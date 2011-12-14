@@ -13,52 +13,48 @@ import nut.HelpForm.*;
  * Sends as SMS
  * @author rgaudin
  */
-public class RegisterForm extends Form implements CommandListener {
+public class DataNutForm extends Form implements CommandListener {
 
     private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
     private static final Command CMD_SAVE = new Command ("Envoi.", Command.OK, 1);
     private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
-    private static final int MAX_SIZE = 3; // max no. of chars per field.
-
+    private static final int MAX_SIZE = 5; // max no. of chars per field.
+    
     public NUTMIDlet midlet;
 
     private Configuration config;
 
-    private static final String[] ageList= {" --- ", "jours", "mois", "ans"};
     private String ErrorMessage = "";
 
-    private TextField first_name;
-    private TextField last_name;
-    private ChoiceGroup type_age;
-    private TextField age;
-    private TextField mother_name;
-    private TextField cscom;
+    private TextField id;
+    private TextField weight;
+    private TextField heught;
+    private TextField pb;
+    private TextField danger_sign;
 
-public RegisterForm(NUTMIDlet midlet) {
-    super("Enregistrement");
+public DataNutForm(NUTMIDlet midlet) {
+    super("Suivie nuttritionnellle");
     this.midlet = midlet;
 
     config = new Configuration();
 
     // creating al fields (blank)
-    first_name =  new TextField("Prenom:", null, 20, TextField.ANY);
-    last_name =  new TextField("Nom:", null, 20, TextField.ANY);
-    mother_name =  new TextField("Nom de la mere:", null, 20, TextField.ANY);
-    type_age = new ChoiceGroup("Age en:", ChoiceGroup.POPUP, ageList, null);
-    age =  new TextField("Age:", null, MAX_SIZE, TextField.NUMERIC);
-    cscom =  new TextField("CSCOM:", null, 20, TextField.ANY);
+    id =  new TextField("Id", null, 20, TextField.ANY);
+    weight =  new TextField("Poids", null, MAX_SIZE, TextField.NUMERIC);
+    heught =  new TextField("Taille", null, MAX_SIZE, TextField.NUMERIC);
+    pb =  new TextField("PB", null, MAX_SIZE, TextField.NUMERIC);
+    danger_sign =  new TextField("Signe de danger", null, 20, TextField.ANY);
 
     // add fields to forms
-    append(first_name);
-    append(last_name);
-    append(mother_name);
-    append(type_age);
-    append(age);
-    append(cscom);
+    append(id);
+    append(weight);
+    append(heught);
+    append(pb);
+    append(danger_sign);
 
-    addCommand(CMD_EXIT);
-    addCommand(CMD_SAVE);
     addCommand(CMD_HELP);
+    addCommand(CMD_SAVE);
+    addCommand(CMD_EXIT);
     this.setCommandListener (this);
 }
 
@@ -81,11 +77,11 @@ public RegisterForm(NUTMIDlet midlet) {
      */
     public boolean isComplete() {
         // all fields are required to be filled.
-        if (first_name.getString().length() == 0 ||
-            last_name.getString().length() == 0 ||
-            mother_name.getString().length() == 0 ||
-            age.getString().length() == 0 ||
-            cscom.getString().length() == 0) {
+        if (id.getString().length() == 0 ||
+            weight.getString().length() == 0 ||
+            heught.getString().length() == 0 ||
+            pb.getString().length() == 0 ||
+            danger_sign.getString().length() == 0) {
             return false;
         }
         return true;
@@ -96,8 +92,8 @@ public RegisterForm(NUTMIDlet midlet) {
      * @return <code>true</code> if all fields are OK
      * <code>false</code> otherwise.
      */
-    public boolean isValid() {
-        if (first_name.getString().equals("reg")) {
+     public boolean isValid() {
+        if (id.getString().equals("reg")) {
             ErrorMessage = "Ala kele ye!";
             return false;
         }
@@ -110,18 +106,17 @@ public RegisterForm(NUTMIDlet midlet) {
      */
     public String toSMSFormat() {
         String sep = " ";
-        return "nut register" + sep
-                + cscom.getString() + sep
-                + first_name.getString() + sep
-                + last_name.getString() + sep
-                + mother_name.getString() + sep
-                + age.getString() + type_age.getString(type_age.getSelectedIndex());
+        return "nut fol" + sep + id.getString() + sep
+                + weight.getString() + sep
+                + heught.getString() + sep
+                + pb.getString() + sep
+                + danger_sign.getString();
     }
 
     public void commandAction(Command c, Displayable d) {
         // help command displays Help Form.
         if (c == CMD_HELP) {
-            HelpForm h = new HelpForm(this.midlet, this, "registration");
+            HelpForm h = new HelpForm(this.midlet, this, "alou");
             this.midlet.display.setCurrent(h);
         }
 

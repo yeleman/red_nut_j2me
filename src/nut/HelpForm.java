@@ -46,7 +46,11 @@ private void getContentFromSection(String section) {
                "de la Croix-Rouge.\n" +
                "Un mauvais numéro vous empêchera de transmettre vos rapports.\n";
     } else if (section.equalsIgnoreCase("registration")) {
-        text = "Enregistrement patient blabla.\n ";
+        text = "Enregistrement patient: Renseignez le prenom, \n" +
+               "le nom, l'age, le nom de la mere de l'enfant\n" +
+               "et indiquez le code du CSCOM .\n ";
+    }  else if (section.equalsIgnoreCase("alou")) {
+        text = "Enregistrement je suis le best blabla.\n ";
     } else if (section.equalsIgnoreCase("version")) {
         text = "NUT - Version " + Constants.version + "\n\n" +
                "En cas de problème, contactez la Croix-Rouge.";

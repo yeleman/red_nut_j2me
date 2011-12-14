@@ -3,6 +3,7 @@ package nut;
 import javax.microedition.midlet.*;
 import javax.microedition.lcdui.*;
 import nut.RegisterForm.*;
+import nut.DataNutForm.*;
 
 /*
  * J2ME Midlet allowing user to fill and submit Nutrition SMS
@@ -66,14 +67,16 @@ public class NUTMIDlet extends MIDlet implements CommandListener {
 
                     // follow-up
                     case 1:
-                        Alert alert = new Alert ("Super!", "Merci d'avoir rien fait.", null, AlertType.ERROR);
-                        alert.setTimeout(3000);
-                        this.display.setCurrent (alert);
+                       // Alert alert = new Alert ("Super!", "Merci d'avoir rien fait.", null, AlertType.ERROR);
+                        //alert.setTimeout(3000);
+                        //this.display.setCurrent (alert);
+                        DataNutForm data_form = new DataNutForm(this);
+                        display.setCurrent (data_form);
                         break;
                     }
             }
         }
-        
+
         // help command displays Help Form.
         if (c == CMD_HELP) {
             HelpForm h = new HelpForm(this, this.mainMenu, "mainmenu");
