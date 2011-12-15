@@ -3,6 +3,8 @@ package nut;
 import javax.microedition.midlet.*;
 import javax.microedition.lcdui.*;
 import nut.RegisterForm.*;
+import nut.ResearchForm.*;
+import nut.OptionForm.*;
 
 /*
  * J2ME Midlet allowing user to fill and submit Nutrition SMS
@@ -12,7 +14,7 @@ public class NUTMIDlet extends MIDlet implements CommandListener {
 
     private static final Command CMD_EXIT = new Command ("Quitter", Command.EXIT, 1);
     private static final Command CMD_VERSION = new Command ("Version", Command.SCREEN, 2);
-    private static final Command CMD_SRVNUM = new Command ("Numéro serveur", Command.SCREEN, 4);
+    private static final Command CMD_SRVNUM = new Command ("Configuration", Command.SCREEN, 4);
     private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 5);
 
     public Display display;
@@ -63,6 +65,12 @@ public class NUTMIDlet extends MIDlet implements CommandListener {
                         RegisterForm reg_form = new RegisterForm(this);
                         display.setCurrent (reg_form);
                         break;
+                    // research
+                    case 2:
+                        //MalariaUnderFiveForm u5_form = new MalariaUnderFiveForm(this);
+                        ResearchForm re_form = new ResearchForm(this);
+                        display.setCurrent (re_form);
+                        break;
 
                     // follow-up
                     case 1:
@@ -88,7 +96,7 @@ public class NUTMIDlet extends MIDlet implements CommandListener {
 
         // srvnum command displays Edit Number Form.
         if (c == CMD_SRVNUM) {
-            EditNumberForm f = new EditNumberForm(this);
+            OptionForm f = new OptionForm(this);
             display.setCurrent(f);
         }
 

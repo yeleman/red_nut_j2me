@@ -31,6 +31,7 @@ public class SMSSender {
             txtmessage.setAddress (address);
             txtmessage.setPayloadText (message);
             smsconn.send (txtmessage);
+            System.out.println("Send:" + message);
         }
         catch (Throwable t) {
             System.out.println ("Send caught: ");

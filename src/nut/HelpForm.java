@@ -41,12 +41,17 @@ private void getContentFromSection(String section) {
         text = "Renseignez votre identifiant et votre ancien mot de passe dans les champs adéquat.\n" +
                "Ensuite, indiquez le nouveau mot de passe désiré. Celui-ci doit faire au moins 3 caractères.\n" +
                "Vous recevrez un SMS du serveur confirmant ou non le changement de mot de passe.\n";
-    } else if (section.equalsIgnoreCase("edit_number")) {
-        text = "Changez le numéro du serveur uniquement sur demande expresse " +
-               "de la Croix-Rouge.\n" +
-               "Un mauvais numéro vous empêchera de transmettre vos rapports.\n";
+    } else if (section.equalsIgnoreCase("option")) {
+        text = "Changez le numéro du serveur, le code du centre et type centre" +
+                " uniquement sur demande expresse de la Croix-Rouge.\n" +
+                "Un mauvais numéro vous empêchera de transmettre vos rapports.\n" ;
     } else if (section.equalsIgnoreCase("registration")) {
         text = "Enregistrement patient blabla.\n ";
+    } else if (section.equalsIgnoreCase("research")) {
+        text = "Renseignez le nom, prénom ou le nom de la mère, vous recevrez un SMS " +
+               "contenant soit l'id du patient.\n" +
+               "Si vous ne recevez pas ce numéro rapidement, réessayer l'envoi.\n\n" +
+               "En cas de problème, contactez ANTIM.";
     } else if (section.equalsIgnoreCase("version")) {
         text = "NUT - Version " + Constants.version + "\n\n" +
                "En cas de problème, contactez la Croix-Rouge.";

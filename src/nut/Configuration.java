@@ -11,18 +11,10 @@ import nut.Constants.*;
  */
 public class Configuration {
 
-    private String server_number;
-    private String health_center;
-    private String is_mam;
-    private String is_sam;
-    private String is_samp;
-
     // index 0 is invalid
     private int server_number_index = 1;
     private int health_center_index = 2;
-    private int is_mam_index = 3;
-    private int is_sam_index = 4;
-    private int is_samp_index = 5;
+    private int hc_code_index = 3;
 
     private static final String database = "configuration";
     private RecordStore recordstore = null;
@@ -39,10 +31,8 @@ public class Configuration {
         if (recordEnumeration.numRecords() < 4) {
             // the following has to be in order of indexes.
             this.set("server_number", "12345678", true);
-            this.set("health_center", "false", true);
-            this.set("is_mam", "false", true);
-            this.set("is_sam", "false", true);
-            this.set("is_samp", "false", true);
+            this.set("health_center", "bamako", true);
+            this.set("hc_code", "URENAM", true);
             this.set("server_number", Constants.server_number, false);
         }
     }
@@ -104,12 +94,8 @@ public class Configuration {
             index = health_center_index;
         } else if (variable.equals("server_number")) {
             index = server_number_index;
-        } else if (variable.equals("is_mam")) {
-            index = is_mam_index;
-        } else if (variable.equals("is_sam")) {
-            index = is_sam_index;
-        } else if (variable.equals("is_samp")) {
-            index = is_samp_index;
+        } else if (variable.equals("hc_code")) {
+            index = hc_code_index;
         } else {
             index = -1;
         }
