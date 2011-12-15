@@ -46,7 +46,9 @@ private void getContentFromSection(String section) {
                 " uniquement sur demande expresse de la Croix-Rouge.\n" +
                 "Un mauvais numéro vous empêchera de transmettre vos rapports.\n" ;
     } else if (section.equalsIgnoreCase("registration")) {
-        text = "Enregistrement patient blabla.\n ";
+        text = "Enregistrement patient: Renseignez le prenom, \n" +
+               "le nom, l'age, le nom de la mere de l'enfant\n" +
+               "et indiquez le code du CSCOM .\n ";
     } else if (section.equalsIgnoreCase("research")) {
         text = "Renseignez le nom, prénom ou le nom de la mère, vous recevrez un SMS " +
                "contenant soit l'id du patient.\n" +

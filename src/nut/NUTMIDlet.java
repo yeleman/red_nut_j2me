@@ -5,6 +5,7 @@ import javax.microedition.lcdui.*;
 import nut.RegisterForm.*;
 import nut.ResearchForm.*;
 import nut.OptionForm.*;
+import nut.DataNutForm.*;
 
 /*
  * J2ME Midlet allowing user to fill and submit Nutrition SMS
@@ -61,27 +62,24 @@ public class NUTMIDlet extends MIDlet implements CommandListener {
 
                     // registration
                     case 0:
-                        //MalariaUnderFiveForm u5_form = new MalariaUnderFiveForm(this);
                         RegisterForm reg_form = new RegisterForm(this);
                         display.setCurrent (reg_form);
                         break;
                     // research
                     case 2:
-                        //MalariaUnderFiveForm u5_form = new MalariaUnderFiveForm(this);
                         ResearchForm re_form = new ResearchForm(this);
                         display.setCurrent (re_form);
                         break;
 
                     // follow-up
                     case 1:
-                        Alert alert = new Alert ("Super!", "Merci d'avoir rien fait.", null, AlertType.ERROR);
-                        alert.setTimeout(3000);
-                        this.display.setCurrent (alert);
+                        DataNutForm data_form = new DataNutForm(this);
+                        display.setCurrent (data_form);
                         break;
                     }
             }
         }
-        
+
         // help command displays Help Form.
         if (c == CMD_HELP) {
             HelpForm h = new HelpForm(this, this.mainMenu, "mainmenu");
