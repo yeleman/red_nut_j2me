@@ -23,14 +23,12 @@ public class ResearchForm extends Form implements CommandListener {
 
     private Configuration config;
 
-    private String ErrorMessage = "";
-
     private TextField first_name;
     private TextField last_name;
     private TextField surname_mother;
 
 public ResearchForm(NUTMIDlet midlet) {
-    super("Enregistrement");
+    super("Recherche d'id");
     this.midlet = midlet;
 
     config = new Configuration();
@@ -139,14 +137,13 @@ public ResearchForm(NUTMIDlet midlet) {
             // sends the sms and reply feedback
             SMSSender sms = new SMSSender();
             String number = config.get("server_number");
-            sms.send(number, this.toSMSFormat());
-            /* if (sms.send(number, this.toSMSFormat())) {
+            if (sms.send(number, this.toSMSFormat())) {
                 alert = new Alert ("Demande envoyée !", "Vous allez recevoir une confirmation du serveur.", null, AlertType.CONFIRMATION);
                 this.midlet.display.setCurrent (alert, this.midlet.mainMenu);
             } else {
                 alert = new Alert ("Échec d'envoi SMS", "Impossible d'envoyer la demande par SMS.", null, AlertType.WARNING);
                 this.midlet.display.setCurrent (alert, this);
-            } */
+            }
         }
     }
 }

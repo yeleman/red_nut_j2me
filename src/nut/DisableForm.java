@@ -7,8 +7,8 @@ import nut.Constants.*;
 import nut.HelpForm.*;
 
 /**
- * J2ME Patient ResearchForm Form
- * Displays Research fields
+ * J2ME Patient DisableForm Form
+ * Displays Disable fields
  * Checks completeness
  * Sends as SMS
  * @author Fadiga
@@ -23,18 +23,16 @@ public class DisableForm extends Form implements CommandListener {
 
     private Configuration config;
 
-    private String ErrorMessage = "";
-
     private TextField id_patient;
 
 public DisableForm(NUTMIDlet midlet) {
-    super("Enregistrement");
+    super("Sortie");
     this.midlet = midlet;
 
     config = new Configuration();
 
     // creating al fields (blank)
-    id_patient =  new TextField("Id du patient", null, 20, TextField.ANY);
+    id_patient =  new TextField("Id du patient", null, 4, TextField.ANY);
 
 
     // add fields to forms
@@ -109,14 +107,13 @@ public DisableForm(NUTMIDlet midlet) {
             // sends the sms and reply feedback
             SMSSender sms = new SMSSender();
             String number = config.get("server_number");
-            sms.send(number, this.toSMSFormat());
-            /* if (sms.send(number, this.toSMSFormat())) {
+            if (sms.send(number, this.toSMSFormat())) {
                 alert = new Alert ("Demande envoyée !", "Vous allez recevoir une confirmation du serveur.", null, AlertType.CONFIRMATION);
                 this.midlet.display.setCurrent (alert, this.midlet.mainMenu);
             } else {
                 alert = new Alert ("Échec d'envoi SMS", "Impossible d'envoyer la demande par SMS.", null, AlertType.WARNING);
                 this.midlet.display.setCurrent (alert, this);
-            } */
+            }
         }
     }
 }

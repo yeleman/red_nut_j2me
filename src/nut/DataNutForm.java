@@ -39,7 +39,7 @@ public DataNutForm(NUTMIDlet midlet) {
     config = new Configuration();
 
     // creating al fields (blank)
-    id =  new TextField("Id", null, 20, TextField.ANY);
+    id =  new TextField("Id", null, 5, TextField.ANY);
     weight =  new TextField("Poids", null, MAX_SIZE, TextField.NUMERIC);
     heught =  new TextField("Taille", null, MAX_SIZE, TextField.NUMERIC);
     pb =  new TextField("PB", null, MAX_SIZE, TextField.NUMERIC);
@@ -116,7 +116,7 @@ public DataNutForm(NUTMIDlet midlet) {
     public void commandAction(Command c, Displayable d) {
         // help command displays Help Form.
         if (c == CMD_HELP) {
-            HelpForm h = new HelpForm(this.midlet, this, "alou");
+            HelpForm h = new HelpForm(this.midlet, this, "datanut");
             this.midlet.display.setCurrent(h);
         }
 
