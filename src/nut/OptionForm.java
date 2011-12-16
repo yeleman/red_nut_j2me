@@ -41,7 +41,7 @@ public OptionForm(NUTMIDlet midlet) {
     }
 
     numberField = new TextField ("Numéro du serveur:", phone_number, 8, TextField.PHONENUMBER);
-    health_centerField = new TextField ("Center de santé:", config.get("health_center"), 10, TextField.ANY);
+    health_centerField = new TextField ("Code du centre:", config.get("health_center"), 10, TextField.ANY);
     hc_codeField =  new ChoiceGroup("Type CScom:", ChoiceGroup.POPUP, type_center, null);
     int sel = 0;
     for (int i = 0; i<type_center.length ; i++) {

@@ -9,7 +9,7 @@ import nut.Constants.*;
  * J2ME Form displaying a long help text
  * Instanciated with a section paramater
  * which triggers appropriate text.
- * @author rgaudin
+ * @author alou/fadiga
  */
 public class HelpForm extends Form implements CommandListener {
 
@@ -46,7 +46,8 @@ private void getContentFromSection(String section) {
                 " uniquement sur demande expresse de la Croix-Rouge.\n" +
                 "Un mauvais numéro vous empêchera de transmettre vos rapports.\n" ;
     } else if (section.equalsIgnoreCase("registration")) {
-        text = "Enregistrement patient: Renseignez le prenom, \n" +
+        text = "Enregistrement patient: \n" +
+               "Renseignez le prenom, \n" +
                "le nom, l'age, le nom de la mere de l'enfant\n" +
                "et indiquez le code du CSCOM .\n ";
     } else if (section.equalsIgnoreCase("research")) {
@@ -57,6 +58,13 @@ private void getContentFromSection(String section) {
     } else if (section.equalsIgnoreCase("version")) {
         text = "NUT - Version " + Constants.version + "\n\n" +
                "En cas de problème, contactez la Croix-Rouge.";
+    }  else if (section.equalsIgnoreCase("datanut")) {
+        text = "Renseigner les champs: \n" +
+                "ID avec l'identifiant de l'enfant, \n" +
+                "le poids en kilogramme, \n" +
+                "la taille en centimetre, \n" +
+                "le PB en centimetre, \n" +
+                "le signe de danger";
     } else {
         text = "Aucune aide disponible pour cet élément.";
     }

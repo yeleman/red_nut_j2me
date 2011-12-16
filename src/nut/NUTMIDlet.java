@@ -76,6 +76,12 @@ public class NUTMIDlet extends MIDlet implements CommandListener {
                         DataNutForm data_form = new DataNutForm(this);
                         display.setCurrent (data_form);
                         break;
+
+                    // follow-up
+                    case 4:
+                        StockForm stock_form = new StockForm(this);
+                        display.setCurrent (stock_form);
+                        break;
                     }
             }
         }

@@ -11,7 +11,7 @@ import nut.HelpForm.*;
  * Displays registration fields
  * Checks completeness
  * Sends as SMS
- * @author rgaudin
+ * @author alou
  */
 public class RegisterForm extends Form implements CommandListener {
 
@@ -24,6 +24,8 @@ public class RegisterForm extends Form implements CommandListener {
 
     private Configuration config;
 
+    private String health_center = "";
+
     private static final String[] ageList= {" --- ", "jours", "mois", "ans"};
     private String ErrorMessage = "";
 
@@ -32,7 +34,6 @@ public class RegisterForm extends Form implements CommandListener {
     private ChoiceGroup type_age;
     private TextField age;
     private TextField mother_name;
-    private TextField cscom;
 
 public RegisterForm(NUTMIDlet midlet) {
     super("Enregistrement");
@@ -40,13 +41,14 @@ public RegisterForm(NUTMIDlet midlet) {
 
     config = new Configuration();
 
+    health_center = config.get("health_center");
+    
     // creating al fields (blank)
     first_name =  new TextField("Prenom:", null, 20, TextField.ANY);
     last_name =  new TextField("Nom:", null, 20, TextField.ANY);
     mother_name =  new TextField("Nom de la mere:", null, 20, TextField.ANY);
     type_age = new ChoiceGroup("Age en:", ChoiceGroup.POPUP, ageList, null);
     age =  new TextField("Age:", null, MAX_SIZE, TextField.NUMERIC);
-    cscom =  new TextField("CSCOM:", null, 20, TextField.ANY);
 
     // add fields to forms
     append(first_name);
@@ -54,7 +56,6 @@ public RegisterForm(NUTMIDlet midlet) {
     append(mother_name);
     append(type_age);
     append(age);
-    append(cscom);
 
     addCommand(CMD_EXIT);
     addCommand(CMD_SAVE);
@@ -84,8 +85,7 @@ public RegisterForm(NUTMIDlet midlet) {
         if (first_name.getString().length() == 0 ||
             last_name.getString().length() == 0 ||
             mother_name.getString().length() == 0 ||
-            age.getString().length() == 0 ||
-            cscom.getString().length() == 0) {
+            age.getString().length() == 0) {
             return false;
         }
         return true;
@@ -111,7 +111,7 @@ public RegisterForm(NUTMIDlet midlet) {
     public String toSMSFormat() {
         String sep = " ";
         return "nut register" + sep
-                + cscom.getString() + sep
+                + health_center + sep
                 + first_name.getString() + sep
                 + last_name.getString() + sep
                 + mother_name.getString() + sep
