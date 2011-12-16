@@ -4,6 +4,7 @@ import javax.microedition.midlet.*;
 import javax.microedition.lcdui.*;
 import nut.RegisterForm.*;
 import nut.ResearchForm.*;
+import nut.DisableForm.*;
 import nut.OptionForm.*;
 import nut.DataNutForm.*;
 
@@ -70,11 +71,15 @@ public class NUTMIDlet extends MIDlet implements CommandListener {
                         ResearchForm re_form = new ResearchForm(this);
                         display.setCurrent (re_form);
                         break;
-
                     // follow-up
                     case 1:
                         DataNutForm data_form = new DataNutForm(this);
                         display.setCurrent (data_form);
+                        break;
+                    // follow-up
+                    case 3:
+                        DisableForm off_form = new DisableForm(this);
+                        display.setCurrent (off_form);
                         break;
                     }
             }
