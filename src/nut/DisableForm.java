@@ -7,13 +7,13 @@ import nut.Constants.*;
 import nut.HelpForm.*;
 
 /**
- * J2ME Patient ResearchForm Form
- * Displays Research fields
+ * J2ME Patient DisableForm Form
+ * Displays Disable fields
  * Checks completeness
  * Sends as SMS
  * @author Fadiga
  */
-public class ResearchForm extends Form implements CommandListener {
+public class DisableForm extends Form implements CommandListener {
 
     private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
     private static final Command CMD_SAVE = new Command ("Envoi.", Command.OK, 1);
@@ -23,26 +23,20 @@ public class ResearchForm extends Form implements CommandListener {
 
     private Configuration config;
 
-    private TextField first_name;
-    private TextField last_name;
-    private TextField surname_mother;
+    private TextField id_patient;
 
-public ResearchForm(NUTMIDlet midlet) {
-    super("Recherche d'id");
+public DisableForm(NUTMIDlet midlet) {
+    super("Sortie");
     this.midlet = midlet;
 
     config = new Configuration();
 
     // creating al fields (blank)
-    first_name =  new TextField("Prenom", null, 20, TextField.ANY);
-    last_name =  new TextField("Nom", null, 20, TextField.ANY);
-    surname_mother =  new TextField("Nom de la mère", null, 20, TextField.ANY);
+    id_patient =  new TextField("Id du patient", null, 4, TextField.ANY);
 
 
     // add fields to forms
-    append(first_name);
-    append(last_name);
-    append(surname_mother);
+    append(id_patient);
 
     addCommand(CMD_EXIT);
     addCommand(CMD_SAVE);
@@ -69,9 +63,7 @@ public ResearchForm(NUTMIDlet midlet) {
      */
     public boolean isComplete() {
         // all fields are required to be filled.
-        if (first_name.getString().length() == 0 &&
-            last_name.getString().length() == 0 &&
-            surname_mother.getString().length() == 0) {
+        if (id_patient.getString().length() == 0) {
             return false;
         }
         return true;
@@ -81,37 +73,15 @@ public ResearchForm(NUTMIDlet midlet) {
     /* Converts Form request to SMS message
      * @return <code>String</code> to be sent by SMS
      */
-    private String firstname;
-    private String lastname;
-    private String surnamemother;
-
     public String toSMSFormat() {
         String sep = " ";
-        String None = "n";
-
-        if (first_name.getString().length() == 0){
-            firstname = None;
-        } else{
-            firstname = first_name.getString();
-          }
-        if (last_name.getString().length() == 0){
-            lastname = None;
-        } else{
-            lastname = last_name.getString();
-          }
-        if (surname_mother.getString().length() == 0){
-            surnamemother = None;
-        } else{
-            surnamemother = surname_mother.getString();
-          }
-        return "nut research" + sep + config.get("health_center")
-                    + sep + firstname + sep + lastname + sep + surnamemother;
+        return "nut off" + sep + id_patient.getString();
     }
 
     public void commandAction(Command c, Displayable d) {
         // help command displays Help Form.
         if (c == CMD_HELP) {
-            HelpForm h = new HelpForm(this.midlet, this, "research");
+            HelpForm h = new HelpForm(this.midlet, this, "Disable");
             this.midlet.display.setCurrent(h);
         }
 

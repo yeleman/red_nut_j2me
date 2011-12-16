@@ -7,10 +7,10 @@ import nut.Constants.*;
 import nut.HelpForm.*;
 
 /**
- * J2ME Form allowing Server number editing.
+ * J2ME Form allowing Server number, health center and hc_code editing.
  * Saves the new number into <code>Configuration</code>
  * Saves the new health center into <code>Configuration</code>
- * Saves the new number into <code>Configuration</code>
+ * Saves the new hc_code into <code>Configuration</code>
  * @author fadiga
  */
 public class OptionForm extends Form implements CommandListener {
@@ -98,11 +98,15 @@ public OptionForm(NUTMIDlet midlet) {
                 this.midlet.display.setCurrent (alert, this);
                 return;
             }
-            alert = new Alert ("Échec d'envoi SMS", "Impossible d'envoyer la demande par SMS.", null, AlertType.WARNING);
-            config.set("server_number", numberField.getString());
-            config.set("health_center", health_centerField.getString());
-            config.set("hc_code", hc_codeField.getString(hc_codeField.getSelectedIndex()));
-            this.midlet.display.setCurrent (this.midlet.mainMenu);
+            if (config.set("server_number", numberField.getString()) &&
+            config.set("health_center", health_centerField.getString()) &&
+            config.set("hc_code", hc_codeField.getString(hc_codeField.getSelectedIndex()))) {
+                alert = new Alert ("confirmation!", "Votre modification a bien enregistré.", null, AlertType.CONFIRMATION);
+                this.midlet.display.setCurrent (alert, this.midlet.mainMenu);
+            } else {
+                alert = new Alert ("Échec", "Impossible d'enregistrer cette modification.", null, AlertType.WARNING);
+                this.midlet.display.setCurrent (alert, this);
+            }
         }
     }
 }
