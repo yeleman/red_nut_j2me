@@ -15,9 +15,12 @@ import nut.HelpForm.*;
  */
 public class RegisterForm extends Form implements CommandListener {
 
-    private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
-    private static final Command CMD_SAVE = new Command ("Envoi.", Command.OK, 1);
-    private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
+    private static final Command CMD_EXIT = new Command ("Retour",
+                                                            Command.BACK, 1);
+    private static final Command CMD_SAVE = new Command ("Envoi.",
+                                                            Command.OK, 1);
+    private static final Command CMD_HELP = new Command ("Aide",
+                                                            Command.HELP, 2);
     private static final int MAX_SIZE = 3; // max no. of chars per field.
 
     public NUTMIDlet midlet;
@@ -115,7 +118,8 @@ public RegisterForm(NUTMIDlet midlet) {
                 + first_name.getString() + sep
                 + last_name.getString() + sep
                 + mother_name.getString() + sep
-                + age.getString() + type_age.getString(type_age.getSelectedIndex());
+                + age.getString()
+                + type_age.getString(type_age.getSelectedIndex());
     }
 
     public void commandAction(Command c, Displayable d) {
@@ -138,7 +142,8 @@ public RegisterForm(NUTMIDlet midlet) {
             // check whether all fields have been completed
             // if not, we alert and don't do anything else.
             if (!this.isComplete()) {
-                alert = new Alert("Données manquantes", "Tous les champs doivent être remplis!", null, AlertType.ERROR);
+                alert = new Alert("Données manquantes", "Tous les champs " +
+                            "doivent être remplis!", null, AlertType.ERROR);
                 alert.setTimeout(Alert.FOREVER);
                 this.midlet.display.setCurrent (alert, this);
                 return;
@@ -146,7 +151,8 @@ public RegisterForm(NUTMIDlet midlet) {
 
             // check for errors and display first error
             if (!this.isValid()) {
-                alert = new Alert("Données incorrectes!", this.ErrorMessage, null, AlertType.ERROR);
+                alert = new Alert("Données incorrectes!", this.ErrorMessage,
+                                  null, AlertType.ERROR);
                 alert.setTimeout(Alert.FOREVER);
                 this.midlet.display.setCurrent (alert, this);
                 return;
@@ -156,10 +162,13 @@ public RegisterForm(NUTMIDlet midlet) {
             SMSSender sms = new SMSSender();
             String number = config.get("server_number");
             if (sms.send(number, this.toSMSFormat())) {
-                alert = new Alert ("Demande envoyée !", "Vous allez recevoir une confirmation du serveur.", null, AlertType.CONFIRMATION);
+                alert = new Alert ("Demande envoyée !", "Vous allez recevoir" +
+                                   " une confirmation du serveur.",
+                                   null, AlertType.CONFIRMATION);
                 this.midlet.display.setCurrent (alert, this.midlet.mainMenu);
             } else {
-                alert = new Alert ("Échec d'envoi SMS", "Impossible d'envoyer la demande par SMS.", null, AlertType.WARNING);
+                alert = new Alert ("Échec d'envoi SMS", "Impossible d'envoyer" +
+                            " la demande par SMS.", null, AlertType.WARNING);
                 this.midlet.display.setCurrent (alert, this);
             }
         }
