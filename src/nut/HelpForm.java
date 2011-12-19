@@ -56,14 +56,14 @@ private void getContentFromSection(String section) {
     } else if (section.equalsIgnoreCase("research")) {
         text = "Renseignez le nom, prénom ou le nom de la mère, vous " +
                "recevrez un SMS contenant l'id du patient s'il existe.\n\n " +
-               "En cas de problème, contactez ANTIM.";
+               "En cas de problème, contactez Croix-Rouge.";
     } else if (section.equalsIgnoreCase("Disable")) {
         text = "Renseignez l'id du patient pour signaler sa sortie du " +
                "programme, vous recevrez un SMS " +
                "confirmant ou non de deactivation.\n" +
-               "En cas de problème, contactez ANTIM.";
+               "En cas de problème, contactez Croix-Rouge.";
     } else if (section.equalsIgnoreCase("datanut")) {
-        text = "En cas de problème, contactez ANTIM.";
+        text = "En cas de problème, contactez Croix-Rouge.";
     } else if (section.equalsIgnoreCase("version")) {
         text = "NUT - Version " + Constants.version + "\n\n" +
                "En cas de problème, contactez la Croix-Rouge.";
