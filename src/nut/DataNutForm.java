@@ -11,7 +11,7 @@ import nut.HelpForm.*;
  * Displays registration fields
  * Checks completeness
  * Sends as SMS
- * @author rgaudin
+ * @author alou
  */
 public class DataNutForm extends Form implements CommandListener {
 
@@ -39,10 +39,10 @@ public DataNutForm(NUTMIDlet midlet) {
     config = new Configuration();
 
     // creating al fields (blank)
-    id =  new TextField("Id", null, 5, TextField.ANY);
-    weight =  new TextField("Poids", null, MAX_SIZE, TextField.NUMERIC);
-    heught =  new TextField("Taille", null, MAX_SIZE, TextField.NUMERIC);
-    pb =  new TextField("PB", null, MAX_SIZE, TextField.NUMERIC);
+    id =  new TextField("Id", null, 20, TextField.ANY);
+    weight =  new TextField("Poids", null, MAX_SIZE, TextField.DECIMAL);
+    heught =  new TextField("Taille", null, MAX_SIZE, TextField.DECIMAL);
+    pb =  new TextField("PB", null, MAX_SIZE, TextField.DECIMAL);
     danger_sign =  new TextField("Signe de danger", null, 20, TextField.ANY);
 
     // add fields to forms
