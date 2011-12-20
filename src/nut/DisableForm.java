@@ -22,7 +22,10 @@ public class DisableForm extends Form implements CommandListener {
     public NUTMIDlet midlet;
 
     private Configuration config;
-
+    private static final String[] reason = {"ABANDON", "TRANFER",
+                                                 "GUERISON","NON-REPONDANT",
+                                                 "DECES"};
+    private ChoiceGroup reasonField;
     private TextField id_patient;
 
 public DisableForm(NUTMIDlet midlet) {
@@ -33,10 +36,12 @@ public DisableForm(NUTMIDlet midlet) {
 
     // creating al fields (blank)
     id_patient =  new TextField("Id du patient", null, 4, TextField.ANY);
+    reasonField =  new ChoiceGroup("Raison:", ChoiceGroup.POPUP, reason, null);
 
 
     // add fields to forms
     append(id_patient);
+    append(reasonField);
 
     addCommand(CMD_EXIT);
     addCommand(CMD_SAVE);
@@ -75,7 +80,8 @@ public DisableForm(NUTMIDlet midlet) {
      */
     public String toSMSFormat() {
         String sep = " ";
-        return "nut off" + sep + id_patient.getString();
+        return "nut off" + sep + id_patient.getString() + sep +
+                reasonField.getString(reasonField.getSelectedIndex());
     }
 
     public void commandAction(Command c, Displayable d) {
