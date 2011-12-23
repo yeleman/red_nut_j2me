@@ -26,6 +26,10 @@ public class DataNutForm extends Form implements CommandListener {
 
     private String ErrorMessage = "";
 
+    private static final String[] oedema = {"Yes", "NO",
+                                                 "Unknown"};
+
+    private ChoiceGroup oedemaField;
     private TextField id;
     private TextField weight;
     private TextField heught;
@@ -42,6 +46,7 @@ public DataNutForm(NUTMIDlet midlet) {
     id =  new TextField("Id", null, 20, TextField.ANY);
     weight =  new TextField("Poids", null, MAX_SIZE, TextField.DECIMAL);
     heught =  new TextField("Taille", null, MAX_SIZE, TextField.DECIMAL);
+    oedemaField =  new ChoiceGroup("Oedema:", ChoiceGroup.POPUP, oedema, null);
     pb =  new TextField("PB", null, MAX_SIZE, TextField.DECIMAL);
     danger_sign =  new TextField("Signe de danger", null, 20, TextField.ANY);
 
@@ -49,6 +54,7 @@ public DataNutForm(NUTMIDlet midlet) {
     append(id);
     append(weight);
     append(heught);
+    append(oedemaField);
     append(pb);
     append(danger_sign);
 
@@ -109,6 +115,7 @@ public DataNutForm(NUTMIDlet midlet) {
         return "nut fol" + sep + id.getString() + sep
                 + weight.getString() + sep
                 + heught.getString() + sep
+                + oedemaField.getString(oedemaField.getSelectedIndex()) + sep
                 + pb.getString() + sep
                 + danger_sign.getString();
     }

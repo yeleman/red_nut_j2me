@@ -1,7 +1,7 @@
 MIDlet-1: NUTMIDlet,,nut.NUTMIDlet
 MIDlet-Description: Enregistrement-suivi des patients atteint de malnutrition.
 MIDlet-Icon: nut-32-32.png
-MIDlet-Jar-Size: 27418
+MIDlet-Jar-Size: 27616
 MIDlet-Jar-URL: Nutrition.jar
 MIDlet-Name: Nutrition
 MIDlet-Vendor: YELEMAN S.A.R.L
