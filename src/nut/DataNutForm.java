@@ -7,12 +7,13 @@ import nut.Constants.*;
 import nut.HelpForm.*;
 
 /**
- * J2ME Patient Registration Form
- * Displays registration fields
+ * J2ME Patient NutritionalData Form
+ * Displays NutritionalData fields
  * Checks completeness
  * Sends as SMS
  * @author alou
  */
+
 public class DataNutForm extends Form implements CommandListener {
 
     private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
@@ -26,13 +27,12 @@ public class DataNutForm extends Form implements CommandListener {
 
     private String ErrorMessage = "";
 
-    private static final String[] oedema = {"Yes", "NO",
-                                                 "Unknown"};
+    private static final String[] oedema = {"OUI", "NON", "Inconnue"};
 
     private ChoiceGroup oedemaField;
     private TextField id;
     private TextField weight;
-    private TextField heught;
+    private TextField height;
     private TextField pb;
     private TextField danger_sign;
 
@@ -43,17 +43,17 @@ public DataNutForm(NUTMIDlet midlet) {
     config = new Configuration();
 
     // creating al fields (blank)
-    id =  new TextField("Id", null, 20, TextField.ANY);
-    weight =  new TextField("Poids", null, MAX_SIZE, TextField.DECIMAL);
-    heught =  new TextField("Taille", null, MAX_SIZE, TextField.DECIMAL);
-    oedemaField =  new ChoiceGroup("Oedema:", ChoiceGroup.POPUP, oedema, null);
-    pb =  new TextField("PB", null, MAX_SIZE, TextField.DECIMAL);
-    danger_sign =  new TextField("Signe de danger", null, 20, TextField.ANY);
+    id =  new TextField("ID:", null, 10, TextField.ANY);
+    weight =  new TextField("Poids en kg:", null, MAX_SIZE, TextField.DECIMAL);
+    height =  new TextField("Taille en cm:", null, MAX_SIZE, TextField.DECIMAL);
+    oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
+    pb =  new TextField("PB:", null, MAX_SIZE, TextField.DECIMAL);
+    danger_sign =  new TextField("Signe de danger:", null, 20, TextField.ANY);
 
     // add fields to forms
     append(id);
     append(weight);
-    append(heught);
+    append(height);
     append(oedemaField);
     append(pb);
     append(danger_sign);
@@ -63,19 +63,6 @@ public DataNutForm(NUTMIDlet midlet) {
     addCommand(CMD_EXIT);
     this.setCommandListener (this);
 }
-
-    /*
-     * converts internal <code>int</code> data to <code>String</code> for field
-     * @param value the number to display on field
-     * @return the <code>String</code> to attach to the field.
-     */
-    private String valueForField(int value) {
-        if (value == -1) {
-            return "";
-        }
-        return String.valueOf(value);
-    }
-
     /*
      * Whether all required fields are filled
      * @return <code>true</code> is all fields are filled
@@ -85,7 +72,7 @@ public DataNutForm(NUTMIDlet midlet) {
         // all fields are required to be filled.
         if (id.getString().length() == 0 ||
             weight.getString().length() == 0 ||
-            heught.getString().length() == 0 ||
+            height.getString().length() == 0 ||
             pb.getString().length() == 0 ||
             danger_sign.getString().length() == 0) {
             return false;
@@ -99,8 +86,16 @@ public DataNutForm(NUTMIDlet midlet) {
      * <code>false</code> otherwise.
      */
      public boolean isValid() {
-        if (id.getString().equals("reg")) {
-            ErrorMessage = "Ala kele ye!";
+        if (Integer.parseInt(this.height.getString()) >= 250) {
+            ErrorMessage = "il n'existe pas un enfant de " + height.getString() +" cm de taille";
+            return false;
+        }
+        if (Integer.parseInt(this.weight.getString()) >= 550) {
+            ErrorMessage = "il n'existe pas un enfant de " + weight.getString() +" kg de poids";
+            return false;
+        }
+        if (Integer.parseInt(this.pb.getString()) >= 100) {
+            ErrorMessage = "il n'existe pas un enfant de " + pb.getString() +" mm de perimetre brachial";
             return false;
         }
         ErrorMessage = "";
@@ -112,10 +107,19 @@ public DataNutForm(NUTMIDlet midlet) {
      */
     public String toSMSFormat() {
         String sep = " ";
+        String oed;
+        if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("OUI")){
+            oed = "YES";
+        } else if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("NON")){
+            oed = "NO";
+        }else if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("Inconnue")){
+            oed = "Unknown";
+        }
+        
         return "nut fol" + sep + id.getString() + sep
                 + weight.getString() + sep
-                + heught.getString() + sep
-                + oedemaField.getString(oedemaField.getSelectedIndex()) + sep
+                + height.getString() + sep
+                + oedema + sep
                 + pb.getString() + sep
                 + danger_sign.getString();
     }

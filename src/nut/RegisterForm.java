@@ -65,19 +65,6 @@ public RegisterForm(NUTMIDlet midlet) {
     addCommand(CMD_HELP);
     this.setCommandListener (this);
 }
-
-    /*
-     * converts internal <code>int</code> data to <code>String</code> for field
-     * @param value the number to display on field
-     * @return the <code>String</code> to attach to the field.
-     */
-    private String valueForField(int value) {
-        if (value == -1) {
-            return "";
-        }
-        return String.valueOf(value);
-    }
-
     /*
      * Whether all required fields are filled
      * @return <code>true</code> is all fields are filled
@@ -100,8 +87,8 @@ public RegisterForm(NUTMIDlet midlet) {
      * <code>false</code> otherwise.
      */
     public boolean isValid() {
-        if (first_name.getString().equals("reg")) {
-            ErrorMessage = "Ala kele ye!";
+        if (Integer.parseInt(this.age.getString()) >= 150 & this.type_age.getString(type_age.getSelectedIndex()).equals("ans")) {
+            ErrorMessage = "Il n'existe pas un enfant de " + age.getString() + " " + type_age.getString(type_age.getSelectedIndex());
             return false;
         }
         ErrorMessage = "";

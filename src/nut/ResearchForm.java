@@ -51,18 +51,6 @@ public ResearchForm(NUTMIDlet midlet) {
 }
 
     /*
-     * converts internal <code>int</code> data to <code>String</code> for field
-     * @param value the number to display on field
-     * @return the <code>String</code> to attach to the field.
-     */
-    private String valueForField(int value) {
-        if (value == -1) {
-            return "";
-        }
-        return String.valueOf(value);
-    }
-
-    /*
      * Whether all required fields are filled
      * @return <code>true</code> is all fields are filled
      * <code>false</code> otherwise.
