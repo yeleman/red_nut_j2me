@@ -7,7 +7,7 @@ import nut.Constants.*;
 
 /**
  * Store defined values into RMS
- * @author rgaudin
+ * @author fadiga
  */
 public class Configuration {
 
@@ -30,7 +30,7 @@ public class Configuration {
         }
         if (recordEnumeration.numRecords() < 4) {
             // the following has to be in order of indexes.
-            this.set("server_number", "12345678", true);
+            this.set("server_number", "71908010", true);
             this.set("health_center", "pmib", true);
             this.set("hc_code", "URENAM", true);
             this.set("server_number", Constants.server_number, false);

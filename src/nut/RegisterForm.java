@@ -29,7 +29,7 @@ public class RegisterForm extends Form implements CommandListener {
 
     private String health_center = "";
 
-    private static final String[] ageList= {" --- ", "jours", "mois", "ans"};
+    private static final String[] ageList= {"mois", "année", "jours"};
     private String ErrorMessage = "";
 
     private TextField first_name;
@@ -47,9 +47,9 @@ public RegisterForm(NUTMIDlet midlet) {
     health_center = config.get("health_center");
     
     // creating al fields (blank)
-    first_name =  new TextField("Prenom:", null, 20, TextField.ANY);
+    first_name =  new TextField("Prénom:", null, 20, TextField.ANY);
     last_name =  new TextField("Nom:", null, 20, TextField.ANY);
-    mother_name =  new TextField("Nom de la mere:", null, 20, TextField.ANY);
+    mother_name =  new TextField("Nom de la mère:", null, 20, TextField.ANY);
     type_age = new ChoiceGroup("Age en:", ChoiceGroup.POPUP, ageList, null);
     age =  new TextField("Age:", null, MAX_SIZE, TextField.NUMERIC);
 
@@ -130,7 +130,7 @@ public RegisterForm(NUTMIDlet midlet) {
             // if not, we alert and don't do anything else.
             if (!this.isComplete()) {
                 alert = new Alert("Données manquantes", "Tous les champs " +
-                            "doivent être remplis!", null, AlertType.ERROR);
+                             "doivent être remplis!", null, AlertType.ERROR);
                 alert.setTimeout(Alert.FOREVER);
                 this.midlet.display.setCurrent (alert, this);
                 return;

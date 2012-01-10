@@ -34,7 +34,7 @@ public ResearchForm(NUTMIDlet midlet) {
     config = new Configuration();
 
     // creating al fields (blank)
-    first_name =  new TextField("Prenom", null, 20, TextField.ANY);
+    first_name =  new TextField("Prénom", null, 20, TextField.ANY);
     last_name =  new TextField("Nom", null, 20, TextField.ANY);
     surname_mother =  new TextField("Nom de la mère", null, 20, TextField.ANY);
 
@@ -116,7 +116,7 @@ public ResearchForm(NUTMIDlet midlet) {
             // check whether all fields have been completed
             // if not, we alert and don't do anything else.
             if (!this.isComplete()) {
-                alert = new Alert("Données manquantes", "Tous les champs doivent être remplis!", null, AlertType.ERROR);
+                alert = new Alert("Données manquantes", "remplissez au moins un champ de saisie!", null, AlertType.ERROR);
                 alert.setTimeout(Alert.FOREVER);
                 this.midlet.display.setCurrent (alert, this);
                 return;

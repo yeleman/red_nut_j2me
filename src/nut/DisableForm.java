@@ -23,8 +23,8 @@ public class DisableForm extends Form implements CommandListener {
 
     private Configuration config;
     private static final String[] reason = {"ABANDON", "TRANFER",
-                                                 "GUERISON","NON-REPONDANT",
-                                                 "DECES"};
+                                            "GUERISON","NON-REPONDANT",
+                                            "DECES"};
     private ChoiceGroup reasonField;
     private TextField id_patient;
 
@@ -92,7 +92,7 @@ public DisableForm(NUTMIDlet midlet) {
             // check whether all fields have been completed
             // if not, we alert and don't do anything else.
             if (!this.isComplete()) {
-                alert = new Alert("Données manquantes", "Tous les champs doivent être remplis!", null, AlertType.ERROR);
+                alert = new Alert("Données manquantes", "Le champ id du patient doit être remplie!", null, AlertType.ERROR);
                 alert.setTimeout(Alert.FOREVER);
                 this.midlet.display.setCurrent (alert, this);
                 return;

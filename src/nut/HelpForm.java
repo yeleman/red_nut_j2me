@@ -39,21 +39,19 @@ public class HelpForm extends Form implements CommandListener {
         String text;
 
         if (section.equalsIgnoreCase("mainmenu")) {
-            text = "Renseignez votre identifiant et votre ancien mot de " +
-                    " passe dans les champs adéquat.\n Ensuite, indiquez le " +
-                    " nouveau mot de passe désiré. Celui-ci doit faire au " +
-                    " moins 3 caractères.\n Vous recevrez un SMS du serveur " +
-                    " confirmant ou non le changement de mot de passe.\n";
+            text = "Chaque élément de la liste correspond à une formulaire.\n" +
+                   "Entrez dans ce qui correspond à ton opération et " +
+                   "renseignez les champs et envoyer.\n" +
+                   "En cas de problème, contactez Croix-Rouge.";
         } else if (section.equalsIgnoreCase("option")) {
-            text = "Changez le numéro du serveur, le code du centre et type" +
-                    " centre uniquement sur demande expresse de la " +
-                    "Croix-Rouge.\n Un mauvais numéro vous empêchera de " +
-                    "transmettre vos rapports.\n" ;
+            text = "Changez le numéro du serveur, le code du centre et type " +
+                   "centre uniquement sur demande expresse de la " +
+                   "Croix-Rouge.\n Un mauvais numéro vous empêchera de " +
+                   "transmettre vos rapports.\n" ;
         } else if (section.equalsIgnoreCase("registration")) {
             text = "Enregistrement patient: \n" +
                    "Renseignez le prenom, \n" +
-                   "le nom, l'age, le nom de la mere de l'enfant\n" +
-                   "et indiquez le code du CSCOM .\n ";
+                   "le nom, l'age et le nom de la mere de l'enfant\n";
         } else if (section.equalsIgnoreCase("research")) {
             text = "Renseignez le nom, prénom ou le nom de la mère, vous " +
                    "recevrez un SMS contenant l'id du patient s'il existe.\n" +
@@ -70,9 +68,9 @@ public class HelpForm extends Form implements CommandListener {
             text = "Renseigner les champs: \n" +
                     "ID avec l'identifiant de l'enfant, \n" +
                     "le poids en kilogramme, \n" +
-                    "la taille en centimetre, \n" +
-                    "le PB en centimetre, \n" +
-                    "le signe de danger" +
+                    "la taille en centimètre, \n" +
+                    "le érimètre brachial en millimètre \n" +
+                    "et le signe de danger \n\n" +
                     "En cas de problème, contactez Croix-Rouge.";
         } else if (section.equalsIgnoreCase("stock")) {
             text = "Renseigner les champs: \n" +

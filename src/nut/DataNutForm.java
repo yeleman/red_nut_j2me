@@ -44,10 +44,10 @@ public DataNutForm(NUTMIDlet midlet) {
 
     // creating al fields (blank)
     id =  new TextField("ID:", null, 10, TextField.ANY);
-    weight =  new TextField("Poids en kg:", null, MAX_SIZE, TextField.DECIMAL);
-    height =  new TextField("Taille en cm:", null, MAX_SIZE, TextField.DECIMAL);
+    weight =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
+    height =  new TextField("Taille (en cm):", null, MAX_SIZE, TextField.DECIMAL);
     oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
-    pb =  new TextField("PB:", null, MAX_SIZE, TextField.DECIMAL);
+    pb =  new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
     danger_sign =  new TextField("Signe de danger:", null, 20, TextField.ANY);
 
     // add fields to forms
@@ -87,15 +87,15 @@ public DataNutForm(NUTMIDlet midlet) {
      */
      public boolean isValid() {
         if (Integer.parseInt(this.height.getString()) >= 250) {
-            ErrorMessage = "il n'existe pas un enfant de " + height.getString() +" cm de taille";
+            ErrorMessage = height.getString() + " cm de taille est trop grand";
             return false;
         }
         if (Integer.parseInt(this.weight.getString()) >= 550) {
-            ErrorMessage = "il n'existe pas un enfant de " + weight.getString() +" kg de poids";
+            ErrorMessage = weight.getString() + " kg de poids est trop gros";
             return false;
         }
         if (Integer.parseInt(this.pb.getString()) >= 100) {
-            ErrorMessage = "il n'existe pas un enfant de " + pb.getString() +" mm de perimetre brachial";
+            ErrorMessage = pb.getString() + " mm de périmètre brachial est trop grand";
             return false;
         }
         ErrorMessage = "";

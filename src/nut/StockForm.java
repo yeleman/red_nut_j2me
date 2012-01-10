@@ -21,7 +21,7 @@ public class StockForm extends Form implements CommandListener {
     private static final int MAX_SIZE = 5; // max no. of chars per field.
 
     private static final String[] monthList= {" --- ", "Janvier (01)", "Février (02)", "Mars (03)", "Avril (04)", "Mai (05)", "Juin (06)", "Juillet (07)", "Aout (08)", "Septembre (09)", "Octobre (10)", "Novembre (11)", "Décembre (12)"};
-    private static final String[] yearList = {" --- ", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"};
+    private static final String[] yearList = {" --- ", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"};
 
     public NUTMIDlet midlet;
 
@@ -115,64 +115,64 @@ public StockForm(NUTMIDlet midlet) {
     //Niebe
     nie_intro = new StringItem(null, "Niebe");
     nie_initial =  new TextField("Stock de debut:", null, MAX_SIZE, TextField.DECIMAL);
-    nie_received =  new TextField("Stock recu:", null, MAX_SIZE, TextField.DECIMAL);
-    nie_used =  new TextField("Stock utilise:", null, MAX_SIZE, TextField.DECIMAL);
+    nie_received =  new TextField("Stock reçu:", null, MAX_SIZE, TextField.DECIMAL);
+    nie_used =  new TextField("Stock utilisé:", null, MAX_SIZE, TextField.DECIMAL);
     nie_lost =  new TextField("Stock perdu:", null, MAX_SIZE, TextField.DECIMAL);
     
     //Mil
     mil_intro = new StringItem(null, "Mil");
     mil_initial =  new TextField("Stock de debut:", null, MAX_SIZE, TextField.DECIMAL);
-    mil_received =  new TextField("Stock recu:", null, MAX_SIZE, TextField.DECIMAL);
-    mil_used =  new TextField("Stock utilise:", null, MAX_SIZE, TextField.DECIMAL);
+    mil_received =  new TextField("Stock reçu:", null, MAX_SIZE, TextField.DECIMAL);
+    mil_used =  new TextField("Stock utilisé:", null, MAX_SIZE, TextField.DECIMAL);
     mil_lost =  new TextField("Stock perdu:", null, MAX_SIZE, TextField.DECIMAL);
 
     //Sucre
     suc_intro = new StringItem(null, "Sucre");
     suc_initial =  new TextField("Stock de debut:", null, MAX_SIZE, TextField.DECIMAL);
-    suc_received =  new TextField("Stock recu:", null, MAX_SIZE, TextField.DECIMAL);
-    suc_used =  new TextField("Stock utilise:", null, MAX_SIZE, TextField.DECIMAL);
+    suc_received =  new TextField("Stock reçu:", null, MAX_SIZE, TextField.DECIMAL);
+    suc_used =  new TextField("Stock utilisé:", null, MAX_SIZE, TextField.DECIMAL);
     suc_lost =  new TextField("Stock perdu:", null, MAX_SIZE, TextField.DECIMAL);
 
     //huile
     hui_intro = new StringItem(null, "Huile");
     hui_initial =  new TextField("Stock de debut:", null, MAX_SIZE, TextField.DECIMAL);
-    hui_received =  new TextField("Stock recu:", null, MAX_SIZE, TextField.DECIMAL);
-    hui_used =  new TextField("Stock utilise:", null, MAX_SIZE, TextField.DECIMAL);
+    hui_received =  new TextField("Stock reçu:", null, MAX_SIZE, TextField.DECIMAL);
+    hui_used =  new TextField("Stock utilisé:", null, MAX_SIZE, TextField.DECIMAL);
     hui_lost =  new TextField("Stock perdu:", null, MAX_SIZE, TextField.DECIMAL);
     
     //Unimix
     uni_intro = new StringItem(null, "Unimix");
     uni_initial =  new TextField("Stock de debut:", null, MAX_SIZE, TextField.DECIMAL);
-    uni_received =  new TextField("Stock recu:", null, MAX_SIZE, TextField.DECIMAL);
-    uni_used =  new TextField("Stock utilise:", null, MAX_SIZE, TextField.DECIMAL);
+    uni_received =  new TextField("Stock reçu:", null, MAX_SIZE, TextField.DECIMAL);
+    uni_used =  new TextField("Stock utilisé:", null, MAX_SIZE, TextField.DECIMAL);
     uni_lost =  new TextField("Stock perdu:", null, MAX_SIZE, TextField.DECIMAL);
 
     //CSB
     csb_intro = new StringItem(null, "CSB");
     csb_initial =  new TextField("Stock de debut:", null, MAX_SIZE, TextField.DECIMAL);
-    csb_received =  new TextField("Stock recu:", null, MAX_SIZE, TextField.DECIMAL);
-    csb_used =  new TextField("Stock utilise:", null, MAX_SIZE, TextField.DECIMAL);
+    csb_received =  new TextField("Stock reçu:", null, MAX_SIZE, TextField.DECIMAL);
+    csb_used =  new TextField("Stock utilisé:", null, MAX_SIZE, TextField.DECIMAL);
     csb_lost =  new TextField("Stock perdu:", null, MAX_SIZE, TextField.DECIMAL);
 
     //l100
     l100_intro = new StringItem(null, "l100");
     l100_initial =  new TextField("Stock de debut:", null, MAX_SIZE, TextField.DECIMAL);
-    l100_received =  new TextField("Stock recu:", null, MAX_SIZE, TextField.DECIMAL);
-    l100_used =  new TextField("Stock utilise:", null, MAX_SIZE, TextField.DECIMAL);
+    l100_received =  new TextField("Stock reçu:", null, MAX_SIZE, TextField.DECIMAL);
+    l100_used =  new TextField("Stock utilisé:", null, MAX_SIZE, TextField.DECIMAL);
     l100_lost =  new TextField("Stock perdu:", null, MAX_SIZE, TextField.DECIMAL);
 
     //l75
     l75_intro = new StringItem(null, "l75");
     l75_initial =  new TextField("Stock de debut:", null, MAX_SIZE, TextField.DECIMAL);
-    l75_received =  new TextField("Stock recu:", null, MAX_SIZE, TextField.DECIMAL);
-    l75_used =  new TextField("Stock utilise:", null, MAX_SIZE, TextField.DECIMAL);
+    l75_received =  new TextField("Stock reçu:", null, MAX_SIZE, TextField.DECIMAL);
+    l75_used =  new TextField("Stock utilisé:", null, MAX_SIZE, TextField.DECIMAL);
     l75_lost =  new TextField("Stock perdu:", null, MAX_SIZE, TextField.DECIMAL);
 
     //plumpy
     pln_intro = new StringItem(null, "Plumpy nut");
     pln_initial =  new TextField("Stock de debut:", null, MAX_SIZE, TextField.DECIMAL);
-    pln_received =  new TextField("Stock recu:", null, MAX_SIZE, TextField.DECIMAL);
-    pln_used =  new TextField("Stock utilise:", null, MAX_SIZE, TextField.DECIMAL);
+    pln_received =  new TextField("Stock reçu:", null, MAX_SIZE, TextField.DECIMAL);
+    pln_used =  new TextField("Stock utilisé:", null, MAX_SIZE, TextField.DECIMAL);
     pln_lost =  new TextField("Stock perdu:", null, MAX_SIZE, TextField.DECIMAL);
 
     // type: URENAM
@@ -460,42 +460,42 @@ public StockForm(NUTMIDlet midlet) {
                 + Integer.parseInt(this.nie_received.getString())
                 <= Integer.parseInt(this.nie_used.getString())
                 + Integer.parseInt(this.nie_lost.getString())) {
-                ErrorMessage = nie_intro.getText() + ": stock initial + stock recu ne peut pas etre inferieur stock utilise + stock perdu";
+                ErrorMessage = nie_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.csb_initial.getString())
                 + Integer.parseInt(this.csb_received.getString())
                 <= Integer.parseInt(this.csb_used.getString())
                 + Integer.parseInt(this.csb_lost.getString())) {
-                ErrorMessage = csb_intro.getText() + ": stock initial + stock recu ne peut pas etre inferieur stock utilise + stock perdu";
+                ErrorMessage = csb_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.uni_initial.getString())
                 + Integer.parseInt(this.uni_received.getString())
                 <= Integer.parseInt(this.uni_used.getString())
                 + Integer.parseInt(this.uni_lost.getString())) {
-                ErrorMessage = uni_intro.getText() + ": stock initial + stock recu ne peut pas etre inferieur stock utilise + stock perdu";
+                ErrorMessage = uni_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.suc_initial.getString())
                 + Integer.parseInt(this.suc_received.getString())
                 <= Integer.parseInt(this.suc_used.getString())
                 + Integer.parseInt(this.suc_lost.getString())) {
-                ErrorMessage = suc_intro.getText() + ": stock initial + stock recu ne peut pas etre inferieur stock utilise + stock perdu";
+                ErrorMessage = suc_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.hui_initial.getString())
                 + Integer.parseInt(this.hui_received.getString())
                 <= Integer.parseInt(this.hui_used.getString())
                 + Integer.parseInt(this.hui_lost.getString())) {
-                ErrorMessage = hui_intro.getText() + ": stock initial + stock recu ne peut pas etre inferieur stock utilise + stock perdu";
+                ErrorMessage = hui_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.mil_initial.getString())
                 + Integer.parseInt(this.mil_received.getString())
                 <= Integer.parseInt(this.mil_used.getString())
                 + Integer.parseInt(this.mil_lost.getString())) {
-                ErrorMessage = mil_intro.getText() + ": stock initial + stock recu ne peut pas etre inferieur stock utilise + stock perdu";
+                ErrorMessage = mil_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             ErrorMessage = "";
@@ -505,49 +505,49 @@ public StockForm(NUTMIDlet midlet) {
                 + Integer.parseInt(this.nie_received.getString())
                 <= Integer.parseInt(this.nie_used.getString())
                 + Integer.parseInt(this.nie_lost.getString())) {
-                ErrorMessage = nie_intro.getText() + ": stock initial + stock recu ne peut pas etre inferieur stock utilise + stock perdu";
+                ErrorMessage = nie_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.csb_initial.getString())
                 + Integer.parseInt(this.csb_received.getString())
                 <= Integer.parseInt(this.csb_used.getString())
                 + Integer.parseInt(this.csb_lost.getString())) {
-                ErrorMessage = csb_intro.getText() + ": stock initial + stock recu ne peut pas etre inferieur stock utilise + stock perdu";
+                ErrorMessage = csb_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.uni_initial.getString())
                 + Integer.parseInt(this.uni_received.getString())
                 <= Integer.parseInt(this.uni_used.getString())
                 + Integer.parseInt(this.uni_lost.getString())) {
-                ErrorMessage = uni_intro.getText() + ": stock initial + stock recu ne peut pas etre inferieur stock utilise + stock perdu";
+                ErrorMessage = uni_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.suc_initial.getString())
                 + Integer.parseInt(this.suc_received.getString())
                 <= Integer.parseInt(this.suc_used.getString())
                 + Integer.parseInt(this.suc_lost.getString())) {
-                ErrorMessage = suc_intro.getText() + ": stock initial + stock recu ne peut pas etre inferieur stock utilise + stock perdu";
+                ErrorMessage = suc_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.hui_initial.getString())
                 + Integer.parseInt(this.hui_received.getString())
                 <= Integer.parseInt(this.hui_used.getString())
                 + Integer.parseInt(this.hui_lost.getString())) {
-                ErrorMessage = hui_intro.getText() + ": stock initial + stock recu ne peut pas etre inferieur stock utilise + stock perdu";
+                ErrorMessage = hui_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.mil_initial.getString())
                 + Integer.parseInt(this.mil_received.getString())
                 <= Integer.parseInt(this.mil_used.getString())
                 + Integer.parseInt(this.mil_lost.getString())) {
-                ErrorMessage = mil_intro.getText() + ": stock initial + stock recu ne peut pas etre inferieur stock utilise + stock perdu";
+                ErrorMessage = mil_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.pln_initial.getString())
                 + Integer.parseInt(this.pln_received.getString())
                 <= Integer.parseInt(this.pln_used.getString())
                 + Integer.parseInt(this.pln_lost.getString())) {
-                ErrorMessage = pln_intro.getText() + ": stock initial + stock recu ne peut pas etre inferieur stock utilise + stock perdu";
+                ErrorMessage = pln_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             ErrorMessage = "";
@@ -557,7 +557,7 @@ public StockForm(NUTMIDlet midlet) {
                 + Integer.parseInt(this.pln_received.getString())
                 <= Integer.parseInt(this.pln_used.getString())
                 + Integer.parseInt(this.pln_lost.getString())) {
-                ErrorMessage = pln_intro.getText() + ": stock initial + stock recu ne peut pas etre inferieur stock utilise + stock perdu";
+                ErrorMessage = pln_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             ErrorMessage = "";
@@ -567,21 +567,21 @@ public StockForm(NUTMIDlet midlet) {
                 + Integer.parseInt(this.l75_received.getString())
                 <= Integer.parseInt(this.l75_used.getString())
                 + Integer.parseInt(this.l75_lost.getString())) {
-                ErrorMessage = l75_intro.getText() + ": stock initial + stock recu ne peut pas etre inferieur stock utilise + stock perdu";
+                ErrorMessage = l75_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.l100_initial.getString())
                 + Integer.parseInt(this.l100_received.getString())
                 <= Integer.parseInt(this.l100_used.getString())
                 + Integer.parseInt(this.l100_lost.getString())) {
-                ErrorMessage = l100_intro.getText() + ": stock initial + stock recu ne peut pas etre inferieur stock utilise + stock perdu";
+                ErrorMessage = l100_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.pln_initial.getString())
                 + Integer.parseInt(this.pln_received.getString())
                 <= Integer.parseInt(this.pln_used.getString())
                 + Integer.parseInt(this.pln_lost.getString())) {
-                ErrorMessage = pln_intro.getText() + ": stock initial + stock recu ne peut pas etre inferieur stock utilise + stock perdu";
+                ErrorMessage = pln_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             ErrorMessage = "";
