@@ -43,7 +43,7 @@ public DataNutForm(NUTMIDlet midlet) {
     config = new Configuration();
 
     // creating al fields (blank)
-    id =  new TextField("ID:", null, 10, TextField.ANY);
+    id =  new TextField("ID:", null, 10, TextField.DECIMAL);
     weight =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
     height =  new TextField("Taille (en cm):", null, MAX_SIZE, TextField.DECIMAL);
     oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);

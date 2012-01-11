@@ -101,7 +101,7 @@ public OptionForm(NUTMIDlet midlet) {
             if (config.set("server_number", numberField.getString()) &&
             config.set("health_center", health_centerField.getString()) &&
             config.set("hc_code", hc_codeField.getString(hc_codeField.getSelectedIndex()))) {
-                alert = new Alert ("confirmation!", "Votre modification a bien enregistré.", null, AlertType.CONFIRMATION);
+                alert = new Alert ("confirmation!", "Votre modification a été bien enregistré.", null, AlertType.CONFIRMATION);
                 this.midlet.display.setCurrent (alert, this.midlet.mainMenu);
             } else {
                 alert = new Alert ("Échec", "Impossible d'enregistrer cette modification.", null, AlertType.WARNING);

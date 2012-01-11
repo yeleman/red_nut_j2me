@@ -73,8 +73,10 @@ public DisableForm(NUTMIDlet midlet) {
             rea = "a";
         } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("TRANFER")){
             rea = "t";
-        } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("NON-REPONDANT")){
+        } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("GUERISON")){
             rea = "h";
+        } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("NON-REPONDANT")){
+            rea = "n";
         } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("DECES")){
             rea = "d";
         }

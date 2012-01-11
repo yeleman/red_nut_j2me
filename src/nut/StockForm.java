@@ -348,6 +348,12 @@ public StockForm(NUTMIDlet midlet) {
      * <code>false</code> otherwise.
      */
     public boolean isComplete() {
+        System.out.println(monthField.getSelectedIndex());
+
+        if (monthField.getSelectedIndex() == 0   ||
+                    yearField.getSelectedIndex() == 0) {
+            return false;
+        }
         // all fields are required to be filled.
         if ((this.hc_code).equals("URENAM")){
             if (this.nie_initial.getString().length() == 0 ||
@@ -444,8 +450,10 @@ public StockForm(NUTMIDlet midlet) {
                 this.pln_used.getString().length() == 0 ||
                 this.pln_lost.getString().length() == 0){
                 return false;
+
             } return true;
          }
+         
          return true;
     }
 
@@ -458,42 +466,42 @@ public StockForm(NUTMIDlet midlet) {
         if ((this.hc_code).equals("URENAM")){
             if (Integer.parseInt(this.nie_initial.getString())
                 + Integer.parseInt(this.nie_received.getString())
-                <= Integer.parseInt(this.nie_used.getString())
+                < Integer.parseInt(this.nie_used.getString())
                 + Integer.parseInt(this.nie_lost.getString())) {
                 ErrorMessage = nie_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.csb_initial.getString())
                 + Integer.parseInt(this.csb_received.getString())
-                <= Integer.parseInt(this.csb_used.getString())
+                < Integer.parseInt(this.csb_used.getString())
                 + Integer.parseInt(this.csb_lost.getString())) {
                 ErrorMessage = csb_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.uni_initial.getString())
                 + Integer.parseInt(this.uni_received.getString())
-                <= Integer.parseInt(this.uni_used.getString())
+                < Integer.parseInt(this.uni_used.getString())
                 + Integer.parseInt(this.uni_lost.getString())) {
                 ErrorMessage = uni_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.suc_initial.getString())
                 + Integer.parseInt(this.suc_received.getString())
-                <= Integer.parseInt(this.suc_used.getString())
+                < Integer.parseInt(this.suc_used.getString())
                 + Integer.parseInt(this.suc_lost.getString())) {
                 ErrorMessage = suc_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.hui_initial.getString())
                 + Integer.parseInt(this.hui_received.getString())
-                <= Integer.parseInt(this.hui_used.getString())
+                < Integer.parseInt(this.hui_used.getString())
                 + Integer.parseInt(this.hui_lost.getString())) {
                 ErrorMessage = hui_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.mil_initial.getString())
                 + Integer.parseInt(this.mil_received.getString())
-                <= Integer.parseInt(this.mil_used.getString())
+                < Integer.parseInt(this.mil_used.getString())
                 + Integer.parseInt(this.mil_lost.getString())) {
                 ErrorMessage = mil_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
@@ -503,49 +511,49 @@ public StockForm(NUTMIDlet midlet) {
         } else if ((this.hc_code).equals("URENAM + URENAS")){
             if (Integer.parseInt(this.nie_initial.getString())
                 + Integer.parseInt(this.nie_received.getString())
-                <= Integer.parseInt(this.nie_used.getString())
+                < Integer.parseInt(this.nie_used.getString())
                 + Integer.parseInt(this.nie_lost.getString())) {
                 ErrorMessage = nie_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.csb_initial.getString())
                 + Integer.parseInt(this.csb_received.getString())
-                <= Integer.parseInt(this.csb_used.getString())
+                < Integer.parseInt(this.csb_used.getString())
                 + Integer.parseInt(this.csb_lost.getString())) {
                 ErrorMessage = csb_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.uni_initial.getString())
                 + Integer.parseInt(this.uni_received.getString())
-                <= Integer.parseInt(this.uni_used.getString())
+                < Integer.parseInt(this.uni_used.getString())
                 + Integer.parseInt(this.uni_lost.getString())) {
                 ErrorMessage = uni_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.suc_initial.getString())
                 + Integer.parseInt(this.suc_received.getString())
-                <= Integer.parseInt(this.suc_used.getString())
+                < Integer.parseInt(this.suc_used.getString())
                 + Integer.parseInt(this.suc_lost.getString())) {
                 ErrorMessage = suc_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.hui_initial.getString())
                 + Integer.parseInt(this.hui_received.getString())
-                <= Integer.parseInt(this.hui_used.getString())
+                < Integer.parseInt(this.hui_used.getString())
                 + Integer.parseInt(this.hui_lost.getString())) {
                 ErrorMessage = hui_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.mil_initial.getString())
                 + Integer.parseInt(this.mil_received.getString())
-                <= Integer.parseInt(this.mil_used.getString())
+                < Integer.parseInt(this.mil_used.getString())
                 + Integer.parseInt(this.mil_lost.getString())) {
                 ErrorMessage = mil_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.pln_initial.getString())
                 + Integer.parseInt(this.pln_received.getString())
-                <= Integer.parseInt(this.pln_used.getString())
+                < Integer.parseInt(this.pln_used.getString())
                 + Integer.parseInt(this.pln_lost.getString())) {
                 ErrorMessage = pln_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
@@ -555,7 +563,7 @@ public StockForm(NUTMIDlet midlet) {
         } else if ((this.hc_code).equals("URENAS")) {
             if (Integer.parseInt(this.pln_initial.getString())
                 + Integer.parseInt(this.pln_received.getString())
-                <= Integer.parseInt(this.pln_used.getString())
+                < Integer.parseInt(this.pln_used.getString())
                 + Integer.parseInt(this.pln_lost.getString())) {
                 ErrorMessage = pln_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
@@ -565,21 +573,21 @@ public StockForm(NUTMIDlet midlet) {
         } else if ((this.hc_code).equals("URENI")) {
             if (Integer.parseInt(this.l75_initial.getString())
                 + Integer.parseInt(this.l75_received.getString())
-                <= Integer.parseInt(this.l75_used.getString())
+                < Integer.parseInt(this.l75_used.getString())
                 + Integer.parseInt(this.l75_lost.getString())) {
                 ErrorMessage = l75_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.l100_initial.getString())
                 + Integer.parseInt(this.l100_received.getString())
-                <= Integer.parseInt(this.l100_used.getString())
+                < Integer.parseInt(this.l100_used.getString())
                 + Integer.parseInt(this.l100_lost.getString())) {
                 ErrorMessage = l100_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
             }
             if (Integer.parseInt(this.pln_initial.getString())
                 + Integer.parseInt(this.pln_received.getString())
-                <= Integer.parseInt(this.pln_used.getString())
+                < Integer.parseInt(this.pln_used.getString())
                 + Integer.parseInt(this.pln_lost.getString())) {
                 ErrorMessage = pln_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
                 return false;
