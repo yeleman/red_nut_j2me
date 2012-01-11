@@ -35,7 +35,7 @@ public DisableForm(NUTMIDlet midlet) {
     config = new Configuration();
 
     // creating al fields (blank)
-    id_patient =  new TextField("Id du patient", null, 4, TextField.ANY);
+    id_patient =  new TextField("Id du patient", null, 4, TextField.DECIMAL);
     reasonField =  new ChoiceGroup("Raison:", ChoiceGroup.POPUP, reason, null);
 
 
