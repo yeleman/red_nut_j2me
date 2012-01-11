@@ -73,8 +73,7 @@ public DataNutForm(NUTMIDlet midlet) {
         if (id.getString().length() == 0 ||
             weight.getString().length() == 0 ||
             height.getString().length() == 0 ||
-            pb.getString().length() == 0 ||
-            danger_sign.getString().length() == 0) {
+            pb.getString().length() == 0) {
             return false;
         }
         return true;
@@ -86,16 +85,16 @@ public DataNutForm(NUTMIDlet midlet) {
      * <code>false</code> otherwise.
      */
      public boolean isValid() {
-        if (Integer.parseInt(this.height.getString()) >= 250) {
-            ErrorMessage = height.getString() + " cm de taille est trop grand";
+        if (Integer.parseInt(this.height.getString()) <5 || Integer.parseInt(this.height.getString()) >= 200) {
+            ErrorMessage = "La taille de l'enfant doit etre compris entre 5 et 200 cm";
             return false;
         }
-        if (Integer.parseInt(this.weight.getString()) >= 550) {
-            ErrorMessage = weight.getString() + " kg de poids est trop gros";
+        if (Integer.parseInt(this.weight.getString()) <= 3 || Integer.parseInt(this.weight.getString()) >100) {
+            ErrorMessage = "le poids doit etre compris entre 3 et 100 kg";
             return false;
         }
-        if (Integer.parseInt(this.pb.getString()) >= 100) {
-            ErrorMessage = pb.getString() + " mm de périmètre brachial est trop grand";
+        if (Integer.parseInt(this.pb.getString()) < 50 || Integer.parseInt(this.pb.getString()) > 250) {
+            ErrorMessage = "Le périmètre brachial doit etre compris entre 50 et 250 mm";
             return false;
         }
         ErrorMessage = "";
@@ -107,7 +106,7 @@ public DataNutForm(NUTMIDlet midlet) {
      */
     public String toSMSFormat() {
         String sep = " ";
-        String oed;
+        String oed = " ";
         if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("OUI")){
             oed = "YES";
         } else if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("NON")){
@@ -119,7 +118,7 @@ public DataNutForm(NUTMIDlet midlet) {
         return "nut fol" + sep + id.getString() + sep
                 + weight.getString() + sep
                 + height.getString() + sep
-                + oedema + sep
+                + oed + sep
                 + pb.getString() + sep
                 + danger_sign.getString();
     }

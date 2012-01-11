@@ -87,7 +87,7 @@ public RegisterForm(NUTMIDlet midlet) {
      * <code>false</code> otherwise.
      */
     public boolean isValid() {
-        if (Integer.parseInt(this.age.getString()) >= 150 & this.type_age.getString(type_age.getSelectedIndex()).equals("ans")) {
+        if (Integer.parseInt(this.age.getString()) >= 15 & this.type_age.getString(type_age.getSelectedIndex()).equals("ans")) {
             ErrorMessage = "Il n'existe pas un enfant de " + age.getString() + " " + type_age.getString(type_age.getSelectedIndex());
             return false;
         }

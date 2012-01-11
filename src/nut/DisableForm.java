@@ -68,8 +68,18 @@ public DisableForm(NUTMIDlet midlet) {
      */
     public String toSMSFormat() {
         String sep = " ";
-        return "nut off" + sep + id_patient.getString() + sep +
-                reasonField.getString(reasonField.getSelectedIndex());
+        String rea = " ";
+        if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("ABANDON")){
+            rea = "a";
+        } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("TRANFER")){
+            rea = "t";
+        } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("NON-REPONDANT")){
+            rea = "h";
+        } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("DECES")){
+            rea = "d";
+        }
+
+        return "nut off" + sep + id_patient.getString() + sep + rea;
     }
 
     public void commandAction(Command c, Displayable d) {
