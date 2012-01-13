@@ -34,6 +34,7 @@ public class DataNutForm extends Form implements CommandListener {
     private TextField weight;
     private TextField height;
     private TextField pb;
+    private TextField nbr_plu;
     private TextField danger_sign;
 
 public DataNutForm(NUTMIDlet midlet) {
@@ -48,6 +49,7 @@ public DataNutForm(NUTMIDlet midlet) {
     height =  new TextField("Taille (en cm):", null, MAX_SIZE, TextField.DECIMAL);
     oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
     pb =  new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
+    nbr_plu =  new TextField("Sachets plumpy nut donnés:", null, MAX_SIZE, TextField.NUMERIC);
     danger_sign =  new TextField("Signe de danger:", null, 20, TextField.ANY);
 
     // add fields to forms
@@ -56,6 +58,7 @@ public DataNutForm(NUTMIDlet midlet) {
     append(height);
     append(oedemaField);
     append(pb);
+    append(nbr_plu);
     append(danger_sign);
 
     addCommand(CMD_HELP);
@@ -85,11 +88,11 @@ public DataNutForm(NUTMIDlet midlet) {
      * <code>false</code> otherwise.
      */
      public boolean isValid() {
-        if (Integer.parseInt(this.height.getString()) <5 || Integer.parseInt(this.height.getString()) >= 200) {
+        if (Float.parseFloat(this.height.getString()) <5 || Float.parseFloat(this.height.getString()) >= 200) {
             ErrorMessage = "La taille de l'enfant doit etre compris entre 5 et 200 cm";
             return false;
         }
-        if (Integer.parseInt(this.weight.getString()) <= 3 || Integer.parseInt(this.weight.getString()) >100) {
+        if (Float.parseFloat(this.weight.getString()) <= 3 || Float.parseFloat(this.weight.getString()) >100) {
             ErrorMessage = "le poids doit etre compris entre 3 et 100 kg";
             return false;
         }
@@ -107,6 +110,7 @@ public DataNutForm(NUTMIDlet midlet) {
     public String toSMSFormat() {
         String sep = " ";
         String oed = " ";
+        String nbr = " ";
         if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("OUI")){
             oed = "YES";
         } else if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("NON")){
@@ -114,12 +118,18 @@ public DataNutForm(NUTMIDlet midlet) {
         }else if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("Inconnue")){
             oed = "Unknown";
         }
-        
+        if (nbr_plu.getString().length() == 0) {
+            nbr = "-";
+        } else {
+            nbr = nbr_plu.getString();
+        }
+
         return "nut fol" + sep + id.getString() + sep
                 + weight.getString() + sep
                 + height.getString() + sep
                 + oed + sep
                 + pb.getString() + sep
+                + nbr + sep
                 + danger_sign.getString();
     }
 
