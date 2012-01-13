@@ -31,7 +31,7 @@ public class NUTMIDlet extends MIDlet implements CommandListener {
 
         config = new Configuration();
 
-        String[] mainMenu_items = {"Enregistrer enfant", "Suivi enfant", "Recherche ID", "Abandon", "Conso Intrants"};
+        String[] mainMenu_items = {"Enregistrer enfant", "Suivi enfant", "Recherche ID", "Sorti", "Conso Intrants"};
         mainMenu = new List("Gestion Nutrition", Choice.IMPLICIT, mainMenu_items, null);
 
         // setup menu

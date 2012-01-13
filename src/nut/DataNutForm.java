@@ -48,7 +48,7 @@ public DataNutForm(NUTMIDlet midlet) {
     height =  new TextField("Taille (en cm):", null, MAX_SIZE, TextField.DECIMAL);
     oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
     pb =  new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
-    danger_sign =  new TextField("Signe de danger:", null, 20, TextField.ANY);
+
 
     // add fields to forms
     append(id);
@@ -56,7 +56,6 @@ public DataNutForm(NUTMIDlet midlet) {
     append(height);
     append(oedemaField);
     append(pb);
-    append(danger_sign);
 
     addCommand(CMD_HELP);
     addCommand(CMD_SAVE);
@@ -119,8 +118,7 @@ public DataNutForm(NUTMIDlet midlet) {
                 + weight.getString() + sep
                 + height.getString() + sep
                 + oed + sep
-                + pb.getString() + sep
-                + danger_sign.getString();
+                + pb.getString();
     }
 
     public void commandAction(Command c, Displayable d) {
