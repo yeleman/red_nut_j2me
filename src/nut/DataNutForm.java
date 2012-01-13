@@ -5,7 +5,7 @@ import javax.microedition.lcdui.*;
 import nut.Configuration.*;
 import nut.Constants.*;
 import nut.HelpForm.*;
-
+import nut.SharedChecks.*;
 /**
  * J2ME Patient NutritionalData Form
  * Displays NutritionalData fields
@@ -30,42 +30,44 @@ public class DataNutForm extends Form implements CommandListener {
     private static final String[] oedema = {"OUI", "NON", "Inconnue"};
 
     private ChoiceGroup oedemaField;
+
     private TextField id;
     private TextField weight;
     private TextField height;
     private TextField pb;
     private TextField nbr_plu;
-    private TextField danger_sign;
 
-public DataNutForm(NUTMIDlet midlet) {
-    super("Suivie nuttritionnellle");
-    this.midlet = midlet;
 
-    config = new Configuration();
+    public DataNutForm(NUTMIDlet midlet) {
+        super("Suivie nuttritionnellle");
+        this.midlet = midlet;
 
-    // creating al fields (blank)
-    id =  new TextField("ID:", null, 10, TextField.DECIMAL);
-    weight =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
-    height =  new TextField("Taille (en cm):", null, MAX_SIZE, TextField.DECIMAL);
-    oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
-    pb =  new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
-    nbr_plu =  new TextField("Sachets plumpy nut donnés:", null, MAX_SIZE, TextField.NUMERIC);
-    danger_sign =  new TextField("Signe de danger:", null, 20, TextField.ANY);
+        config = new Configuration();
 
-    // add fields to forms
-    append(id);
-    append(weight);
-    append(height);
-    append(oedemaField);
-    append(pb);
-    append(nbr_plu);
-    append(danger_sign);
+        // creating all fields (blank)
+        id =  new TextField("ID:", null, 10, TextField.DECIMAL);
+        weight =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
+        height =  new TextField("Taille (en cm):", null, MAX_SIZE, TextField.DECIMAL);
+        oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
+        pb =  new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
+        nbr_plu =  new TextField("Sachets plumpy nut donnés:", null, MAX_SIZE, TextField.NUMERIC);
 
-    addCommand(CMD_HELP);
-    addCommand(CMD_SAVE);
-    addCommand(CMD_EXIT);
-    this.setCommandListener (this);
-}
+
+        // add fields to form
+        append(id);
+        append(weight);
+        append(height);
+        append(oedemaField);
+        append(pb);
+        append(nbr_plu);
+
+        // add command to form
+        addCommand(CMD_HELP);
+        addCommand(CMD_SAVE);
+        addCommand(CMD_EXIT);
+        this.setCommandListener (this);
+    }
+
     /*
      * Whether all required fields are filled
      * @return <code>true</code> is all fields are filled
@@ -73,10 +75,8 @@ public DataNutForm(NUTMIDlet midlet) {
      */
     public boolean isComplete() {
         // all fields are required to be filled.
-        if (id.getString().length() == 0 ||
-            weight.getString().length() == 0 ||
-            height.getString().length() == 0 ||
-            pb.getString().length() == 0) {
+        //SharedChecks checks = new SharedChecks();
+        if (id.getString().length() == 0 || !SharedChecks.isComplete(weight, height, pb)) {
             return false;
         }
         return true;
@@ -88,20 +88,11 @@ public DataNutForm(NUTMIDlet midlet) {
      * <code>false</code> otherwise.
      */
      public boolean isValid() {
-        if (Float.parseFloat(this.height.getString()) <5 || Float.parseFloat(this.height.getString()) >= 200) {
-            ErrorMessage = "La taille de l'enfant doit etre compris entre 5 et 200 cm";
-            return false;
-        }
-        if (Float.parseFloat(this.weight.getString()) <= 3 || Float.parseFloat(this.weight.getString()) >100) {
-            ErrorMessage = "le poids doit etre compris entre 3 et 100 kg";
-            return false;
-        }
-        if (Integer.parseInt(this.pb.getString()) < 50 || Integer.parseInt(this.pb.getString()) > 250) {
-            ErrorMessage = "Le périmètre brachial doit etre compris entre 50 et 250 mm";
-            return false;
-        }
-        ErrorMessage = "";
-        return true;
+           ErrorMessage = SharedChecks.Message(weight, height, pb);
+           if (ErrorMessage != ""){
+               return false;
+           }
+           return true;
     }
 
     /* Converts Form request to SMS message
@@ -129,8 +120,7 @@ public DataNutForm(NUTMIDlet midlet) {
                 + height.getString() + sep
                 + oed + sep
                 + pb.getString() + sep
-                + nbr + sep
-                + danger_sign.getString();
+                + nbr;
     }
 
     public void commandAction(Command c, Displayable d) {
@@ -170,6 +160,7 @@ public DataNutForm(NUTMIDlet midlet) {
             // sends the sms and reply feedback
             SMSSender sms = new SMSSender();
             String number = config.get("server_number");
+
             if (sms.send(number, this.toSMSFormat())) {
                 alert = new Alert ("Demande envoyée !", "Vous allez recevoir une confirmation du serveur.", null, AlertType.CONFIRMATION);
                 this.midlet.display.setCurrent (alert, this.midlet.mainMenu);
