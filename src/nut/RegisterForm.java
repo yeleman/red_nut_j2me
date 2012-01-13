@@ -136,7 +136,14 @@ public RegisterForm(NUTMIDlet midlet) {
         return true;
     }
 
-
+    private int[] formatDateString(Date date_obj) {
+        String date = date_obj.toString();
+        int day = Integer.valueOf(date.substring(8, 10)).intValue();
+        int month = monthFromString(date.substring(4,7));
+        int year = Integer.valueOf(date.substring(30, 34)).intValue();
+        int list_date[] = {day, month, year};
+        return list_date;
+    }
 
     /*
      * Whether all filled data is correct
@@ -144,10 +151,19 @@ public RegisterForm(NUTMIDlet midlet) {
      * <code>false</code> otherwise.
      */
     public boolean isValid() {
-        int day,  month, year, now_day, now_month, now_year;
+        int dob_array[] = formatDateString(dob.getDate());
+        int day = dob_array[0];
+        int month = dob_array[1];
+        int year = dob_array[2];
 
-        if (now_year - 5 > year) {
-            ErrorMessage = 'DATE TROP VIEILLE';
+        Date now = new Date();
+        int now_array[] = formatDateString(now);
+        int now_day = now_array[0];
+        int now_month = now_array[1];
+        int now_year = now_array[2];
+
+        if ((now_year > year)) {
+            ErrorMessage = "DATE TROP VIEILLE";
             return false;
         }
         // calcule date 6 mois
@@ -184,7 +200,6 @@ public RegisterForm(NUTMIDlet midlet) {
                            fifty_month_old[0], fifty_month_old[1], fifty_month_old[2])){
             // date a moins de 6 mois.
             System.out.println("plus de 59 mois");
-
             return false;
         }
         else{
@@ -198,7 +213,6 @@ public RegisterForm(NUTMIDlet midlet) {
      * @return <code>String</code> to be sent by SMS
      */
 
-
     private int monthFromString(String month_str) {
         int i;
         for(i=0; i<=month_list.length; i++){
@@ -211,17 +225,17 @@ public RegisterForm(NUTMIDlet midlet) {
 
     public String toSMSFormat() {
         String sep = " ";
-        String date = dob.getDate().toString();
-        int day = Integer.valueOf(date.substring(8, 10)).intValue();
-        int month = monthFromString(date.substring(4,7));
-        int year = Integer.valueOf(date.substring(30, 34)).intValue();
+        int dob_array[] = formatDateString(dob.getDate());
+        int day = dob_array[0];
+        int month = dob_array[1];
+        int year = dob_array[2];
         return "nut register" + sep
-                + health_center + sep
-                + first_name.getString() + sep
-                + last_name.getString() + sep
-                + mother_name.getString() + sep
-                + sex.getString(sex.getSelectedIndex()) + sep
-                + year + "-" + month + "-" + day;
+                              + health_center + sep
+                              + first_name.getString() + sep
+                              + last_name.getString() + sep
+                              + mother_name.getString() + sep
+                              + sex.getString(sex.getSelectedIndex()) + sep
+                              + year + "-" + month + "-" + day;
     }
 
     public void commandAction(Command c, Displayable d) {
@@ -264,7 +278,7 @@ public RegisterForm(NUTMIDlet midlet) {
             SMSSender sms = new SMSSender();
             String number = config.get("server_number");
             sms.send(number, this.toSMSFormat());
-            /*if (sms.send(number, this.toSMSFormat())) {
+            if (sms.send(number, this.toSMSFormat())) {
                 alert = new Alert ("Demande envoyée !", "Vous allez recevoir" +
                                    " une confirmation du serveur.",
                                    null, AlertType.CONFIRMATION);
@@ -273,7 +287,7 @@ public RegisterForm(NUTMIDlet midlet) {
                 alert = new Alert ("Échec d'envoi SMS", "Impossible d'envoyer" +
                             " la demande par SMS.", null, AlertType.WARNING);
                 this.midlet.display.setCurrent (alert, this);
-            }*/
+            }
         }
     }
 }
