@@ -56,6 +56,8 @@ public RegisterForm(NUTMIDlet midlet) {
     mother_name =  new TextField("Nom de la mère:", null, 20, TextField.ANY);
     dob =  new DateField("Date de naissance:", DateField.DATE, TimeZone.getTimeZone("GMT"));
     sex = new ChoiceGroup("Sexe:", ChoiceGroup.POPUP, sexList, null);
+    
+    dob.setDate(new Date());
     // add fields to forms
     append(first_name);
     append(last_name);
@@ -162,7 +164,7 @@ public RegisterForm(NUTMIDlet midlet) {
         int now_month = now_array[1];
         int now_year = now_array[2];
 
-        if ((now_year > year)) {
+        if ((now_year - 5 > year)) {
             ErrorMessage = "DATE TROP VIEILLE";
             return false;
         }
@@ -176,36 +178,24 @@ public RegisterForm(NUTMIDlet midlet) {
 
         int six_month_old[] = d;
 
-       // int d[] = {now_day, now_month, now_year};
         for(i=0; i<=59; i++){
             d = previous_month(d[0], d[1], d[2]);
         }
 
         int fifty_month_old[] = d;
 
-        //System.out.println(six_month_old[0], six_month_old[1], six_month_old[2]);
-
         if (is_before_month(six_month_old[0], six_month_old[1], six_month_old[2],
                            day, month, year)){
             // date a moins de 6 mois.
-            System.out.println("date a moins de 6 mois");
+            ErrorMessage = "Date a moins de 6 mois";
             return false;
         }
-        else {
-            System.out.println("date a plus de 6 mois");
-        }
-       // System.out.println('59 MOIS: %d - %d - %d' % (fifty_month_old[0], fifty_month_old[1], fifty_month_old[2]));
-
         if (is_before_month(day, month, year,
                            fifty_month_old[0], fifty_month_old[1], fifty_month_old[2])){
             // date a moins de 6 mois.
-            System.out.println("plus de 59 mois");
+            ErrorMessage = "Plus de 59 mois";
             return false;
         }
-        else{
-            System.out.println("plus de 59 mois");
-        }
-        ErrorMessage = "";
         return true;
     }
 
@@ -265,19 +255,18 @@ public RegisterForm(NUTMIDlet midlet) {
             return;
         }
 
-            // check for errors and display first error
-            if (!this.isValid()) {
-                alert = new Alert("Données incorrectes!", this.ErrorMessage,
-                                  null, AlertType.ERROR);
-                alert.setTimeout(Alert.FOREVER);
-                this.midlet.display.setCurrent (alert, this);
-                return;
-            }
+        // check for errors and display first error
+        if (!this.isValid()) {
+            alert = new Alert("Données incorrectes!", this.ErrorMessage,
+                              null, AlertType.ERROR);
+            alert.setTimeout(Alert.FOREVER);
+            this.midlet.display.setCurrent (alert, this);
+            return;
+        }
 
             // sends the sms and reply feedback
             SMSSender sms = new SMSSender();
             String number = config.get("server_number");
-            sms.send(number, this.toSMSFormat());
             if (sms.send(number, this.toSMSFormat())) {
                 alert = new Alert ("Demande envoyée !", "Vous allez recevoir" +
                                    " une confirmation du serveur.",
