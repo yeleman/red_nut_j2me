@@ -43,43 +43,43 @@ public class HelpForm extends Form implements CommandListener {
                    "Entrez dans ce qui correspond à ton opération et " +
                    "renseignez les champs et envoyer.\n" +
                    "En cas de problème, contactez Croix-Rouge.";
+        } else if (section.equalsIgnoreCase("version")) {
+            text = "NUT - Version " + Constants.version + "\n\n" +
+                   "En cas de problème, contactez la Croix-Rouge.";
         } else if (section.equalsIgnoreCase("option")) {
             text = "Changez le numéro du serveur, le code du centre et type " +
                    "centre uniquement sur demande expresse de la " +
                    "Croix-Rouge.\n Un mauvais numéro vous empêchera de " +
                    "transmettre vos rapports.\n" ;
         } else if (section.equalsIgnoreCase("registration")) {
-            text = "Enregistrement patient: \n" +
-                   "Renseignez le prenom, \n" +
-                   "le nom, l'age et le nom de la mere de l'enfant\n";
-        } else if (section.equalsIgnoreCase("research")) {
-            text = "Renseignez le nom, prénom ou le nom de la mère, vous " +
-                   "recevrez un SMS contenant l'id du patient s'il existe.\n" +
-                   "En cas de problème, contactez Croix-Rouge.";
-        } else if (section.equalsIgnoreCase("Disable")) {
-            text = "Renseignez l'id du patient pour signaler sa sortie du " +
-                   "programme, vous recevrez un SMS " +
-                   "confirmant ou non de deactivation.\n" +
-                   "En cas de problème, contactez Croix-Rouge.";
-        } else if (section.equalsIgnoreCase("version")) {
-            text = "NUT - Version " + Constants.version + "\n\n" +
-                   "En cas de problème, contactez la Croix-Rouge.";
-        }  else if (section.equalsIgnoreCase("datanut")) {
+            text = "Renseignez le prenom, le nom, l'age, le nom de " +
+                   "la mere puis les données nutritionelles de l'enfant.\n\n" +
+                    "En cas de problème, contactez Croix-Rouge.";
+        } else if (section.equalsIgnoreCase("datanut")) {
             text = "Renseigner les champs: \n" +
                     "ID avec l'identifiant de l'enfant, \n" +
                     "le poids en kilogramme, \n" +
                     "la taille en centimètre, \n" +
-                    "le érimètre brachial en millimètre \n" +
-                    "et le signe de danger \n\n" +
+                    "le périmètre brachial en millimètre \n" +
+                    "le nombre de sachets de plumpy nut donné \n\n" +
                     "En cas de problème, contactez Croix-Rouge.";
+        } else if (section.equalsIgnoreCase("research")) {
+            text = "Renseignez soit le nom, soit le prénom ou le nom de la mère, vous " +
+                   "recevrez un SMS contenant l'id des patients si il existe.\n\n" +
+                   "En cas de problème, contactez Croix-Rouge.";
+        } else if (section.equalsIgnoreCase("Disable")) {
+            text = "Renseignez l'id puis indiquez la raison de la sortie " +
+                   " du patient du programme. \n" +
+                   "Vous recevrez un SMS confirmant ou non la deactivation.\n\n" +
+                   "En cas de problème, contactez Croix-Rouge.";
         } else if (section.equalsIgnoreCase("stock")) {
             text = "Renseigner les champs: \n" +
-                    "Stock initial, \n" +
-                    "Stock reçu, \n" +
-                    "Stock utilisé, \n" +
-                    "Stock perdu \n" +
-                    "pour chaque produit, \n" +
-                    "puis on indique la periode." +
+                    "Stock initial, " +
+                    "Stock reçu, " +
+                    "Stock utilisé, " +
+                    "Stock perdu " +
+                    "pour chaque produit, " +
+                    "puis indiquez la periode.\n\n" +
                     "En cas de problème, contactez Croix-Rouge.";
         } else {
             text = "Aucune aide disponible pour cet élément.";

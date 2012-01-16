@@ -27,7 +27,7 @@ public class OptionForm extends Form implements CommandListener {
     NUTMIDlet midlet;
 
 public OptionForm(NUTMIDlet midlet) {
-    super("Paramètres transmission");
+    super("Paramètres de transmission");
     this.midlet = midlet;
     
     config = new Configuration();
@@ -42,7 +42,7 @@ public OptionForm(NUTMIDlet midlet) {
 
     numberField = new TextField ("Numéro du serveur:", phone_number, 8, TextField.PHONENUMBER);
     health_centerField = new TextField ("Code du centre:", config.get("health_center"), 10, TextField.ANY);
-    hc_codeField =  new ChoiceGroup("Type CScom:", ChoiceGroup.POPUP, type_center, null);
+    hc_codeField =  new ChoiceGroup("Type CSCOM:", ChoiceGroup.POPUP, type_center, null);
     int sel = 0;
     for (int i = 0; i<type_center.length ; i++) {
         if (type_center[i].equals(config.get("hc_code"))) {
@@ -101,7 +101,7 @@ public OptionForm(NUTMIDlet midlet) {
             if (config.set("server_number", numberField.getString()) &&
             config.set("health_center", health_centerField.getString()) &&
             config.set("hc_code", hc_codeField.getString(hc_codeField.getSelectedIndex()))) {
-                alert = new Alert ("confirmation!", "Votre modification a été bien enregistré.", null, AlertType.CONFIRMATION);
+                alert = new Alert ("Confirmation!", "Votre modification a été bien enregistré.", null, AlertType.CONFIRMATION);
                 this.midlet.display.setCurrent (alert, this.midlet.mainMenu);
             } else {
                 alert = new Alert ("Échec", "Impossible d'enregistrer cette modification.", null, AlertType.WARNING);

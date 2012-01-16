@@ -39,18 +39,23 @@ public class DataNutForm extends Form implements CommandListener {
 
 
     public DataNutForm(NUTMIDlet midlet) {
-        super("Suivie nuttritionnellle");
+        super("Suivie nutritionnelle");
         this.midlet = midlet;
 
         config = new Configuration();
 
         // creating all fields (blank)
         id =  new TextField("ID:", null, 10, TextField.DECIMAL);
-        weight =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
-        height =  new TextField("Taille (en cm):", null, MAX_SIZE, TextField.DECIMAL);
-        oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
-        pb =  new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
-        nbr_plu =  new TextField("Sachets plumpy nut donnés:", null, MAX_SIZE, TextField.NUMERIC);
+        weight =  new TextField("Poids (en kg):", null,
+                MAX_SIZE, TextField.DECIMAL);
+        height =  new TextField("Taille (en cm):", null,
+                MAX_SIZE, TextField.DECIMAL);
+        oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP,
+                oedema, null);
+        pb =  new TextField("Périmètre brachial (en mm):", null,
+                MAX_SIZE, TextField.DECIMAL);
+        nbr_plu =  new TextField("Sachets plumpy nut donnés:", null,
+                MAX_SIZE, TextField.NUMERIC);
 
 
         // add fields to form
@@ -143,7 +148,8 @@ public class DataNutForm extends Form implements CommandListener {
             // check whether all fields have been completed
             // if not, we alert and don't do anything else.
             if (!this.isComplete()) {
-                alert = new Alert("Données manquantes", "Tous les champs doivent être remplis!", null, AlertType.ERROR);
+                alert = new Alert("Données manquantes", "Tous les champs " +
+                        "requis doivent être remplis!", null, AlertType.ERROR);
                 alert.setTimeout(Alert.FOREVER);
                 this.midlet.display.setCurrent (alert, this);
                 return;
@@ -151,7 +157,8 @@ public class DataNutForm extends Form implements CommandListener {
 
             // check for errors and display first error
             if (!this.isValid()) {
-                alert = new Alert("Données incorrectes!", this.ErrorMessage, null, AlertType.ERROR);
+                alert = new Alert("Données incorrectes!", this.ErrorMessage,
+                        null, AlertType.ERROR);
                 alert.setTimeout(Alert.FOREVER);
                 this.midlet.display.setCurrent (alert, this);
                 return;
@@ -162,10 +169,14 @@ public class DataNutForm extends Form implements CommandListener {
             String number = config.get("server_number");
 
             if (sms.send(number, this.toSMSFormat())) {
-                alert = new Alert ("Demande envoyée !", "Vous allez recevoir une confirmation du serveur.", null, AlertType.CONFIRMATION);
+                alert = new Alert ("Demande envoyée !", "Vous allez " +
+                        "recevoir une confirmation du serveur.", null,
+                        AlertType.CONFIRMATION);
                 this.midlet.display.setCurrent (alert, this.midlet.mainMenu);
             } else {
-                alert = new Alert ("Échec d'envoi SMS", "Impossible d'envoyer la demande par SMS.", null, AlertType.WARNING);
+                alert = new Alert ("Échec d'envoi SMS", "Impossible " +
+                        "d'envoyer la demande par SMS.", null,
+                        AlertType.WARNING);
                 this.midlet.display.setCurrent (alert, this);
             }
         }

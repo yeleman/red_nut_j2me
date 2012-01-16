@@ -26,7 +26,7 @@ public class SharedChecks {
 
      public static String Message(TextField weight, TextField height, TextField pb) {
         if (Float.parseFloat(weight.getString()) <= Constants.MIN_WEIGHT || Float.parseFloat(weight.getString()) > Constants.MAX_WEIGHT) {
-           return "le poids doit etre compris entre " + Constants.MIN_WEIGHT + " et " + Constants.MAX_WEIGHT + " kg";
+           return "Le poids doit etre compris entre " + Constants.MIN_WEIGHT + " et " + Constants.MAX_WEIGHT + " kg";
         }
         else if (Integer.parseInt(height.getString()) < Constants.MIN_HEIGHT || Integer.parseInt(height.getString()) >= Constants.MAX_HEIGHT) {
             return "La taille de l'enfant doit etre compris entre " + Constants.MIN_HEIGHT + " et " + Constants.MAX_HEIGHT + " cm";

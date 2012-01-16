@@ -7,7 +7,7 @@ import java.util.Date;
 import nut.Configuration.*;
 import nut.Constants.*;
 import nut.HelpForm.*;
-
+import nut.SharedChecks.*;
 
 /**
  * J2ME Patient Registration Form
@@ -24,6 +24,7 @@ public class RegisterForm extends Form implements CommandListener {
                                                             Command.OK, 1);
     private static final Command CMD_HELP = new Command ("Aide",
                                                             Command.HELP, 2);
+    private static final int MAX_SIZE = 5; // max no. of chars per field.
     private static final String month_list[] = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
 
     public NUTMIDlet midlet;
@@ -32,14 +33,25 @@ public class RegisterForm extends Form implements CommandListener {
 
     private String health_center = "";
 
-    private static final String[] sexList= {"F", "M"};
+    private static final String[] sexList= {" ", "F", "M"};
+    private static final String[] oedema = {"OUI", "NON", "Inconnue"};
+    private ChoiceGroup oedemaField;
+
     private String ErrorMessage = "";
 
+    //register
     private TextField first_name;
     private TextField last_name;
     private TextField mother_name;
     private ChoiceGroup sex;
     private DateField dob;
+
+    //datanut
+    private StringItem intro;
+    private TextField weight;
+    private TextField height;
+    private TextField pb;
+    private TextField nbr_plu;
 
 
 public RegisterForm(NUTMIDlet midlet) {
@@ -50,23 +62,39 @@ public RegisterForm(NUTMIDlet midlet) {
 
     health_center = config.get("health_center");
 
-    // creating al fields (blank)
+    // creating all fields (blank)
     first_name =  new TextField("Prénom:", null, 20, TextField.ANY);
     last_name =  new TextField("Nom:", null, 20, TextField.ANY);
     mother_name =  new TextField("Nom de la mère:", null, 20, TextField.ANY);
     dob =  new DateField("Date de naissance:", DateField.DATE, TimeZone.getTimeZone("GMT"));
     sex = new ChoiceGroup("Sexe:", ChoiceGroup.POPUP, sexList, null);
+
+    intro = new StringItem(null, "Suivie nuttritionnellle");
+    weight =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
+    height =  new TextField("Taille (en cm):", null, MAX_SIZE, TextField.DECIMAL);
+    oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
+    pb =  new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
+    nbr_plu =  new TextField("Sachets plumpy nut donnés:", null, MAX_SIZE, TextField.NUMERIC);
     
     dob.setDate(new Date());
+
     // add fields to forms
     append(first_name);
     append(last_name);
     append(mother_name);
     append(dob);
     append(sex);
+
+    append(intro);
+    append(weight);
+    append(height);
+    append(oedemaField);
+    append(pb);
+    append(nbr_plu);
     addCommand(CMD_EXIT);
     addCommand(CMD_SAVE);
     addCommand(CMD_HELP);
+
     this.setCommandListener (this);
 
 }
@@ -108,6 +136,7 @@ public RegisterForm(NUTMIDlet midlet) {
             return false;
         }
     }
+
     /*
      * Whether all required fields are filled
      * @return <code>true</code> is all fields are filled
@@ -132,7 +161,8 @@ public RegisterForm(NUTMIDlet midlet) {
 
         if (first_name.getString().length() == 0 ||
             last_name.getString().length() == 0 ||
-            mother_name.getString().length() == 0) {
+            mother_name.getString().length() == 0 ||
+            !SharedChecks.isComplete(weight, height, pb)) {
             return false;
         }
         return true;
@@ -196,6 +226,10 @@ public RegisterForm(NUTMIDlet midlet) {
             ErrorMessage = "Plus de 59 mois";
             return false;
         }
+        ErrorMessage = SharedChecks.Message(weight, height, pb);
+           if (ErrorMessage != ""){
+               return false;
+           }
         return true;
     }
 
@@ -215,6 +249,20 @@ public RegisterForm(NUTMIDlet midlet) {
 
     public String toSMSFormat() {
         String sep = " ";
+        String oed = " ";
+        String nbr = " ";
+        if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("OUI")){
+            oed = "YES";
+        } else if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("NON")){
+            oed = "NO";
+        }else if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("Inconnue")){
+            oed = "Unknown";
+        }
+        if (nbr_plu.getString().length() == 0) {
+            nbr = "-";
+        } else {
+            nbr = nbr_plu.getString();
+        }
         int dob_array[] = formatDateString(dob.getDate());
         int day = dob_array[0];
         int month = dob_array[1];
@@ -225,7 +273,12 @@ public RegisterForm(NUTMIDlet midlet) {
                               + last_name.getString() + sep
                               + mother_name.getString() + sep
                               + sex.getString(sex.getSelectedIndex()) + sep
-                              + year + "-" + month + "-" + day;
+                              + year + "-" + month + "-" + day + " #"
+                              + weight.getString() + sep
+                              + height.getString() + sep
+                              + oed + sep
+                              + pb.getString() + sep
+                              + nbr;
     }
 
     public void commandAction(Command c, Displayable d) {
@@ -249,7 +302,7 @@ public RegisterForm(NUTMIDlet midlet) {
             // if not, we alert and don't do anything else.
         if (!this.isComplete()) {
             alert = new Alert("Données manquantes", "Tous les champs " +
-                         "doivent être remplis!", null, AlertType.ERROR);
+                         "requis doivent être remplis!", null, AlertType.ERROR);
             alert.setTimeout(Alert.FOREVER);
             this.midlet.display.setCurrent (alert, this);
             return;

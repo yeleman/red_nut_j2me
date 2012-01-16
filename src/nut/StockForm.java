@@ -99,7 +99,7 @@ public class StockForm extends Form implements CommandListener {
     private TextField pln_lost;
 
 public StockForm(NUTMIDlet midlet) {
-    super("Consommation Intrant");
+    super("Consommation Intrants");
     this.midlet = midlet;
 
     config = new Configuration();
