@@ -75,7 +75,7 @@ public ResearchForm(NUTMIDlet midlet) {
 
     public String toSMSFormat() {
         String sep = " ";
-        String None = "n";
+        String None = "-";
 
         if (first_name.getString().length() == 0){
             firstname = None;
