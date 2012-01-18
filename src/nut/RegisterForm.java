@@ -169,10 +169,12 @@ public RegisterForm(NUTMIDlet midlet) {
     }
 
     private int[] formatDateString(Date date_obj) {
+        // NOKIA 2690 format:
+        // Sun Jan 18 00:00:00 GMT 2009
         String date = date_obj.toString();
         int day = Integer.valueOf(date.substring(8, 10)).intValue();
         int month = monthFromString(date.substring(4,7));
-        int year = Integer.valueOf(date.substring(30, 34)).intValue();
+        int year = Integer.valueOf(date.substring(24, 28)).intValue(); //30, 34 on emul
         int list_date[] = {day, month, year};
         return list_date;
     }
@@ -267,6 +269,7 @@ public RegisterForm(NUTMIDlet midlet) {
         int day = dob_array[0];
         int month = dob_array[1];
         int year = dob_array[2];
+        
         return "nut register" + sep
                               + health_center + sep
                               + first_name.getString() + sep
