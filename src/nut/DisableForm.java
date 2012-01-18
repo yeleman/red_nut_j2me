@@ -22,7 +22,7 @@ public class DisableForm extends Form implements CommandListener {
     public NUTMIDlet midlet;
 
     private Configuration config;
-    private static final String[] reason = {"ABANDON", "TRANFER",
+    private static final String[] reason = {"ABANDON", "TRANSFER",
                                             "GUERISON","NON-REPONDANT",
                                             "DECES"};
     private ChoiceGroup reasonField;

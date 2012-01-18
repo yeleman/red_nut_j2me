@@ -33,7 +33,7 @@ public class RegisterForm extends Form implements CommandListener {
 
     private String health_center = "";
 
-    private static final String[] sexList= {" ", "F", "M"};
+    private static final String[] sexList= {"F", "M"};
     private static final String[] oedema = {"OUI", "NON", "Inconnue"};
     private ChoiceGroup oedemaField;
 
