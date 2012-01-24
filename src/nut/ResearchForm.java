@@ -28,15 +28,15 @@ public class ResearchForm extends Form implements CommandListener {
     private TextField surname_mother;
 
 public ResearchForm(NUTMIDlet midlet) {
-    super("Recherche d'id");
+    super("Recherche d'ID");
     this.midlet = midlet;
 
     config = new Configuration();
 
     // creating al fields (blank)
-    first_name =  new TextField("Prénom", null, 20, TextField.ANY);
-    last_name =  new TextField("Nom", null, 20, TextField.ANY);
-    surname_mother =  new TextField("Nom de la mère", null, 20, TextField.ANY);
+    first_name =  new TextField("Prénom:", null, 20, TextField.ANY);
+    last_name =  new TextField("Nom:", null, 20, TextField.ANY);
+    surname_mother =  new TextField("Nom de la mère:", null, 20, TextField.ANY);
 
 
     // add fields to forms
