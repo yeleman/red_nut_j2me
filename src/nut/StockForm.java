@@ -2,6 +2,8 @@
 package nut;
 
 import javax.microedition.lcdui.*;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import nut.Configuration.*;
 import nut.Constants.*;
 import nut.HelpForm.*;
@@ -35,68 +37,8 @@ public class StockForm extends Form implements CommandListener {
     
     private String ErrorMessage = "";
 
-    //Niebe
-    private StringItem nie_intro;
-    private TextField nie_initial;
-    private TextField nie_received;
-    private TextField nie_used;
-    private TextField nie_lost;
-
-    //Mil
-    private StringItem mil_intro;
-    private TextField mil_initial;
-    private TextField mil_received;
-    private TextField mil_used;
-    private TextField mil_lost;
-
-    //Sucre
-    private StringItem suc_intro;
-    private TextField suc_initial;
-    private TextField suc_received;
-    private TextField suc_used;
-    private TextField suc_lost;
-
-    //Huile
-    private StringItem hui_intro;
-    private TextField hui_initial;
-    private TextField hui_received;
-    private TextField hui_used;
-    private TextField hui_lost;
-
-    //Unimux
-    private StringItem uni_intro;
-    private TextField uni_initial;
-    private TextField uni_received;
-    private TextField uni_used;
-    private TextField uni_lost;
-
-    //CSB
-    private StringItem csb_intro;
-    private TextField csb_initial;
-    private TextField csb_received;
-    private TextField csb_used;
-    private TextField csb_lost;
-
-    //Lait F100
-    private StringItem l100_intro;
-    private TextField l100_initial;
-    private TextField l100_received;
-    private TextField l100_used;
-    private TextField l100_lost;
-
-    //Lait F75
-    private StringItem l75_intro;
-    private TextField l75_initial;
-    private TextField l75_received;
-    private TextField l75_used;
-    private TextField l75_lost;
-
-    //Plumpy Nut
-    private StringItem pln_intro;
-    private TextField pln_initial;
-    private TextField pln_received;
-    private TextField pln_used;
-    private TextField pln_lost;
+    private Hashtable inputs;  // list of list of code/name for inputs per CAP
+    private Hashtable inputs_fields; // list of list of field per CAP
 
 public StockForm(NUTMIDlet midlet) {
     super("Consommation Intrants");
@@ -110,218 +52,67 @@ public StockForm(NUTMIDlet midlet) {
     health_center = config.get("health_center");
     period_intro = new StringItem(null, "Indiquez la periode");
 
-    // creating all fields (blank)
-    
-    //Niebe
-    nie_intro = new StringItem(null, "Niebe");
-    nie_initial =  new TextField("Stock de debut:", null, MAX_SIZE, TextField.DECIMAL);
-    nie_received =  new TextField("Stock reçu:", null, MAX_SIZE, TextField.DECIMAL);
-    nie_used =  new TextField("Stock utilisé:", null, MAX_SIZE, TextField.DECIMAL);
-    nie_lost =  new TextField("Stock perdu:", null, MAX_SIZE, TextField.DECIMAL);
-    
-    //Mil
-    mil_intro = new StringItem(null, "Mil");
-    mil_initial =  new TextField("Stock de debut:", null, MAX_SIZE, TextField.DECIMAL);
-    mil_received =  new TextField("Stock reçu:", null, MAX_SIZE, TextField.DECIMAL);
-    mil_used =  new TextField("Stock utilisé:", null, MAX_SIZE, TextField.DECIMAL);
-    mil_lost =  new TextField("Stock perdu:", null, MAX_SIZE, TextField.DECIMAL);
-
-    //Sucre
-    suc_intro = new StringItem(null, "Sucre");
-    suc_initial =  new TextField("Stock de debut:", null, MAX_SIZE, TextField.DECIMAL);
-    suc_received =  new TextField("Stock reçu:", null, MAX_SIZE, TextField.DECIMAL);
-    suc_used =  new TextField("Stock utilisé:", null, MAX_SIZE, TextField.DECIMAL);
-    suc_lost =  new TextField("Stock perdu:", null, MAX_SIZE, TextField.DECIMAL);
-
-    //huile
-    hui_intro = new StringItem(null, "Huile");
-    hui_initial =  new TextField("Stock de debut:", null, MAX_SIZE, TextField.DECIMAL);
-    hui_received =  new TextField("Stock reçu:", null, MAX_SIZE, TextField.DECIMAL);
-    hui_used =  new TextField("Stock utilisé:", null, MAX_SIZE, TextField.DECIMAL);
-    hui_lost =  new TextField("Stock perdu:", null, MAX_SIZE, TextField.DECIMAL);
-    
-    //Unimix
-    uni_intro = new StringItem(null, "Unimix");
-    uni_initial =  new TextField("Stock de debut:", null, MAX_SIZE, TextField.DECIMAL);
-    uni_received =  new TextField("Stock reçu:", null, MAX_SIZE, TextField.DECIMAL);
-    uni_used =  new TextField("Stock utilisé:", null, MAX_SIZE, TextField.DECIMAL);
-    uni_lost =  new TextField("Stock perdu:", null, MAX_SIZE, TextField.DECIMAL);
-
-    //CSB
-    csb_intro = new StringItem(null, "CSB");
-    csb_initial =  new TextField("Stock de debut:", null, MAX_SIZE, TextField.DECIMAL);
-    csb_received =  new TextField("Stock reçu:", null, MAX_SIZE, TextField.DECIMAL);
-    csb_used =  new TextField("Stock utilisé:", null, MAX_SIZE, TextField.DECIMAL);
-    csb_lost =  new TextField("Stock perdu:", null, MAX_SIZE, TextField.DECIMAL);
-
-    //l100
-    l100_intro = new StringItem(null, "l100");
-    l100_initial =  new TextField("Stock de debut:", null, MAX_SIZE, TextField.DECIMAL);
-    l100_received =  new TextField("Stock reçu:", null, MAX_SIZE, TextField.DECIMAL);
-    l100_used =  new TextField("Stock utilisé:", null, MAX_SIZE, TextField.DECIMAL);
-    l100_lost =  new TextField("Stock perdu:", null, MAX_SIZE, TextField.DECIMAL);
-
-    //l75
-    l75_intro = new StringItem(null, "l75");
-    l75_initial =  new TextField("Stock de debut:", null, MAX_SIZE, TextField.DECIMAL);
-    l75_received =  new TextField("Stock reçu:", null, MAX_SIZE, TextField.DECIMAL);
-    l75_used =  new TextField("Stock utilisé:", null, MAX_SIZE, TextField.DECIMAL);
-    l75_lost =  new TextField("Stock perdu:", null, MAX_SIZE, TextField.DECIMAL);
-
-    //plumpy
-    pln_intro = new StringItem(null, "Plumpy nut");
-    pln_initial =  new TextField("Stock de debut:", null, MAX_SIZE, TextField.DECIMAL);
-    pln_received =  new TextField("Stock reçu:", null, MAX_SIZE, TextField.DECIMAL);
-    pln_used =  new TextField("Stock utilisé:", null, MAX_SIZE, TextField.DECIMAL);
-    pln_lost =  new TextField("Stock perdu:", null, MAX_SIZE, TextField.DECIMAL);
-
-    // type: URENAM
-    if ((hc_code).equals("URENAM")){
-    // add  niebe fields to forms
-    append(nie_intro);
-    append(nie_initial);
-    append(nie_received);
-    append(nie_used);
-    append(nie_lost);
-
-    // add  CSB fields to forms
-    append(csb_intro);
-    append(csb_initial);
-    append(csb_received);
-    append(csb_used);
-    append(csb_lost);
-
-    // add  unimix fields to forms
-    append(uni_intro);
-    append(uni_initial);
-    append(uni_received);
-    append(uni_used);
-    append(uni_lost);
-
-    // add  huile fields to forms
-    append(hui_intro);
-    append(hui_initial);
-    append(hui_received);
-    append(hui_used);
-    append(hui_lost);
-
-    // add  sucre fields to forms
-    append(suc_intro);
-    append(suc_initial);
-    append(suc_received);
-    append(suc_used);
-    append(suc_lost);
-
-    // add  mil fields to forms
-    append(mil_intro);
-    append(mil_initial);
-    append(mil_received);
-    append(mil_used);
-    append(mil_lost);
-
-    // add  period
+    // add period
     append(period_intro);
     append(monthField);
     append(yearField);
 
-    // type: URENAS
-    } else if ((hc_code).equals("URENAS")){
-    // add  plumpy nut fields to forms
-    append(pln_intro);
-    append(pln_initial);
-    append(pln_received);
-    append(pln_used);
-    append(pln_lost);
+     // creating all fields (blank)
+    //private String[] inputs = {"Niebe", "Mil", "Sucre", "Huile", "Unimux", "CSB", "Lait F100", "Lait F75", "Plumpy Nut"};
+    // inputs = {'MAM': [('nieb', "Niebe"), ('mil', "Mil")]}
 
-    // add  period
-    append(period_intro);
-    append(monthField);
-    append(yearField);
+    Hashtable mam_inputs = new Hashtable();
+    mam_inputs.put("niebe", "Niebe");
+    mam_inputs.put("mil", "Mil");
+    mam_inputs.put("sugar", "Sucre");
+    mam_inputs.put("oil", "Huile");
 
-    // type: URENAM + URENAS
-    } else if ((hc_code).equals("URENAM + URENAS")){
-    // add  niebe fields to forms
-    append(nie_intro);
-    append(nie_initial);
-    append(nie_received);
-    append(nie_used);
-    append(nie_lost);
+    Hashtable sam_inputs = new Hashtable();
+    sam_inputs.put("plumpy", "Plumpy Nut");
 
-    // add  CSB fields to forms
-    append(csb_intro);
-    append(csb_initial);
-    append(csb_received);
-    append(csb_used);
-    append(csb_lost);
+    inputs = new Hashtable();
+    if (this.hc_code.equals("URENAM") || this.hc_code.equals("URENAM+URENAS")) {
+        inputs.put("mam", mam_inputs);    
+    }
+    if (this.hc_code.equals("URENAS") || this.hc_code.equals("URENAM+URENAS")) {
+        inputs.put("sam", sam_inputs);
+    }
 
-    // add  unimix fields to forms
-    append(uni_intro);
-    append(uni_initial);
-    append(uni_received);
-    append(uni_used);
-    append(uni_lost);
+    // store reference to fields tables
+    inputs_fields = new Hashtable();
 
-    // add  huile fields to forms
-    append(hui_intro);
-    append(hui_initial);
-    append(hui_received);
-    append(hui_used);
-    append(hui_lost);
+    for(Enumeration cap = inputs.keys(); cap.hasMoreElements();) {
+        String mcap = (String)cap.nextElement();
 
-    // add  sucre fields to forms
-    append(suc_intro);
-    append(suc_initial);
-    append(suc_received);
-    append(suc_used);
-    append(suc_lost);
+        Hashtable cap_fields = new Hashtable();
 
-    // add  mil fields to forms
-    append(mil_intro);
-    append(mil_initial);
-    append(mil_received);
-    append(mil_used);
-    append(mil_lost);
+        Hashtable inputs_table = (Hashtable)inputs.get(mcap);
+        for(Enumeration input = inputs_table.keys(); input.hasMoreElements();) {
+            String input_code = (String)input.nextElement();
+            String input_name = (String)inputs_table.get(input_code);
 
-    // add  plumpy nut fields to forms
-    append(pln_intro);
-    append(pln_initial);
-    append(pln_received);
-    append(pln_used);
-    append(pln_lost);
+            StringItem intro = new StringItem(null, input_name);
+            TextField initial = new TextField("Stock de debut:", null, MAX_SIZE, TextField.DECIMAL);
+            TextField received = new TextField("Stock reçu:", null, MAX_SIZE, TextField.DECIMAL);
+            TextField used = new TextField("Stock utilisé:", null, MAX_SIZE, TextField.DECIMAL);
+            TextField lost = new TextField("Stock perdu:", null, MAX_SIZE, TextField.DECIMAL);
 
-    // add  period
-    append(period_intro);
-    append(monthField);
-    append(yearField);
+            append(intro);
+            append(initial);
+            append(received);
+            append(used);
+            append(lost);
+            
+            cap_fields.put("code", input_code);
+            cap_fields.put("name", input_name);
+            cap_fields.put("initial", initial);
+            cap_fields.put("received", received);
+            cap_fields.put("used", used);
+            cap_fields.put("lost", lost);
+        }
 
-    // type: URENI
-    } else if ((hc_code).equals("URENI")){
-    // add  l75 fields to forms
-    append(l75_intro);
-    append(l75_initial);
-    append(l75_received);
-    append(l75_used);
-    append(l75_lost);
-
-    // add  l100 fields to forms
-    append(l100_intro);
-    append(l100_initial);
-    append(l100_received);
-    append(l100_used);
-    append(l100_lost);
-
-    // add  plumpy nut fields to forms
-    append(pln_intro);
-    append(pln_initial);
-    append(pln_received);
-    append(pln_used);
-    append(pln_lost);
-
-    // add  period
-    append(period_intro);
-    append(monthField);
-    append(yearField);
-
+        inputs_fields.put(mcap, cap_fields);
+        
     }
 
     addCommand(CMD_EXIT);
@@ -350,111 +141,40 @@ public StockForm(NUTMIDlet midlet) {
     public boolean isComplete() {
         System.out.println(monthField.getSelectedIndex());
 
-        if (monthField.getSelectedIndex() == 0   ||
+        if (monthField.getSelectedIndex() == 0   || 
                     yearField.getSelectedIndex() == 0) {
             return false;
         }
-        // all fields are required to be filled.
-        if ((this.hc_code).equals("URENAM")){
-            if (this.nie_initial.getString().length() == 0 ||
-                this.nie_received.getString().length() == 0 ||
-                this.nie_used.getString().length() == 0 ||
-                this.nie_lost.getString().length() == 0 ||
 
-                this.csb_initial.getString().length() == 0 ||
-                this.csb_received.getString().length() == 0 ||
-                this.csb_used.getString().length() == 0 ||
-                this.csb_lost.getString().length() == 0 ||
+        for(Enumeration cap = inputs_fields.keys(); cap.hasMoreElements();) {
+            String mcap = (String)cap.nextElement();
 
-                this.uni_initial.getString().length() == 0 ||
-                this.uni_received.getString().length() == 0 ||
-                this.uni_used.getString().length() == 0 ||
-                this.uni_lost.getString().length() == 0 ||
+            // table containing fields for that MAM/SAM
+            Hashtable fields_table = (Hashtable)inputs_fields.get(mcap);
+            // table containing inputs/name for that MAM/SAM
+            Hashtable inputs_table = (Hashtable)inputs.get(mcap);
 
-                this.suc_initial.getString().length() == 0 ||
-                this.suc_received.getString().length() == 0 ||
-                this.suc_used.getString().length() == 0 ||
-                this.suc_lost.getString().length() == 0 ||
+            for(Enumeration input = fields_table.keys(); input.hasMoreElements();) {
+                String input_code = (String)input.nextElement();
+                String input_name = (String)inputs_table.get(input_code);
+                System.out.println(input_name);
 
-                this.hui_initial.getString().length() == 0 ||
-                this.hui_received.getString().length() == 0 ||
-                this.hui_used.getString().length() == 0 ||
-                this.hui_lost.getString().length() == 0 ||
+                TextField initial = (TextField)fields_table.get("initial");
+                TextField received = (TextField)fields_table.get("received");
+                TextField used = (TextField)fields_table.get("used");
+                TextField lost = (TextField)fields_table.get("lost");
 
-                this.mil_initial.getString().length() == 0 ||
-                this.mil_received.getString().length() == 0 ||
-                this.mil_used.getString().length() == 0 ||
-                this.mil_lost.getString().length() == 0 ){
-                return false;
-            } return true;
+                if (initial.getString().length() == 0 ||
+                    received.getString().length() == 0 ||
+                    used.getString().length() == 0 ||
+                    lost.getString().length() == 0) {
+                         return false;
+                    }
+                    
+            } 
+        }
 
-        } else if ((this.hc_code).equals("URENAS")){
-            if (this.pln_initial.getString().length() == 0 ||
-                this.pln_received.getString().length() == 0 ||
-                this.pln_used.getString().length() == 0 ||
-                this.pln_lost.getString().length() == 0){
-                return false;
-            } return true;
-
-         } else if ((this.hc_code).equals("URENAM + URENAS")){
-            if (this.nie_initial.getString().length() == 0 ||
-                this.nie_received.getString().length() == 0 ||
-                this.nie_used.getString().length() == 0 ||
-                this.nie_lost.getString().length() == 0 ||
-
-                this.csb_initial.getString().length() == 0 ||
-                this.csb_received.getString().length() == 0 ||
-                this.csb_used.getString().length() == 0 ||
-                this.csb_lost.getString().length() == 0 ||
-
-                this.uni_initial.getString().length() == 0 ||
-                this.uni_received.getString().length() == 0 ||
-                this.uni_used.getString().length() == 0 ||
-                this.uni_lost.getString().length() == 0 ||
-
-                this.suc_initial.getString().length() == 0 ||
-                this.suc_received.getString().length() == 0 ||
-                this.suc_used.getString().length() == 0 ||
-                this.suc_lost.getString().length() == 0 ||
-
-                this.hui_initial.getString().length() == 0 ||
-                this.hui_received.getString().length() == 0 ||
-                this.hui_used.getString().length() == 0 ||
-                this.hui_lost.getString().length() == 0 ||
-
-                this.mil_initial.getString().length() == 0 ||
-                this.mil_received.getString().length() == 0 ||
-                this.mil_used.getString().length() == 0 ||
-                this.mil_lost.getString().length() == 0 ||
-
-                this.pln_initial.getString().length() == 0 ||
-                this.pln_received.getString().length() == 0 ||
-                this.pln_used.getString().length() == 0 ||
-                this.pln_lost.getString().length() == 0){
-                return false;
-            } return true;
-
-         } else if ((this.hc_code).equals("URENI")){
-             if (this.l75_initial.getString().length() == 0 ||
-                this.l75_received.getString().length() == 0 ||
-                this.l75_used.getString().length() == 0 ||
-                this.l75_lost.getString().length() == 0 ||
-
-                this.l100_initial.getString().length() == 0 ||
-                this.l100_received.getString().length() == 0 ||
-                this.l100_used.getString().length() == 0 ||
-                this.l100_lost.getString().length() == 0 ||
-
-                this.pln_initial.getString().length() == 0 ||
-                this.pln_received.getString().length() == 0 ||
-                this.pln_used.getString().length() == 0 ||
-                this.pln_lost.getString().length() == 0){
-                return false;
-
-            } return true;
-         }
-         
-         return true;
+        return true;
     }
 
     /*
@@ -463,138 +183,35 @@ public StockForm(NUTMIDlet midlet) {
      * <code>false</code> otherwise.
      */
     public boolean isValid() {
-        if ((this.hc_code).equals("URENAM")){
-            if (Integer.parseInt(this.nie_initial.getString())
-                + Integer.parseInt(this.nie_received.getString())
-                < Integer.parseInt(this.nie_used.getString())
-                + Integer.parseInt(this.nie_lost.getString())) {
-                ErrorMessage = nie_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
-                return false;
+
+        for(Enumeration cap = inputs_fields.keys(); cap.hasMoreElements();) {
+            String mcap = (String)cap.nextElement();
+
+            // table containing fields for that MAM/SAM
+            Hashtable fields_table = (Hashtable)inputs_fields.get(mcap);
+            // table containing inputs/name for that MAM/SAM
+            Hashtable inputs_table = (Hashtable)inputs.get(mcap);
+
+            for(Enumeration input = fields_table.keys(); input.hasMoreElements();) {
+                String input_code = (String)fields_table.get("code");
+                String input_name = (String)fields_table.get("name");
+                System.out.println(input_name);
+
+                TextField initial = (TextField)fields_table.get("initial");
+                TextField received = (TextField)fields_table.get("received");
+                TextField used = (TextField)fields_table.get("used");
+                TextField lost = (TextField)fields_table.get("lost");
+
+                if (Integer.parseInt(initial.getString())
+                + Integer.parseInt(received.getString())
+                < Integer.parseInt(used.getString())
+                + Integer.parseInt(lost.getString())) {
+                    ErrorMessage = input_name + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
+                    return false;
+                }
             }
-            if (Integer.parseInt(this.csb_initial.getString())
-                + Integer.parseInt(this.csb_received.getString())
-                < Integer.parseInt(this.csb_used.getString())
-                + Integer.parseInt(this.csb_lost.getString())) {
-                ErrorMessage = csb_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
-                return false;
-            }
-            if (Integer.parseInt(this.uni_initial.getString())
-                + Integer.parseInt(this.uni_received.getString())
-                < Integer.parseInt(this.uni_used.getString())
-                + Integer.parseInt(this.uni_lost.getString())) {
-                ErrorMessage = uni_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
-                return false;
-            }
-            if (Integer.parseInt(this.suc_initial.getString())
-                + Integer.parseInt(this.suc_received.getString())
-                < Integer.parseInt(this.suc_used.getString())
-                + Integer.parseInt(this.suc_lost.getString())) {
-                ErrorMessage = suc_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
-                return false;
-            }
-            if (Integer.parseInt(this.hui_initial.getString())
-                + Integer.parseInt(this.hui_received.getString())
-                < Integer.parseInt(this.hui_used.getString())
-                + Integer.parseInt(this.hui_lost.getString())) {
-                ErrorMessage = hui_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
-                return false;
-            }
-            if (Integer.parseInt(this.mil_initial.getString())
-                + Integer.parseInt(this.mil_received.getString())
-                < Integer.parseInt(this.mil_used.getString())
-                + Integer.parseInt(this.mil_lost.getString())) {
-                ErrorMessage = mil_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
-                return false;
-            }
-            ErrorMessage = "";
-            return true;
-        } else if ((this.hc_code).equals("URENAM + URENAS")){
-            if (Integer.parseInt(this.nie_initial.getString())
-                + Integer.parseInt(this.nie_received.getString())
-                < Integer.parseInt(this.nie_used.getString())
-                + Integer.parseInt(this.nie_lost.getString())) {
-                ErrorMessage = nie_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
-                return false;
-            }
-            if (Integer.parseInt(this.csb_initial.getString())
-                + Integer.parseInt(this.csb_received.getString())
-                < Integer.parseInt(this.csb_used.getString())
-                + Integer.parseInt(this.csb_lost.getString())) {
-                ErrorMessage = csb_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
-                return false;
-            }
-            if (Integer.parseInt(this.uni_initial.getString())
-                + Integer.parseInt(this.uni_received.getString())
-                < Integer.parseInt(this.uni_used.getString())
-                + Integer.parseInt(this.uni_lost.getString())) {
-                ErrorMessage = uni_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
-                return false;
-            }
-            if (Integer.parseInt(this.suc_initial.getString())
-                + Integer.parseInt(this.suc_received.getString())
-                < Integer.parseInt(this.suc_used.getString())
-                + Integer.parseInt(this.suc_lost.getString())) {
-                ErrorMessage = suc_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
-                return false;
-            }
-            if (Integer.parseInt(this.hui_initial.getString())
-                + Integer.parseInt(this.hui_received.getString())
-                < Integer.parseInt(this.hui_used.getString())
-                + Integer.parseInt(this.hui_lost.getString())) {
-                ErrorMessage = hui_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
-                return false;
-            }
-            if (Integer.parseInt(this.mil_initial.getString())
-                + Integer.parseInt(this.mil_received.getString())
-                < Integer.parseInt(this.mil_used.getString())
-                + Integer.parseInt(this.mil_lost.getString())) {
-                ErrorMessage = mil_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
-                return false;
-            }
-            if (Integer.parseInt(this.pln_initial.getString())
-                + Integer.parseInt(this.pln_received.getString())
-                < Integer.parseInt(this.pln_used.getString())
-                + Integer.parseInt(this.pln_lost.getString())) {
-                ErrorMessage = pln_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
-                return false;
-            }
-            ErrorMessage = "";
-            return true;
-        } else if ((this.hc_code).equals("URENAS")) {
-            if (Integer.parseInt(this.pln_initial.getString())
-                + Integer.parseInt(this.pln_received.getString())
-                < Integer.parseInt(this.pln_used.getString())
-                + Integer.parseInt(this.pln_lost.getString())) {
-                ErrorMessage = pln_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
-                return false;
-            }
-            ErrorMessage = "";
-            return true;
-        } else if ((this.hc_code).equals("URENI")) {
-            if (Integer.parseInt(this.l75_initial.getString())
-                + Integer.parseInt(this.l75_received.getString())
-                < Integer.parseInt(this.l75_used.getString())
-                + Integer.parseInt(this.l75_lost.getString())) {
-                ErrorMessage = l75_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
-                return false;
-            }
-            if (Integer.parseInt(this.l100_initial.getString())
-                + Integer.parseInt(this.l100_received.getString())
-                < Integer.parseInt(this.l100_used.getString())
-                + Integer.parseInt(this.l100_lost.getString())) {
-                ErrorMessage = l100_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
-                return false;
-            }
-            if (Integer.parseInt(this.pln_initial.getString())
-                + Integer.parseInt(this.pln_received.getString())
-                < Integer.parseInt(this.pln_used.getString())
-                + Integer.parseInt(this.pln_lost.getString())) {
-                ErrorMessage = pln_intro.getText() + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
-                return false;
-            }
-            ErrorMessage = "";
-            return true;
         }
+
         ErrorMessage = "";
         return true;
     }
@@ -604,7 +221,7 @@ public StockForm(NUTMIDlet midlet) {
      */
     public String toSMSFormat() {
         String sep = " ";
-        if ((this.hc_code).equals("URENAM")){
+        /*if ((this.hc_code).equals("URENAM")){
             return "nut stock URENAM" + sep
                    + health_center + sep
                    + monthField.getSelectedIndex() + sep
@@ -705,7 +322,7 @@ public StockForm(NUTMIDlet midlet) {
                 + pln_received.getString() + sep
                 + pln_used.getString() + sep
                 + pln_lost.getString();
-        } return "nut stock";
+        } */return "nut stock";
         
     }
 
