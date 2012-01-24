@@ -35,7 +35,7 @@ public DisableForm(NUTMIDlet midlet) {
     config = new Configuration();
 
     // creating al fields (blank)
-    id_patient =  new TextField("Id du patient", null, 4, TextField.DECIMAL);
+    id_patient =  new TextField("ID:", null, 4, TextField.DECIMAL);
     reasonField =  new ChoiceGroup("Raison:", ChoiceGroup.POPUP, reason, null);
 
 
@@ -104,7 +104,7 @@ public DisableForm(NUTMIDlet midlet) {
             // check whether all fields have been completed
             // if not, we alert and don't do anything else.
             if (!this.isComplete()) {
-                alert = new Alert("Données manquantes", "Le champ id du patient doit être remplie!", null, AlertType.ERROR);
+                alert = new Alert("Données manquantes", "Le champ ID du patient doit être remplie!", null, AlertType.ERROR);
                 alert.setTimeout(Alert.FOREVER);
                 this.midlet.display.setCurrent (alert, this);
                 return;

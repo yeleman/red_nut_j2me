@@ -39,48 +39,45 @@ public class HelpForm extends Form implements CommandListener {
         String text;
 
         if (section.equalsIgnoreCase("mainmenu")) {
-            text = "Chaque élément de la liste correspond à une formulaire.\n" +
-                   "Entrez dans ce qui correspond à ton opération et " +
-                   "renseignez les champs et envoyer.\n" +
-                   "En cas de problème, contactez Croix-Rouge.";
+            text = "Chaque élément de la liste correspond à un formulaire.\n" +
+                   "Entrez dans celui qui correspond à votre opération puis " +
+                   "renseignez les champs et envoyez.\n" +
+                   "En cas de problème, contactez la Croix-Rouge.";
         } else if (section.equalsIgnoreCase("version")) {
             text = "NUT - Version " + Constants.version + "\n\n" +
                    "En cas de problème, contactez la Croix-Rouge.";
         } else if (section.equalsIgnoreCase("option")) {
             text = "Changez le numéro du serveur, le code du centre et type " +
                    "centre uniquement sur demande expresse de la " +
-                   "Croix-Rouge.\n Un mauvais numéro vous empêchera de " +
+                   "Croix-Rouge.\nUn mauvais numéro vous empêchera de " +
                    "transmettre vos rapports.\n" ;
         } else if (section.equalsIgnoreCase("registration")) {
-            text = "Renseignez le prenom, le nom, l'age, le nom de " +
-                   "la mere puis les données nutritionelles de l'enfant.\n\n" +
-                    "En cas de problème, contactez Croix-Rouge.";
+            text = "Renseignez le prénom, le nom, la date d'anniversaire, le" +
+                   " nom de la mère puis les données nutritionelles de " +
+                   "l'enfant.\n\n" +
+                   "En cas de problème, contactez la Croix-Rouge.";
         } else if (section.equalsIgnoreCase("datanut")) {
-            text = "Renseigner les champs: \n" +
+            text = "Renseignez les champs: \n" +
                     "ID avec l'identifiant de l'enfant, \n" +
                     "le poids en kilogramme, \n" +
                     "la taille en centimètre, \n" +
                     "le périmètre brachial en millimètre \n" +
-                    "le nombre de sachets de plumpy nut donné \n\n" +
-                    "En cas de problème, contactez Croix-Rouge.";
+                    "le nombre de sachets de plumpy nut donné (optionnel). \n\n" +
+                    "En cas de problème, contactez la Croix-Rouge.";
         } else if (section.equalsIgnoreCase("research")) {
             text = "Renseignez soit le nom, soit le prénom ou le nom de la mère, vous " +
-                   "recevrez un SMS contenant l'id des patients si il existe.\n\n" +
-                   "En cas de problème, contactez Croix-Rouge.";
+                   "recevrez un SMS contenant l'ID des patients si ils existent.\n\n" +
+                   "En cas de problème, contactez la Croix-Rouge.";
         } else if (section.equalsIgnoreCase("Disable")) {
-            text = "Renseignez l'id puis indiquez la raison de la sortie " +
+            text = "Renseignez l'ID puis indiquez la raison de la sortie " +
                    " du patient du programme. \n" +
-                   "Vous recevrez un SMS confirmant ou non la deactivation.\n\n" +
-                   "En cas de problème, contactez Croix-Rouge.";
+                   "Vous recevrez un SMS confirmant ou non la désactivation.\n\n" +
+                   "En cas de problème, contactez la Croix-Rouge.";
         } else if (section.equalsIgnoreCase("stock")) {
-            text = "Renseigner les champs: \n" +
-                    "Stock initial, " +
-                    "Stock reçu, " +
-                    "Stock utilisé, " +
-                    "Stock perdu " +
-                    "pour chaque produit, " +
-                    "puis indiquez la periode.\n\n" +
-                    "En cas de problème, contactez Croix-Rouge.";
+            text = "Renseignez les champs: \n" +
+                    "Stock initial, Stock reçu, Stock utilisé, Stock perdu " +
+                    "pour chaque produit, puis indiquez la période.\n\n" +
+                    "En cas de problème, contactez la Croix-Rouge.";
         } else {
             text = "Aucune aide disponible pour cet élément.";
         }
