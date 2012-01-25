@@ -132,18 +132,6 @@ public StockForm(NUTMIDlet midlet) {
 }
 
     /*
-     * converts internal <code>int</code> data to <code>String</code> for field
-     * @param value the number to display on field
-     * @return the <code>String</code> to attach to the field.
-     */
-    private String valueForField(int value) {
-        if (value == -1) {
-            return "";
-        }
-        return String.valueOf(value);
-    }
-
-    /*
      * Whether all required fields are filled
      * @return <code>true</code> is all fields are filled
      * <code>false</code> otherwise.
@@ -161,14 +149,12 @@ public StockForm(NUTMIDlet midlet) {
             // table containing fields for that MAM/SAM
             Hashtable fields_table = (Hashtable)inputs_fields.get(mcap);
             // table containing inputs/name for that MAM/SAM
-            Hashtable inputs_table = (Hashtable)inputs.get(mcap);
 
             for(Enumeration input = fields_table.keys(); input.hasMoreElements();) {
                 String input_code = (String)input.nextElement();
-                
+
                 Hashtable indiv_fields = (Hashtable)fields_table.get(input_code);
 
-                String input_name = (String)indiv_fields.get("name");
                 TextField initial = (TextField)indiv_fields.get("initial");
                 TextField received = (TextField)indiv_fields.get("received");
                 TextField used = (TextField)indiv_fields.get("used");
@@ -199,11 +185,10 @@ public StockForm(NUTMIDlet midlet) {
 
             // table containing fields for that MAM/SAM
             Hashtable fields_table = (Hashtable)inputs_fields.get(mcap);
-            // table containing inputs/name for that MAM/SAM
-            Hashtable inputs_table = (Hashtable)inputs.get(mcap);
+
             for(Enumeration input = fields_table.keys(); input.hasMoreElements();) {
                 String input_code = (String)input.nextElement();
-                
+
                 Hashtable indiv_fields = (Hashtable)fields_table.get(input_code);
 
                 String input_name = (String)indiv_fields.get("name");
@@ -233,7 +218,7 @@ public StockForm(NUTMIDlet midlet) {
     public String toSMSFormat() {
         System.out.println("toSMSFormat");
         String sep = " ";
-        String msg = "nut stock" + sep + this.hc_code + sep
+        String msg = "nut stock" + sep + this.hc_code + sep + this.health_center + sep
                      + monthField.getSelectedIndex() + sep
                      + Integer.parseInt(yearField.getString(yearField.getSelectedIndex())) + sep;
 
@@ -248,13 +233,11 @@ public StockForm(NUTMIDlet midlet) {
 
                 Hashtable indiv_fields = (Hashtable)fields_table.get(input_code);
 
-                String input_name = (String)indiv_fields.get("name");
-
                 TextField initial = (TextField)indiv_fields.get("initial");
                 TextField received = (TextField)indiv_fields.get("received");
                 TextField used = (TextField)indiv_fields.get("used");
                 TextField lost = (TextField)indiv_fields.get("lost");
-                msg = msg + "#" + input_code + sep + initial.getString() + sep + received.getString() + sep
+                msg += "#" + input_code + sep + initial.getString() + sep + received.getString() + sep
                            + used.getString() + sep + lost.getString() + sep;
             }
         }
