@@ -57,10 +57,6 @@ public StockForm(NUTMIDlet midlet) {
     append(monthField);
     append(yearField);
 
-     // creating all fields (blank)
-    //private String[] inputs = {"Niebe", "Mil", "Sucre", "Huile", "Unimux", "CSB", "Lait F100", "Lait F75", "Plumpy Nut"};
-    // inputs = {'MAM': [('nieb', "Niebe"), ('mil', "Mil")]}
-
     Hashtable mam_inputs = new Hashtable();
     mam_inputs.put("nie", "Niebe");
     mam_inputs.put("csb", "CSB");
@@ -98,6 +94,9 @@ public StockForm(NUTMIDlet midlet) {
 
         Hashtable inputs_table = (Hashtable)inputs.get(mcap);
         for(Enumeration input = inputs_table.keys(); input.hasMoreElements();) {
+
+            Hashtable indiv_fields = new Hashtable();
+
             String input_code = (String)input.nextElement();
             String input_name = (String)inputs_table.get(input_code);
 
@@ -113,16 +112,17 @@ public StockForm(NUTMIDlet midlet) {
             append(used);
             append(lost);
 
-            cap_fields.put("code", input_code);
-            cap_fields.put("name", input_name);
-            cap_fields.put("initial", initial);
-            cap_fields.put("received", received);
-            cap_fields.put("used", used);
-            cap_fields.put("lost", lost);
+            indiv_fields.put("code", input_code);
+            indiv_fields.put("name", input_name);
+            indiv_fields.put("initial", initial);
+            indiv_fields.put("received", received);
+            indiv_fields.put("used", used);
+            indiv_fields.put("lost", lost);
+
+            cap_fields.put(input_code, indiv_fields);
         }
 
         inputs_fields.put(mcap, cap_fields);
-
     }
 
     addCommand(CMD_EXIT);
@@ -149,7 +149,6 @@ public StockForm(NUTMIDlet midlet) {
      * <code>false</code> otherwise.
      */
     public boolean isComplete() {
-        System.out.println(monthField.getSelectedIndex());
 
         if (monthField.getSelectedIndex() == 0   ||
                     yearField.getSelectedIndex() == 0) {
@@ -166,13 +165,14 @@ public StockForm(NUTMIDlet midlet) {
 
             for(Enumeration input = fields_table.keys(); input.hasMoreElements();) {
                 String input_code = (String)input.nextElement();
-                String input_name = (String)inputs_table.get(input_code);
-                System.out.println(input_name);
+                
+                Hashtable indiv_fields = (Hashtable)fields_table.get(input_code);
 
-                TextField initial = (TextField)fields_table.get("initial");
-                TextField received = (TextField)fields_table.get("received");
-                TextField used = (TextField)fields_table.get("used");
-                TextField lost = (TextField)fields_table.get("lost");
+                String input_name = (String)indiv_fields.get("name");
+                TextField initial = (TextField)indiv_fields.get("initial");
+                TextField received = (TextField)indiv_fields.get("received");
+                TextField used = (TextField)indiv_fields.get("used");
+                TextField lost = (TextField)indiv_fields.get("lost");
 
                 if (initial.getString().length() == 0 ||
                     received.getString().length() == 0 ||
@@ -201,17 +201,17 @@ public StockForm(NUTMIDlet midlet) {
             Hashtable fields_table = (Hashtable)inputs_fields.get(mcap);
             // table containing inputs/name for that MAM/SAM
             Hashtable inputs_table = (Hashtable)inputs.get(mcap);
-            System.out.println(inputs_table);
             for(Enumeration input = fields_table.keys(); input.hasMoreElements();) {
-                input.nextElement();
-                String input_code = (String)fields_table.get("code");
-                String input_name = (String)fields_table.get("name");
-                System.out.println(input_name);
+                String input_code = (String)input.nextElement();
+                
+                Hashtable indiv_fields = (Hashtable)fields_table.get(input_code);
 
-                TextField initial = (TextField)fields_table.get("initial");
-                TextField received = (TextField)fields_table.get("received");
-                TextField used = (TextField)fields_table.get("used");
-                TextField lost = (TextField)fields_table.get("lost");
+                String input_name = (String)indiv_fields.get("name");
+
+                TextField initial = (TextField)indiv_fields.get("initial");
+                TextField received = (TextField)indiv_fields.get("received");
+                TextField used = (TextField)indiv_fields.get("used");
+                TextField lost = (TextField)indiv_fields.get("lost");
 
                 if (Integer.parseInt(initial.getString())
                 + Integer.parseInt(received.getString())
@@ -231,6 +231,7 @@ public StockForm(NUTMIDlet midlet) {
      * @return <code>String</code> to be sent by SMS
      */
     public String toSMSFormat() {
+        System.out.println("toSMSFormat");
         String sep = " ";
         String msg = "nut stock" + sep + this.hc_code + sep
                      + monthField.getSelectedIndex() + sep
@@ -241,22 +242,20 @@ public StockForm(NUTMIDlet midlet) {
 
             // table containing fields for that MAM/SAM
             Hashtable fields_table = (Hashtable)inputs_fields.get(mcap);
-            // table containing inputs/name for that MAM/SAM
-            //Hashtable inputs_table = (Hashtable)inputs.get(mcap);
 
-            for(Enumeration input = fields_table.elements(); input.hasMoreElements();) {
-                
-                String input_code = (String)fields_table.get("code");
-                String input_name = (String)fields_table.get("name");
-                System.out.println(input_name);
+            for(Enumeration input = fields_table.keys(); input.hasMoreElements();) {
+                String input_code = (String)input.nextElement();
 
-                TextField initial = (TextField)fields_table.get("initial");
-                TextField received = (TextField)fields_table.get("received");
-                TextField used = (TextField)fields_table.get("used");
-                TextField lost = (TextField)fields_table.get("lost");
+                Hashtable indiv_fields = (Hashtable)fields_table.get(input_code);
+
+                String input_name = (String)indiv_fields.get("name");
+
+                TextField initial = (TextField)indiv_fields.get("initial");
+                TextField received = (TextField)indiv_fields.get("received");
+                TextField used = (TextField)indiv_fields.get("used");
+                TextField lost = (TextField)indiv_fields.get("lost");
                 msg = msg + "#" + input_code + sep + initial.getString() + sep + received.getString() + sep
                            + used.getString() + sep + lost.getString() + sep;
-                input.nextElement();
             }
         }
         return msg;
