@@ -75,7 +75,7 @@ public RegisterForm(NUTMIDlet midlet) {
     oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
     pb =  new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
     nbr_plu =  new TextField("Sachets plumpy nut donnés:", null, MAX_SIZE, TextField.NUMERIC);
-    
+
     dob.setDate(new Date());
 
     // add fields to forms
@@ -144,20 +144,6 @@ public RegisterForm(NUTMIDlet midlet) {
      */
     public boolean isComplete() {
         // all fields are required to be filled.
-        Date now = new Date();
-        System.out.println(now);
-        long epoch = 0;
-        Date empty = new Date(epoch);
-        System.out.println(empty);
-
-        try {
-            System.out.println(dob.getDate().toString());
-        } catch (NullPointerException e) {
-            System.out.println("EMPTY");
-            return false;
-        }
-        System.out.println("NOT EMPTY");
-        System.out.println(dob.getDate().toString());
 
         if (first_name.getString().length() == 0 ||
             last_name.getString().length() == 0 ||
@@ -219,7 +205,7 @@ public RegisterForm(NUTMIDlet midlet) {
         if (is_before_month(six_month_old[0], six_month_old[1], six_month_old[2],
                            day, month, year)){
             // date a moins de 6 mois.
-            ErrorMessage = "Date a moins de 6 mois";
+            ErrorMessage = "L'enfant doit être agé de plus de 6 mois";
             return false;
         }
         if (is_before_month(day, month, year,
@@ -269,7 +255,7 @@ public RegisterForm(NUTMIDlet midlet) {
         int day = dob_array[0];
         int month = dob_array[1];
         int year = dob_array[2];
-        
+
         return "nut register" + sep
                               + health_center + sep
                               + first_name.getString() + sep
