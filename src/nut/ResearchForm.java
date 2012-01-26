@@ -116,7 +116,7 @@ public ResearchForm(NUTMIDlet midlet) {
             // check whether all fields have been completed
             // if not, we alert and don't do anything else.
             if (!this.isComplete()) {
-                alert = new Alert("Données manquantes", "remplissez au moins un champ de saisie!", null, AlertType.ERROR);
+                alert = new Alert("Données manquantes", "Remplissez au moins un champ de saisie!", null, AlertType.ERROR);
                 alert.setTimeout(Alert.FOREVER);
                 this.midlet.display.setCurrent (alert, this);
                 return;
