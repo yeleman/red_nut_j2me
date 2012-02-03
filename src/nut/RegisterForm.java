@@ -69,7 +69,7 @@ public RegisterForm(NUTMIDlet midlet) {
     dob =  new DateField("Date de naissance:", DateField.DATE, TimeZone.getTimeZone("GMT"));
     sex = new ChoiceGroup("Sexe:", ChoiceGroup.POPUP, sexList, null);
 
-    intro = new StringItem(null, "Suivie nuttritionnellle");
+    intro = new StringItem(null, "Suivi nuttritionnel");
     weight =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
     height =  new TextField("Taille (en cm):", null, MAX_SIZE, TextField.DECIMAL);
     oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
@@ -144,21 +144,6 @@ public RegisterForm(NUTMIDlet midlet) {
      */
     public boolean isComplete() {
         // all fields are required to be filled.
-        Date now = new Date();
-        System.out.println(now);
-        long epoch = 0;
-        Date empty = new Date(epoch);
-        System.out.println(empty);
-
-        try {
-            System.out.println(dob.getDate().toString());
-        } catch (NullPointerException e) {
-            System.out.println("EMPTY");
-            return false;
-        }
-        System.out.println("NOT EMPTY");
-        System.out.println(dob.getDate().toString());
-
         if (first_name.getString().length() == 0 ||
             last_name.getString().length() == 0 ||
             mother_name.getString().length() == 0 ||

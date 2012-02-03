@@ -34,7 +34,7 @@ public class StockForm extends Form implements CommandListener {
 
     private ChoiceGroup monthField;
     private ChoiceGroup yearField;
-    
+
     private String ErrorMessage = "";
 
     private Hashtable inputs;  // list of list of code/name for inputs per CAP
@@ -57,25 +57,31 @@ public StockForm(NUTMIDlet midlet) {
     append(monthField);
     append(yearField);
 
-     // creating all fields (blank)
-    //private String[] inputs = {"Niebe", "Mil", "Sucre", "Huile", "Unimux", "CSB", "Lait F100", "Lait F75", "Plumpy Nut"};
-    // inputs = {'MAM': [('nieb', "Niebe"), ('mil', "Mil")]}
-
     Hashtable mam_inputs = new Hashtable();
-    mam_inputs.put("niebe", "Niebe");
+    mam_inputs.put("nie", "Niebe");
+    mam_inputs.put("csb", "CSB");
+    mam_inputs.put("uni", "Unimix");
+    mam_inputs.put("hui", "Huile");
+    mam_inputs.put("suc", "Sucre");
     mam_inputs.put("mil", "Mil");
-    mam_inputs.put("sugar", "Sucre");
-    mam_inputs.put("oil", "Huile");
+
+    Hashtable sam_comp_inputs = new Hashtable();
+    sam_comp_inputs.put("l75", "Lait F175");
+    sam_comp_inputs.put("l100", "Lait F100");
+    sam_comp_inputs.put("pln", "Plumpy Nut");
 
     Hashtable sam_inputs = new Hashtable();
-    sam_inputs.put("plumpy", "Plumpy Nut");
+    sam_inputs.put("pln", "Plumpy Nut");
 
     inputs = new Hashtable();
     if (this.hc_code.equals("URENAM") || this.hc_code.equals("URENAM+URENAS")) {
-        inputs.put("mam", mam_inputs);    
+        inputs.put("mam", mam_inputs);
     }
     if (this.hc_code.equals("URENAS") || this.hc_code.equals("URENAM+URENAS")) {
         inputs.put("sam", sam_inputs);
+    }
+    if (this.hc_code.equals("URENI")) {
+        inputs.put("sam_comp", sam_comp_inputs);
     }
 
     // store reference to fields tables
@@ -88,6 +94,9 @@ public StockForm(NUTMIDlet midlet) {
 
         Hashtable inputs_table = (Hashtable)inputs.get(mcap);
         for(Enumeration input = inputs_table.keys(); input.hasMoreElements();) {
+
+            Hashtable indiv_fields = new Hashtable();
+
             String input_code = (String)input.nextElement();
             String input_name = (String)inputs_table.get(input_code);
 
@@ -102,17 +111,18 @@ public StockForm(NUTMIDlet midlet) {
             append(received);
             append(used);
             append(lost);
-            
-            cap_fields.put("code", input_code);
-            cap_fields.put("name", input_name);
-            cap_fields.put("initial", initial);
-            cap_fields.put("received", received);
-            cap_fields.put("used", used);
-            cap_fields.put("lost", lost);
+
+            indiv_fields.put("code", input_code);
+            indiv_fields.put("name", input_name);
+            indiv_fields.put("initial", initial);
+            indiv_fields.put("received", received);
+            indiv_fields.put("used", used);
+            indiv_fields.put("lost", lost);
+
+            cap_fields.put(input_code, indiv_fields);
         }
 
         inputs_fields.put(mcap, cap_fields);
-        
     }
 
     addCommand(CMD_EXIT);
@@ -122,26 +132,13 @@ public StockForm(NUTMIDlet midlet) {
 }
 
     /*
-     * converts internal <code>int</code> data to <code>String</code> for field
-     * @param value the number to display on field
-     * @return the <code>String</code> to attach to the field.
-     */
-    private String valueForField(int value) {
-        if (value == -1) {
-            return "";
-        }
-        return String.valueOf(value);
-    }
-
-    /*
      * Whether all required fields are filled
      * @return <code>true</code> is all fields are filled
      * <code>false</code> otherwise.
      */
     public boolean isComplete() {
-        System.out.println(monthField.getSelectedIndex());
 
-        if (monthField.getSelectedIndex() == 0   || 
+        if (monthField.getSelectedIndex() == 0   ||
                     yearField.getSelectedIndex() == 0) {
             return false;
         }
@@ -152,17 +149,16 @@ public StockForm(NUTMIDlet midlet) {
             // table containing fields for that MAM/SAM
             Hashtable fields_table = (Hashtable)inputs_fields.get(mcap);
             // table containing inputs/name for that MAM/SAM
-            Hashtable inputs_table = (Hashtable)inputs.get(mcap);
 
             for(Enumeration input = fields_table.keys(); input.hasMoreElements();) {
                 String input_code = (String)input.nextElement();
-                String input_name = (String)inputs_table.get(input_code);
-                System.out.println(input_name);
 
-                TextField initial = (TextField)fields_table.get("initial");
-                TextField received = (TextField)fields_table.get("received");
-                TextField used = (TextField)fields_table.get("used");
-                TextField lost = (TextField)fields_table.get("lost");
+                Hashtable indiv_fields = (Hashtable)fields_table.get(input_code);
+
+                TextField initial = (TextField)indiv_fields.get("initial");
+                TextField received = (TextField)indiv_fields.get("received");
+                TextField used = (TextField)indiv_fields.get("used");
+                TextField lost = (TextField)indiv_fields.get("lost");
 
                 if (initial.getString().length() == 0 ||
                     received.getString().length() == 0 ||
@@ -170,8 +166,8 @@ public StockForm(NUTMIDlet midlet) {
                     lost.getString().length() == 0) {
                          return false;
                     }
-                    
-            } 
+
+            }
         }
 
         return true;
@@ -189,18 +185,18 @@ public StockForm(NUTMIDlet midlet) {
 
             // table containing fields for that MAM/SAM
             Hashtable fields_table = (Hashtable)inputs_fields.get(mcap);
-            // table containing inputs/name for that MAM/SAM
-            Hashtable inputs_table = (Hashtable)inputs.get(mcap);
 
             for(Enumeration input = fields_table.keys(); input.hasMoreElements();) {
-                String input_code = (String)fields_table.get("code");
-                String input_name = (String)fields_table.get("name");
-                System.out.println(input_name);
+                String input_code = (String)input.nextElement();
 
-                TextField initial = (TextField)fields_table.get("initial");
-                TextField received = (TextField)fields_table.get("received");
-                TextField used = (TextField)fields_table.get("used");
-                TextField lost = (TextField)fields_table.get("lost");
+                Hashtable indiv_fields = (Hashtable)fields_table.get(input_code);
+
+                String input_name = (String)indiv_fields.get("name");
+
+                TextField initial = (TextField)indiv_fields.get("initial");
+                TextField received = (TextField)indiv_fields.get("received");
+                TextField used = (TextField)indiv_fields.get("used");
+                TextField lost = (TextField)indiv_fields.get("lost");
 
                 if (Integer.parseInt(initial.getString())
                 + Integer.parseInt(received.getString())
@@ -220,110 +216,33 @@ public StockForm(NUTMIDlet midlet) {
      * @return <code>String</code> to be sent by SMS
      */
     public String toSMSFormat() {
+        System.out.println("toSMSFormat");
         String sep = " ";
-        /*if ((this.hc_code).equals("URENAM")){
-            return "nut stock URENAM" + sep
-                   + health_center + sep
-                   + monthField.getSelectedIndex() + sep
-                   + Integer.parseInt(yearField.getString(yearField.getSelectedIndex())) + sep +"#nie" + sep
-                   + nie_initial.getString() + sep
-                   + nie_received.getString() + sep
-                   + nie_used.getString() + sep
-                   + nie_lost.getString() + sep +"#csb" + sep
+        String msg = "nut stock" + sep + this.hc_code + sep + this.health_center + sep
+                     + monthField.getSelectedIndex() + sep
+                     + Integer.parseInt(yearField.getString(yearField.getSelectedIndex())) + sep;
 
-                   + csb_initial.getString() + sep
-                   + csb_received.getString() + sep
-                   + csb_used.getString() + sep
-                   + csb_lost.getString() + sep +"#uni" + sep
+        for(Enumeration cap = inputs_fields.keys(); cap.hasMoreElements();) {
+            String mcap = (String)cap.nextElement();
 
-                   + uni_initial.getString() + sep
-                   + uni_received.getString() + sep
-                   + uni_used.getString() + sep
-                   + uni_lost.getString() + sep +"#hui" + sep
+            // table containing fields for that MAM/SAM
+            Hashtable fields_table = (Hashtable)inputs_fields.get(mcap);
 
-                   + hui_initial.getString() + sep
-                   + hui_received.getString() + sep
-                   + hui_used.getString() + sep
-                   + hui_lost.getString() + sep +"#suc" + sep
+            for(Enumeration input = fields_table.keys(); input.hasMoreElements();) {
+                String input_code = (String)input.nextElement();
 
-                   + suc_initial.getString() + sep
-                   + suc_received.getString() + sep
-                   + suc_used.getString() + sep
-                   + suc_lost.getString() + sep +"#mil" + sep
+                Hashtable indiv_fields = (Hashtable)fields_table.get(input_code);
 
-                   + mil_initial.getString() + sep
-                   + mil_received.getString() + sep
-                   + mil_used.getString() + sep
-                   + mil_lost.getString();
-        } else if ((this.hc_code).equals("URENAM + URENAS")){
-            return "nut stock URENAMURENAS" + sep
-                + health_center + sep
-                + monthField.getSelectedIndex() + sep
-                + Integer.parseInt(yearField.getString(yearField.getSelectedIndex())) + sep +"#nie" + sep
-                + nie_initial.getString() + sep
-                + nie_received.getString() + sep
-                + nie_used.getString() + sep
-                + nie_lost.getString() + sep + "#csb" + sep
+                TextField initial = (TextField)indiv_fields.get("initial");
+                TextField received = (TextField)indiv_fields.get("received");
+                TextField used = (TextField)indiv_fields.get("used");
+                TextField lost = (TextField)indiv_fields.get("lost");
+                msg += "#" + input_code + sep + initial.getString() + sep + received.getString() + sep
+                           + used.getString() + sep + lost.getString() + sep;
+            }
+        }
+        return msg;
 
-                + csb_initial.getString() + sep
-                + csb_received.getString() + sep
-                + csb_used.getString() + sep
-                + csb_lost.getString() + sep + "#uni" + sep
-
-                + uni_initial.getString() + sep
-                + uni_received.getString() + sep
-                + uni_used.getString() + sep
-                + uni_lost.getString() + sep + "#hui" + sep
-
-                + hui_initial.getString() + sep
-                + hui_received.getString() + sep
-                + hui_used.getString() + sep
-                + hui_lost.getString() + sep + "#suc" + sep
-
-                + suc_initial.getString() + sep
-                + suc_received.getString() + sep
-                + suc_used.getString() + sep
-                + suc_lost.getString() + sep + "#mil" + sep
-
-                + mil_initial.getString() + sep
-                + mil_received.getString() + sep
-                + mil_used.getString() + sep
-                + mil_lost.getString() + sep + "#pln" + sep
-
-                + pln_initial.getString() + sep
-                + pln_received.getString() + sep
-                + pln_used.getString() + sep
-                + pln_lost.getString();
-        } else if ((this.hc_code).endsWith("URENAS")){
-            return "nut stock URENAS" + sep
-                + health_center + sep
-                + monthField.getSelectedIndex() + sep
-                + Integer.parseInt(yearField.getString(yearField.getSelectedIndex())) + sep + "#pln" + sep
-                + pln_initial.getString() + sep
-                + pln_received.getString() + sep
-                + pln_used.getString() + sep
-                + pln_lost.getString();
-        } else if ((this.hc_code).equals("URENI")){
-            return "nut stock URENI" + sep
-                + health_center + sep
-                + monthField.getSelectedIndex() + sep
-                + Integer.parseInt(yearField.getString(yearField.getSelectedIndex())) + sep + "#l75" + sep
-                + l75_initial.getString() + sep
-                + l75_received.getString() + sep
-                + l75_used.getString() + sep
-                + l75_lost.getString() + sep + "#l100" + sep
-
-                + l100_initial.getString() + sep
-                + l100_received.getString() + sep
-                + l100_used.getString() + sep
-                + l100_lost.getString() + sep + "#pln" + sep
-
-                + pln_initial.getString() + sep
-                + pln_received.getString() + sep
-                + pln_used.getString() + sep
-                + pln_lost.getString();
-        } */return "nut stock";
-        
     }
 
     public void commandAction(Command c, Displayable d) {

@@ -3,6 +3,8 @@ package nut;
 
 import javax.microedition.lcdui.*;
 import nut.Configuration.*;
+import java.util.TimeZone;
+import java.util.Date;
 import nut.Constants.*;
 import nut.HelpForm.*;
 
@@ -18,6 +20,9 @@ public class DisableForm extends Form implements CommandListener {
     private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
     private static final Command CMD_SAVE = new Command ("Envoi.", Command.OK, 1);
     private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
+    private static final String month_list[] = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+
+    private DateField date;
 
     public NUTMIDlet midlet;
 
@@ -37,11 +42,14 @@ public DisableForm(NUTMIDlet midlet) {
     // creating al fields (blank)
     id_patient =  new TextField("ID:", null, 4, TextField.DECIMAL);
     reasonField =  new ChoiceGroup("Raison:", ChoiceGroup.POPUP, reason, null);
+    date =  new DateField("Date de naissance:", DateField.DATE, TimeZone.getTimeZone("GMT"));
 
+    date.setDate(new Date());
 
     // add fields to forms
     append(id_patient);
     append(reasonField);
+    append(date);
 
     addCommand(CMD_EXIT);
     addCommand(CMD_SAVE);
@@ -62,7 +70,23 @@ public DisableForm(NUTMIDlet midlet) {
         return true;
     }
 
-
+    private int[] formatDateString(Date date_obj) {
+        String date_ = date_obj.toString();
+        int day = Integer.valueOf(date_.substring(8, 10)).intValue();
+        int month = monthFromString(date_.substring(4,7));
+        int year = Integer.valueOf(date_.substring(30, 34)).intValue();
+        int list_date[] = {day, month, year};
+        return list_date;
+    }
+    private int monthFromString(String month_str) {
+        int i;
+        for(i=0; i<=month_list.length; i++){
+            if(month_list[i].equals(month_str)){
+                return i + 1;
+            }
+        }
+        return 1;
+    }
     /* Converts Form request to SMS message
      * @return <code>String</code> to be sent by SMS
      */
@@ -81,7 +105,12 @@ public DisableForm(NUTMIDlet midlet) {
             rea = "d";
         }
 
-        return "nut off" + sep + id_patient.getString() + sep + rea;
+        int date_array[] = formatDateString(date.getDate());
+        int day = date_array[0];
+        int month = date_array[1];
+        int year = date_array[2];
+        return "nut off" + sep + id_patient.getString() + sep + rea + sep
+                              + year + "-" + month + "-" + day + " #";
     }
 
     public void commandAction(Command c, Displayable d) {
