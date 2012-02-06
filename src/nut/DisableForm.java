@@ -42,7 +42,7 @@ public DisableForm(NUTMIDlet midlet) {
     // creating al fields (blank)
     id_patient =  new TextField("ID:", null, 4, TextField.DECIMAL);
     reasonField =  new ChoiceGroup("Raison:", ChoiceGroup.POPUP, reason, null);
-    date =  new DateField("Date de naissance:", DateField.DATE, TimeZone.getTimeZone("GMT"));
+    date =  new DateField("Date de sortie:", DateField.DATE, TimeZone.getTimeZone("GMT"));
 
     date.setDate(new Date());
 
