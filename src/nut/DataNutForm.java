@@ -39,7 +39,7 @@ public class DataNutForm extends Form implements CommandListener {
 
 
     public DataNutForm(NUTMIDlet midlet) {
-        super("Suivie nutritionnelle");
+        super("Suivi nutritionnel");
         this.midlet = midlet;
 
         config = new Configuration();

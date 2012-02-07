@@ -69,7 +69,7 @@ public RegisterForm(NUTMIDlet midlet) {
     dob =  new DateField("Date de naissance:", DateField.DATE, TimeZone.getTimeZone("GMT"));
     sex = new ChoiceGroup("Sexe:", ChoiceGroup.POPUP, sexList, null);
 
-    intro = new StringItem(null, "Suivie nuttritionnellle");
+    intro = new StringItem(null, "Suivi nuttritionnel");
     weight =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
     height =  new TextField("Taille (en cm):", null, MAX_SIZE, TextField.DECIMAL);
     oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
@@ -144,7 +144,6 @@ public RegisterForm(NUTMIDlet midlet) {
      */
     public boolean isComplete() {
         // all fields are required to be filled.
-
         if (first_name.getString().length() == 0 ||
             last_name.getString().length() == 0 ||
             mother_name.getString().length() == 0 ||
@@ -155,12 +154,10 @@ public RegisterForm(NUTMIDlet midlet) {
     }
 
     private int[] formatDateString(Date date_obj) {
-        // NOKIA 2690 format:
-        // Sun Jan 18 00:00:00 GMT 2009
         String date = date_obj.toString();
         int day = Integer.valueOf(date.substring(8, 10)).intValue();
         int month = monthFromString(date.substring(4,7));
-        int year = Integer.valueOf(date.substring(24, 28)).intValue(); //30, 34 on emul
+        int year = Integer.valueOf(date.substring(30, 34)).intValue();
         int list_date[] = {day, month, year};
         return list_date;
     }
@@ -255,7 +252,6 @@ public RegisterForm(NUTMIDlet midlet) {
         int day = dob_array[0];
         int month = dob_array[1];
         int year = dob_array[2];
-
         return "nut register" + sep
                               + health_center + sep
                               + first_name.getString() + sep
@@ -288,23 +284,23 @@ public RegisterForm(NUTMIDlet midlet) {
             Alert alert;
 
             // check whether all fields have been completed
-            // if not, we alert and don't do anything else.
-        if (!this.isComplete()) {
-            alert = new Alert("Données manquantes", "Tous les champs " +
-                         "requis doivent être remplis!", null, AlertType.ERROR);
-            alert.setTimeout(Alert.FOREVER);
-            this.midlet.display.setCurrent (alert, this);
-            return;
-        }
+                // if not, we alert and don't do anything else.
+            if (!this.isComplete()) {
+                alert = new Alert("Données manquantes", "Tous les champs " +
+                             "requis doivent être remplis!", null, AlertType.ERROR);
+                alert.setTimeout(Alert.FOREVER);
+                this.midlet.display.setCurrent (alert, this);
+                return;
+            }
 
-        // check for errors and display first error
-        if (!this.isValid()) {
-            alert = new Alert("Données incorrectes!", this.ErrorMessage,
-                              null, AlertType.ERROR);
-            alert.setTimeout(Alert.FOREVER);
-            this.midlet.display.setCurrent (alert, this);
-            return;
-        }
+            // check for errors and display first error
+            if (!this.isValid()) {
+                alert = new Alert("Données incorrectes!", this.ErrorMessage,
+                                  null, AlertType.ERROR);
+                alert.setTimeout(Alert.FOREVER);
+                this.midlet.display.setCurrent (alert, this);
+                return;
+            }
 
             // sends the sms and reply feedback
             SMSSender sms = new SMSSender();

@@ -80,18 +80,19 @@ public ResearchForm(NUTMIDlet midlet) {
         if (first_name.getString().length() == 0){
             firstname = None;
         } else{
-            firstname = first_name.getString();
+            firstname = first_name.getString().replace(' ', '_');
           }
         if (last_name.getString().length() == 0){
             lastname = None;
         } else{
-            lastname = last_name.getString();
+            lastname = last_name.getString().replace(' ', '_');
           }
         if (surname_mother.getString().length() == 0){
             surnamemother = None;
         } else{
-            surnamemother = surname_mother.getString();
+            surnamemother = surname_mother.getString().replace(' ', '_');
           }
+
         return "nut research" + sep + config.get("health_center")
                     + sep + firstname + sep + lastname + sep + surnamemother;
     }
@@ -126,7 +127,7 @@ public ResearchForm(NUTMIDlet midlet) {
             SMSSender sms = new SMSSender();
             String number = config.get("server_number");
             if (sms.send(number, this.toSMSFormat())) {
-                alert = new Alert ("Demande envoyée !", "Vous allez recevoir une confirmation du serveur.", null, AlertType.CONFIRMATION);
+                alert = new Alert ("Demande envoyée !", "Vous allez recevoir la réponse du serveur.", null, AlertType.CONFIRMATION);
                 this.midlet.display.setCurrent (alert, this.midlet.mainMenu);
             } else {
                 alert = new Alert ("Échec d'envoi SMS", "Impossible d'envoyer la demande par SMS.", null, AlertType.WARNING);
