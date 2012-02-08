@@ -95,7 +95,7 @@ public DisableForm(NUTMIDlet midlet) {
         String rea = " ";
         if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("ABANDON")){
             rea = "a";
-        } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("TRANFER")){
+        } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("TRANSFER")){
             rea = "t";
         } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("GUERISON")){
             rea = "h";
