@@ -110,7 +110,7 @@ public DisableForm(NUTMIDlet midlet) {
         int month = date_array[1];
         int year = date_array[2];
         return "nut off" + sep + id_patient.getString() + sep + rea + sep
-                              + year + "-" + month + "-" + day + " #";
+                              + year + "-" + month + "-" + day;
     }
 
     public void commandAction(Command c, Displayable d) {
