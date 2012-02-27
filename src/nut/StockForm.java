@@ -64,11 +64,13 @@ public StockForm(NUTMIDlet midlet) {
     mam_inputs.put("hui", "Huile");
     mam_inputs.put("suc", "Sucre");
     mam_inputs.put("mil", "Mil");
+    mam_inputs.put("auf", "Autre Farine");
 
     Hashtable sam_comp_inputs = new Hashtable();
     sam_comp_inputs.put("l75", "Lait F175");
     sam_comp_inputs.put("l100", "Lait F100");
     sam_comp_inputs.put("pln", "Plumpy Nut");
+    sam_comp_inputs.put("auf", "Autre Farine");
 
     Hashtable sam_inputs = new Hashtable();
     sam_inputs.put("pln", "Plumpy Nut");

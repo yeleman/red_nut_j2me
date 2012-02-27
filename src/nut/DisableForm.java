@@ -95,7 +95,7 @@ public DisableForm(NUTMIDlet midlet) {
         String rea = " ";
         if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("ABANDON")){
             rea = "a";
-        } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("TRANFER")){
+        } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("TRANSFER")){
             rea = "t";
         } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("GUERISON")){
             rea = "h";
@@ -110,7 +110,7 @@ public DisableForm(NUTMIDlet midlet) {
         int month = date_array[1];
         int year = date_array[2];
         return "nut off" + sep + id_patient.getString() + sep + rea + sep
-                              + year + "-" + month + "-" + day + " #";
+                              + year + "-" + month + "-" + day;
     }
 
     public void commandAction(Command c, Displayable d) {
