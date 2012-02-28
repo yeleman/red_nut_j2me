@@ -45,6 +45,7 @@ public class RegisterForm extends Form implements CommandListener {
     private TextField mother_name;
     private ChoiceGroup sex;
     private DateField dob;
+    private TextField contacts;
 
     //datanut
     private StringItem intro;
@@ -68,6 +69,7 @@ public RegisterForm(NUTMIDlet midlet) {
     mother_name =  new TextField("Nom de la mère:", null, 20, TextField.ANY);
     dob =  new DateField("Date de naissance:", DateField.DATE, TimeZone.getTimeZone("GMT"));
     sex = new ChoiceGroup("Sexe:", ChoiceGroup.POPUP, sexList, null);
+    contacts =  new TextField("contact:", null, 20, TextField.ANY);
 
     intro = new StringItem(null, "Suivi nuttritionnel");
     weight =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
@@ -84,6 +86,7 @@ public RegisterForm(NUTMIDlet midlet) {
     append(mother_name);
     append(dob);
     append(sex);
+    append(contacts);
 
     append(intro);
     append(weight);
@@ -235,7 +238,8 @@ public RegisterForm(NUTMIDlet midlet) {
     public String toSMSFormat() {
         String sep = " ";
         String oed = " ";
-        String nbr = " ";
+        String nbrplu = " ";
+        String contact = " ";
         if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("OUI")){
             oed = "YES";
         } else if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("NON")){
@@ -244,9 +248,14 @@ public RegisterForm(NUTMIDlet midlet) {
             oed = "Unknown";
         }
         if (nbr_plu.getString().length() == 0) {
-            nbr = "-";
+            nbrplu = "-";
         } else {
-            nbr = nbr_plu.getString();
+            nbrplu = nbr_plu.getString();
+        }
+        if (contacts.getString().length() == 0) {
+            contact = "-";
+        } else {
+            contact = contacts.getString();
         }
         int dob_array[] = formatDateString(dob.getDate());
         int day = dob_array[0];
@@ -258,12 +267,13 @@ public RegisterForm(NUTMIDlet midlet) {
                               + last_name.getString() + sep
                               + mother_name.getString() + sep
                               + sex.getString(sex.getSelectedIndex()) + sep
-                              + year + "-" + month + "-" + day + " #"
+                              + year + "-" + month + "-" + day + sep
+                              + contact + " #"
                               + weight.getString() + sep
                               + height.getString() + sep
                               + oed + sep
                               + pb.getString() + sep
-                              + nbr;
+                              + nbrplu;
     }
 
     public void commandAction(Command c, Displayable d) {
