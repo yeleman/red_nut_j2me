@@ -87,7 +87,6 @@ public RegisterForm(NUTMIDlet midlet) {
     append(dob);
     append(sex);
     append(contacts);
-
     append(intro);
     append(weight);
     append(height);
@@ -160,7 +159,13 @@ public RegisterForm(NUTMIDlet midlet) {
         String date = date_obj.toString();
         int day = Integer.valueOf(date.substring(8, 10)).intValue();
         int month = monthFromString(date.substring(4,7));
-        int year = Integer.valueOf(date.substring(30, 34)).intValue();
+        int start = 24;
+        int end = 28;
+        if (date.length()==34){
+            start = 30;
+            end = 34;
+        }
+        int year = Integer.valueOf(date.substring(start, end)).intValue();
         int list_date[] = {day, month, year};
         return list_date;
     }

@@ -13,7 +13,6 @@ import javax.microedition.lcdui.*;
  */
 public class SharedChecks {
 
-
     public static boolean isComplete(TextField weight, TextField height, TextField pb) {
        // all fields are required to be filled.
         if (weight.getString().length() == 0 ||
