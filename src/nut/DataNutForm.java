@@ -30,12 +30,13 @@ public class DataNutForm extends Form implements CommandListener {
     private String ErrorMessage = "";
 
     private static final String[] oedema = {"OUI", "NON", "Inconnue"};
+    private static final String[] typeurenlist = {"URENAS", "URENI", "URENAM"};
 
     private ChoiceGroup oedemaField;
 
-
     private DateField create_date;
     private TextField id;
+    private ChoiceGroup type_uren;
     private TextField weight;
     private TextField height;
     private TextField pb;
@@ -51,22 +52,19 @@ public class DataNutForm extends Form implements CommandListener {
         // creating all fields (blank)
         create_date =  new DateField("Date de enregistrement:", DateField.DATE, TimeZone.getTimeZone("GMT"));
         id =  new TextField("ID:", null, 10, TextField.DECIMAL);
-        weight =  new TextField("Poids (en kg):", null,
-                MAX_SIZE, TextField.DECIMAL);
-        height =  new TextField("Taille (en cm):", null,
-                MAX_SIZE, TextField.DECIMAL);
-        oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP,
-                oedema, null);
-        pb =  new TextField("Périmètre brachial (en mm):", null,
-                MAX_SIZE, TextField.DECIMAL);
-        nbr_plu =  new TextField("Sachets plumpy nut donnés:", null,
-                MAX_SIZE, TextField.NUMERIC);
+        type_uren = new ChoiceGroup("Type uren:", ChoiceGroup.POPUP, typeurenlist, null);
+        weight =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
+        height =  new TextField("Taille (en cm):", null, MAX_SIZE, TextField.DECIMAL);
+        oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
+        pb =  new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
+        nbr_plu =  new TextField("Sachets plumpy nut donnés:", null, MAX_SIZE, TextField.NUMERIC);
 
         create_date.setDate(new Date());
 
         // add fields to form
         append(create_date);
         append(id);
+        append(type_uren);
         append(weight);
         append(height);
         append(oedemaField);
@@ -108,8 +106,7 @@ public class DataNutForm extends Form implements CommandListener {
             ErrorMessage = "La date indiquée est dans le futur.";
             return false;
         }
-
-           return true;
+        return true;
     }
 
     /* Converts Form request to SMS message
@@ -138,6 +135,7 @@ public class DataNutForm extends Form implements CommandListener {
                               + SharedChecks.addzero(reporting_date_array[0]);
 
         return "nut fol" + sep + reporting_d
+                         + sep + type_uren.getSelectedIndex() // return O = URENAS, 1 = URENI, URENAM = 2
                          + sep + id.getString()
                          + sep + weight.getString()
                          + sep + height.getString()

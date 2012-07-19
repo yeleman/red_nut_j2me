@@ -34,16 +34,18 @@ public class RegisterForm extends Form implements CommandListener {
 
     private static final String[] sexList= {"F", "M"};
     private static final String[] oedema = {"OUI", "NON", "Inconnue"};
-    private ChoiceGroup oedemaField;
+    private static final String[] typeurenlist = {"URENAS", "URENI", "URENAM"};
 
     private String ErrorMessage = "";
 
     //register
     private DateField create_date;
+    private TextField id;
     private TextField first_name;
     private TextField last_name;
     private TextField mother_name;
     private ChoiceGroup sex;
+    private ChoiceGroup type_uren;
     private DateField dob;
     private TextField contacts;
 
@@ -51,6 +53,7 @@ public class RegisterForm extends Form implements CommandListener {
     private StringItem intro;
     private TextField weight;
     private TextField height;
+    private ChoiceGroup oedemaField;
     private TextField pb;
     private TextField nbr_plu;
 
@@ -65,11 +68,13 @@ public RegisterForm(NUTMIDlet midlet) {
 
     // creating all fields (blank)
     create_date =  new DateField("Date de enregistrement:", DateField.DATE, TimeZone.getTimeZone("GMT"));
+    id =  new TextField("ID:", null, 10, TextField.DECIMAL);
     first_name =  new TextField("Prénom:", null, 20, TextField.ANY);
     last_name =  new TextField("Nom:", null, 20, TextField.ANY);
     mother_name =  new TextField("Nom de la mère:", null, 20, TextField.ANY);
     dob =  new DateField("Date de naissance:", DateField.DATE, TimeZone.getTimeZone("GMT"));
     sex = new ChoiceGroup("Sexe:", ChoiceGroup.POPUP, sexList, null);
+    type_uren = new ChoiceGroup("Type uren:", ChoiceGroup.POPUP, typeurenlist, null);
     contacts =  new TextField("contact:", null, 20, TextField.ANY);
 
     intro = new StringItem(null, "Suivi nutritionnel");
@@ -84,9 +89,11 @@ public RegisterForm(NUTMIDlet midlet) {
 
     // add fields to forms
     append(create_date);
+    append(id);
     append(first_name);
     append(last_name);
     append(mother_name);
+    append(type_uren);
     append(dob);
     append(sex);
     append(contacts);
@@ -152,6 +159,7 @@ public RegisterForm(NUTMIDlet midlet) {
         if (first_name.getString().length() == 0 ||
             last_name.getString().length() == 0 ||
             mother_name.getString().length() == 0 ||
+            id.getString().length() == 0 ||
             !SharedChecks.isComplete(weight, height, pb)) {
             return false;
         }
@@ -262,20 +270,21 @@ public RegisterForm(NUTMIDlet midlet) {
                               + SharedChecks.addzero(dob_array[1])
                               + SharedChecks.addzero(dob_array[0]);
 
-        return "nut register" + sep
-                              + health_center + sep
-                              + reporting_d + sep
-                              + first_name.getString().replace(' ', '_') + sep
-                              + last_name.getString().replace(' ', '_') + sep
-                              + mother_name.getString().replace(' ', '_') + sep
-                              + sex.getString(sex.getSelectedIndex()) + sep
-                              + dob_d + sep
-                              + contact + " #"
-                              + weight.getString() + sep
-                              + height.getString() + sep
-                              + oed + sep
-                              + pb.getString() + sep
-                              + nbrplu;
+        return "nut register" + sep + health_center
+                              + sep + reporting_d
+                              + sep + id.getString()
+                              + sep + type_uren.getSelectedIndex() // return O = URENAS, 1 = URENI, URENAM = 2
+                              + sep + first_name.getString().replace(' ', '_')
+                              + sep + last_name.getString().replace(' ', '_')
+                              + sep + mother_name.getString().replace(' ', '_')
+                              + sep + sex.getString(sex.getSelectedIndex())
+                              + sep + dob_d
+                              + sep + contact
+                              + " #" + weight.getString()
+                              + sep + height.getString()
+                              + sep + oed
+                              + sep + pb.getString()
+                              + sep + nbrplu;
     }
 
     public void commandAction(Command c, Displayable d) {
