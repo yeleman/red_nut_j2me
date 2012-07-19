@@ -14,7 +14,7 @@ import nut.SharedChecks.*;
  * Displays registration fields
  * Checks completeness
  * Sends as SMS
- * @author alou
+ * @author Fad
  */
 public class RegisterForm extends Form implements CommandListener {
 
@@ -25,7 +25,6 @@ public class RegisterForm extends Form implements CommandListener {
     private static final Command CMD_HELP = new Command ("Aide",
                                                             Command.HELP, 2);
     private static final int MAX_SIZE = 5; // max no. of chars per field.
-    private static final String month_list[] = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
 
     public NUTMIDlet midlet;
 
@@ -40,6 +39,7 @@ public class RegisterForm extends Form implements CommandListener {
     private String ErrorMessage = "";
 
     //register
+    private DateField create_date;
     private TextField first_name;
     private TextField last_name;
     private TextField mother_name;
@@ -64,6 +64,7 @@ public RegisterForm(NUTMIDlet midlet) {
     health_center = config.get("health_center");
 
     // creating all fields (blank)
+    create_date =  new DateField("Date de enregistrement:", DateField.DATE, TimeZone.getTimeZone("GMT"));
     first_name =  new TextField("Prénom:", null, 20, TextField.ANY);
     last_name =  new TextField("Nom:", null, 20, TextField.ANY);
     mother_name =  new TextField("Nom de la mère:", null, 20, TextField.ANY);
@@ -71,16 +72,18 @@ public RegisterForm(NUTMIDlet midlet) {
     sex = new ChoiceGroup("Sexe:", ChoiceGroup.POPUP, sexList, null);
     contacts =  new TextField("contact:", null, 20, TextField.ANY);
 
-    intro = new StringItem(null, "Suivi nuttritionnel");
+    intro = new StringItem(null, "Suivi nutritionnel");
     weight =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
     height =  new TextField("Taille (en cm):", null, MAX_SIZE, TextField.DECIMAL);
     oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
     pb =  new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
     nbr_plu =  new TextField("Sachets plumpy nut donnés:", null, MAX_SIZE, TextField.NUMERIC);
 
+    create_date.setDate(new Date());
     dob.setDate(new Date());
 
     // add fields to forms
+    append(create_date);
     append(first_name);
     append(last_name);
     append(mother_name);
@@ -155,34 +158,31 @@ public RegisterForm(NUTMIDlet midlet) {
         return true;
     }
 
-    private int[] formatDateString(Date date_obj) {
-        String date = date_obj.toString();
-        int day = Integer.valueOf(date.substring(8, 10)).intValue();
-        int month = monthFromString(date.substring(4,7));
-        int start = 24;
-        int end = 28;
-        if (date.length()==34){
-            start = 30;
-            end = 34;
-        }
-        int year = Integer.valueOf(date.substring(start, end)).intValue();
-        int list_date[] = {day, month, year};
-        return list_date;
-    }
-
     /*
      * Whether all filled data is correct
      * @return <code>true</code> if all fields are OK
      * <code>false</code> otherwise.
      */
     public boolean isValid() {
-        int dob_array[] = formatDateString(dob.getDate());
+        ErrorMessage = "La date indiquée est dans le futur.";
+
+        if (SharedChecks.isDateValide(create_date.getDate()) != true) {
+            ErrorMessage = "[Date de visite] " + ErrorMessage;
+            return false;
+        }
+
+        if (SharedChecks.isDateValide(dob.getDate()) != true) {
+            ErrorMessage = "[Date de naissance] " + ErrorMessage;
+            return false;
+        }
+
+        int dob_array[] = SharedChecks.formatDateString(dob.getDate());
         int day = dob_array[0];
         int month = dob_array[1];
         int year = dob_array[2];
 
         Date now = new Date();
-        int now_array[] = formatDateString(now);
+        int now_array[] = SharedChecks.formatDateString(now);
         int now_day = now_array[0];
         int now_month = now_array[1];
         int now_year = now_array[2];
@@ -230,16 +230,6 @@ public RegisterForm(NUTMIDlet midlet) {
      * @return <code>String</code> to be sent by SMS
      */
 
-    private int monthFromString(String month_str) {
-        int i;
-        for(i=0; i<=month_list.length; i++){
-            if(month_list[i].equals(month_str)){
-                return i + 1;
-            }
-        }
-        return 1;
-    }
-
     public String toSMSFormat() {
         String sep = " ";
         String oed = " ";
@@ -262,17 +252,24 @@ public RegisterForm(NUTMIDlet midlet) {
         } else {
             contact = contacts.getString();
         }
-        int dob_array[] = formatDateString(dob.getDate());
-        int day = dob_array[0];
-        int month = dob_array[1];
-        int year = dob_array[2];
+        int reporting_date_array[] = SharedChecks.formatDateString(create_date.getDate());
+        String reporting_d = String.valueOf(reporting_date_array[2])
+                              + SharedChecks.addzero(reporting_date_array[1])
+                              + SharedChecks.addzero(reporting_date_array[0]);
+
+        int dob_array[] = SharedChecks.formatDateString(dob.getDate());
+        String dob_d = String.valueOf(dob_array[2])
+                              + SharedChecks.addzero(dob_array[1])
+                              + SharedChecks.addzero(dob_array[0]);
+
         return "nut register" + sep
                               + health_center + sep
-                              + first_name.getString() + sep
-                              + last_name.getString() + sep
-                              + mother_name.getString() + sep
+                              + reporting_d + sep
+                              + first_name.getString().replace(' ', '_') + sep
+                              + last_name.getString().replace(' ', '_') + sep
+                              + mother_name.getString().replace(' ', '_') + sep
                               + sex.getString(sex.getSelectedIndex()) + sep
-                              + year + "-" + month + "-" + day + sep
+                              + dob_d + sep
                               + contact + " #"
                               + weight.getString() + sep
                               + height.getString() + sep
