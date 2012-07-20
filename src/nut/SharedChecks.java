@@ -52,7 +52,6 @@ public class SharedChecks {
         int now_day = now_array[0];
         int now_month = now_array[1];
         int now_year = now_array[2];
-
         if (now_year < year){
             return false;
         }

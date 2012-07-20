@@ -14,7 +14,7 @@ import nut.SharedChecks.*;
  * Displays registration fields
  * Checks completeness
  * Sends as SMS
- * @author Fad
+ * @author alou & Fad
  */
 public class RegisterForm extends Form implements CommandListener {
 
@@ -25,6 +25,7 @@ public class RegisterForm extends Form implements CommandListener {
     private static final Command CMD_HELP = new Command ("Aide",
                                                             Command.HELP, 2);
     private static final int MAX_SIZE = 5; // max no. of chars per field.
+    private static final String month_list[] = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
 
     public NUTMIDlet midlet;
 
@@ -75,7 +76,7 @@ public RegisterForm(NUTMIDlet midlet) {
     dob =  new DateField("Date de naissance:", DateField.DATE, TimeZone.getTimeZone("GMT"));
     sex = new ChoiceGroup("Sexe:", ChoiceGroup.POPUP, sexList, null);
     type_uren = new ChoiceGroup("Type uren:", ChoiceGroup.POPUP, typeurenlist, null);
-    contacts =  new TextField("contact:", null, 20, TextField.ANY);
+    contacts =  new TextField("contact:", null, 20, TextField.NUMERIC);
 
     intro = new StringItem(null, "Suivi nutritionnel");
     weight =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
@@ -166,6 +167,21 @@ public RegisterForm(NUTMIDlet midlet) {
         return true;
     }
 
+    private int[] formatDateString(Date date_obj) {
+        String date = date_obj.toString();
+        int day = Integer.valueOf(date.substring(8, 10)).intValue();
+        int month = monthFromString(date.substring(4,7));
+        int start = 24;
+        int end = 28;
+        if (date.length()==34){
+            start = 30;
+            end = 34;
+        }
+        int year = Integer.valueOf(date.substring(start, end)).intValue();
+        int list_date[] = {day, month, year};
+        return list_date;
+    }
+
     /*
      * Whether all filled data is correct
      * @return <code>true</code> if all fields are OK
@@ -237,6 +253,16 @@ public RegisterForm(NUTMIDlet midlet) {
    /* Converts Form request to SMS message
      * @return <code>String</code> to be sent by SMS
      */
+
+    private int monthFromString(String month_str) {
+        int i;
+        for(i=0; i<=month_list.length; i++){
+            if(month_list[i].equals(month_str)){
+                return i + 1;
+            }
+        }
+        return 1;
+    }
 
     public String toSMSFormat() {
         String sep = " ";
