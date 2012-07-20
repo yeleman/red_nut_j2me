@@ -69,7 +69,7 @@ public RegisterForm(NUTMIDlet midlet) {
     mother_name =  new TextField("Nom de la mère:", null, 20, TextField.ANY);
     dob =  new DateField("Date de naissance:", DateField.DATE, TimeZone.getTimeZone("GMT"));
     sex = new ChoiceGroup("Sexe:", ChoiceGroup.POPUP, sexList, null);
-    contacts =  new TextField("contact:", null, 20, TextField.ANY);
+    contacts =  new TextField("Contact:", null, 20, TextField.NUMERIC);
 
     intro = new StringItem(null, "Suivi nuttritionnel");
     weight =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
