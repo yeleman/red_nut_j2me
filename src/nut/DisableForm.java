@@ -20,11 +20,10 @@ public class DisableForm extends Form implements CommandListener {
     private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
     private static final Command CMD_SAVE = new Command ("Envoi.", Command.OK, 1);
     private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
-    private static final String month_list[] = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
-
-    private DateField date;
 
     public NUTMIDlet midlet;
+
+    private DateField date_disable;
 
     private Configuration config;
     private static final String[] reason = {"ABANDON", "TRANSFER",
@@ -32,6 +31,8 @@ public class DisableForm extends Form implements CommandListener {
                                             "DECES"};
     private ChoiceGroup reasonField;
     private TextField id_patient;
+    private String ErrorMessage = "";
+
 
 public DisableForm(NUTMIDlet midlet) {
     super("Sortie");
@@ -42,14 +43,14 @@ public DisableForm(NUTMIDlet midlet) {
     // creating al fields (blank)
     id_patient =  new TextField("ID:", null, 4, TextField.DECIMAL);
     reasonField =  new ChoiceGroup("Raison:", ChoiceGroup.POPUP, reason, null);
-    date =  new DateField("Date de sortie:", DateField.DATE, TimeZone.getTimeZone("GMT"));
+    date_disable =  new DateField("Date de sortie:", DateField.DATE, TimeZone.getTimeZone("GMT"));
 
-    date.setDate(new Date());
+    date_disable.setDate(new Date());
 
     // add fields to forms
     append(id_patient);
     append(reasonField);
-    append(date);
+    append(date_disable);
 
     addCommand(CMD_EXIT);
     addCommand(CMD_SAVE);
@@ -69,24 +70,16 @@ public DisableForm(NUTMIDlet midlet) {
         }
         return true;
     }
+    public boolean isValid() {
 
-    private int[] formatDateString(Date date_obj) {
-        String date_ = date_obj.toString();
-        int day = Integer.valueOf(date_.substring(8, 10)).intValue();
-        int month = monthFromString(date_.substring(4,7));
-        int year = Integer.valueOf(date_.substring(30, 34)).intValue();
-        int list_date[] = {day, month, year};
-        return list_date;
-    }
-    private int monthFromString(String month_str) {
-        int i;
-        for(i=0; i<=month_list.length; i++){
-            if(month_list[i].equals(month_str)){
-                return i + 1;
-            }
+        if (SharedChecks.isDateValide(date_disable.getDate()) != true) {
+            ErrorMessage = "[Date de sortie] La date indiquée est dans le futur.";
+            return false;
         }
-        return 1;
+
+        return true;
     }
+
     /* Converts Form request to SMS message
      * @return <code>String</code> to be sent by SMS
      */
@@ -105,12 +98,14 @@ public DisableForm(NUTMIDlet midlet) {
             rea = "d";
         }
 
-        int date_array[] = formatDateString(date.getDate());
-        int day = date_array[0];
-        int month = date_array[1];
-        int year = date_array[2];
-        return "nut off" + sep + id_patient.getString() + sep + rea + sep
-                              + year + "-" + month + "-" + day;
+        int date_array[] = SharedChecks.formatDateString(date_disable.getDate());
+        String disable_d = String.valueOf(date_array[2])
+                         + SharedChecks.addzero(date_array[1])
+                         + SharedChecks.addzero(date_array[0]);
+
+        return "nut off" + sep + id_patient.getString()
+                         + sep + rea
+                         + sep + disable_d;
     }
 
     public void commandAction(Command c, Displayable d) {
@@ -139,6 +134,13 @@ public DisableForm(NUTMIDlet midlet) {
                 return;
             }
 
+            if (!this.isValid()) {
+                alert = new Alert("Données incorrectes!", this.ErrorMessage,
+                                  null, AlertType.ERROR);
+                alert.setTimeout(Alert.FOREVER);
+                this.midlet.display.setCurrent (alert, this);
+                return;
+            }
             // sends the sms and reply feedback
             SMSSender sms = new SMSSender();
             String number = config.get("server_number");

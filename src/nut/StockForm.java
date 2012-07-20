@@ -23,7 +23,7 @@ public class StockForm extends Form implements CommandListener {
     private static final int MAX_SIZE = 5; // max no. of chars per field.
 
     private static final String[] monthList= {" --- ", "Janvier (01)", "Février (02)", "Mars (03)", "Avril (04)", "Mai (05)", "Juin (06)", "Juillet (07)", "Aout (08)", "Septembre (09)", "Octobre (10)", "Novembre (11)", "Décembre (12)"};
-    private static final String[] yearList = {" --- ", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"};
+    private static final String[] yearList = {" --- ", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"};
 
     public NUTMIDlet midlet;
 

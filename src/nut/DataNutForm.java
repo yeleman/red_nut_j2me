@@ -2,6 +2,8 @@
 package nut;
 
 import javax.microedition.lcdui.*;
+import java.util.TimeZone;
+import java.util.Date;
 import nut.Configuration.*;
 import nut.Constants.*;
 import nut.HelpForm.*;
@@ -20,7 +22,7 @@ public class DataNutForm extends Form implements CommandListener {
     private static final Command CMD_SAVE = new Command ("Envoi.", Command.OK, 1);
     private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
     private static final int MAX_SIZE = 5; // max no. of chars per field.
-    
+
     public NUTMIDlet midlet;
 
     private Configuration config;
@@ -28,10 +30,13 @@ public class DataNutForm extends Form implements CommandListener {
     private String ErrorMessage = "";
 
     private static final String[] oedema = {"OUI", "NON", "Inconnue"};
+    private static final String[] typeurenlist = {"URENAS", "URENI", "URENAM"};
 
     private ChoiceGroup oedemaField;
 
+    private DateField create_date;
     private TextField id;
+    private ChoiceGroup type_uren;
     private TextField weight;
     private TextField height;
     private TextField pb;
@@ -45,21 +50,21 @@ public class DataNutForm extends Form implements CommandListener {
         config = new Configuration();
 
         // creating all fields (blank)
+        create_date =  new DateField("Date de enregistrement:", DateField.DATE, TimeZone.getTimeZone("GMT"));
         id =  new TextField("ID:", null, 10, TextField.DECIMAL);
-        weight =  new TextField("Poids (en kg):", null,
-                MAX_SIZE, TextField.DECIMAL);
-        height =  new TextField("Taille (en cm):", null,
-                MAX_SIZE, TextField.DECIMAL);
-        oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP,
-                oedema, null);
-        pb =  new TextField("Périmètre brachial (en mm):", null,
-                MAX_SIZE, TextField.DECIMAL);
-        nbr_plu =  new TextField("Sachets plumpy nut donnés:", null,
-                MAX_SIZE, TextField.NUMERIC);
+        type_uren = new ChoiceGroup("Type uren:", ChoiceGroup.POPUP, typeurenlist, null);
+        weight =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
+        height =  new TextField("Taille (en cm):", null, MAX_SIZE, TextField.DECIMAL);
+        oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
+        pb =  new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
+        nbr_plu =  new TextField("Sachets plumpy nut donnés:", null, MAX_SIZE, TextField.NUMERIC);
 
+        create_date.setDate(new Date());
 
         // add fields to form
+        append(create_date);
         append(id);
+        append(type_uren);
         append(weight);
         append(height);
         append(oedemaField);
@@ -93,11 +98,15 @@ public class DataNutForm extends Form implements CommandListener {
      * <code>false</code> otherwise.
      */
      public boolean isValid() {
-           ErrorMessage = SharedChecks.Message(weight, height, pb);
-           if (ErrorMessage != ""){
-               return false;
-           }
-           return true;
+        ErrorMessage = SharedChecks.Message(weight, height, pb);
+        if (ErrorMessage != ""){
+           return false;
+        }
+        if (SharedChecks.isDateValide(create_date.getDate()) != true) {
+            ErrorMessage = "La date indiquée est dans le futur.";
+            return false;
+        }
+        return true;
     }
 
     /* Converts Form request to SMS message
@@ -120,12 +129,19 @@ public class DataNutForm extends Form implements CommandListener {
             nbr = nbr_plu.getString();
         }
 
-        return "nut fol" + sep + id.getString() + sep
-                + weight.getString() + sep
-                + height.getString() + sep
-                + oed + sep
-                + pb.getString() + sep
-                + nbr;
+        int reporting_date_array[] = SharedChecks.formatDateString(create_date.getDate());
+        String reporting_d = String.valueOf(reporting_date_array[2])
+                              + SharedChecks.addzero(reporting_date_array[1])
+                              + SharedChecks.addzero(reporting_date_array[0]);
+
+        return "nut fol" + sep + reporting_d
+                         + sep + type_uren.getSelectedIndex() // return O = URENAS, 1 = URENI, URENAM = 2
+                         + sep + id.getString()
+                         + sep + weight.getString()
+                         + sep + height.getString()
+                         + sep + oed
+                         + sep + pb.getString()
+                         + sep + nbr;
     }
 
     public void commandAction(Command c, Displayable d) {

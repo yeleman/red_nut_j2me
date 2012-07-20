@@ -94,7 +94,9 @@ public ResearchForm(NUTMIDlet midlet) {
           }
 
         return "nut research" + sep + config.get("health_center")
-                    + sep + firstname + sep + lastname + sep + surnamemother;
+                              + sep + firstname.replace(' ', '_')
+                              + sep + lastname.replace(' ', '_')
+                              + sep + surnamemother.replace(' ', '_');
     }
 
     public void commandAction(Command c, Displayable d) {
