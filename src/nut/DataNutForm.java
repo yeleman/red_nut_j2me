@@ -27,6 +27,7 @@ public class DataNutForm extends Form implements CommandListener {
 
     private Configuration config;
 
+    private String health_center = "";
     private String ErrorMessage = "";
 
     private static final String[] oedema = {"OUI", "NON", "Inconnue"};
@@ -48,6 +49,7 @@ public class DataNutForm extends Form implements CommandListener {
         this.midlet = midlet;
 
         config = new Configuration();
+        health_center = config.get("health_center");
 
         // creating all fields (blank)
         create_date =  new DateField("Date de enregistrement:", DateField.DATE, TimeZone.getTimeZone("GMT"));
@@ -134,7 +136,8 @@ public class DataNutForm extends Form implements CommandListener {
                               + SharedChecks.addzero(reporting_date_array[1])
                               + SharedChecks.addzero(reporting_date_array[0]);
 
-        return "nut fol" + sep + reporting_d
+        return "nut fol" + sep + health_center
+                         + sep + reporting_d
                          + sep + type_uren.getSelectedIndex() // return O = URENAS, 1 = URENI, URENAM = 2
                          + sep + id.getString()
                          + sep + weight.getString()

@@ -272,15 +272,15 @@ public RegisterForm(NUTMIDlet midlet) {
 
         return "nut register" + sep + health_center
                               + sep + reporting_d
-                              + sep + id.getString()
                               + sep + type_uren.getSelectedIndex() // return O = URENAS, 1 = URENI, URENAM = 2
+                              + sep + id.getString()
                               + sep + first_name.getString().replace(' ', '_')
                               + sep + last_name.getString().replace(' ', '_')
                               + sep + mother_name.getString().replace(' ', '_')
                               + sep + sex.getString(sex.getSelectedIndex())
                               + sep + dob_d
                               + sep + contact
-                              + " #" + weight.getString()
+                              + "#" + weight.getString()
                               + sep + height.getString()
                               + sep + oed
                               + sep + pb.getString()
