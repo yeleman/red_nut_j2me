@@ -65,8 +65,8 @@ public class DataNutForm extends Form implements CommandListener {
 
         // add fields to form
         append(create_date);
-        append(id);
         append(type_uren);
+        append(id);
         append(weight);
         append(height);
         append(oedemaField);
@@ -118,12 +118,21 @@ public class DataNutForm extends Form implements CommandListener {
         String sep = " ";
         String oed = " ";
         String nbr = " ";
+        String uren = " ";
+
         if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("OUI")){
             oed = "YES";
         } else if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("NON")){
             oed = "NO";
         }else if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("Inconnue")){
             oed = "Unknown";
+        }
+        if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENAS")){
+            uren = "sam";
+        } else if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENAM")){
+            uren = "mas";
+        }else if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENI")){
+            uren = "samp";
         }
         if (nbr_plu.getString().length() == 0) {
             nbr = "-";
@@ -138,7 +147,7 @@ public class DataNutForm extends Form implements CommandListener {
 
         return "nut fol" + sep + health_center
                          + sep + reporting_d
-                         + sep + type_uren.getSelectedIndex() // return O = URENAS, 1 = URENI, URENAM = 2
+                         + sep + uren
                          + sep + id.getString()
                          + sep + weight.getString()
                          + sep + height.getString()

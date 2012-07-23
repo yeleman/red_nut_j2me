@@ -47,7 +47,7 @@ public DisableForm(NUTMIDlet midlet) {
 
     // creating al fields (blank)
     id_patient =  new TextField("ID:", null, 4, TextField.DECIMAL);
-    type_uren = new ChoiceGroup("Type uren:", ChoiceGroup.POPUP, typeurenlist, null);
+    type_uren = new ChoiceGroup("Type UREN:", ChoiceGroup.POPUP, typeurenlist, null);
     reasonField =  new ChoiceGroup("Raison:", ChoiceGroup.POPUP, reason, null);
     date_disable =  new DateField("Date de sortie:", DateField.DATE, TimeZone.getTimeZone("GMT"));
 
@@ -55,8 +55,8 @@ public DisableForm(NUTMIDlet midlet) {
 
     // add fields to forms
     append(date_disable);
-    append(id_patient);
     append(type_uren);
+    append(id_patient);
     append(reasonField);
 
     addCommand(CMD_EXIT);
@@ -93,6 +93,8 @@ public DisableForm(NUTMIDlet midlet) {
     public String toSMSFormat() {
         String sep = " ";
         String rea = " ";
+        String uren = " ";
+
         if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("ABANDON")){
             rea = "a";
         } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("TRANSFER")){
@@ -103,6 +105,14 @@ public DisableForm(NUTMIDlet midlet) {
             rea = "n";
         } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("DECES")){
             rea = "d";
+        }
+
+        if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENAS")){
+            uren = "sam";
+        } else if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENAM")){
+            uren = "mas";
+        }else if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENI")){
+            uren = "samp";
         }
 
         int date_array[] = SharedChecks.formatDateString(date_disable.getDate());

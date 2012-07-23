@@ -244,6 +244,8 @@ public RegisterForm(NUTMIDlet midlet) {
         String oed = " ";
         String nbrplu = " ";
         String contact = " ";
+        String uren = " ";
+
         if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("OUI")){
             oed = "YES";
         } else if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("NON")){
@@ -251,6 +253,15 @@ public RegisterForm(NUTMIDlet midlet) {
         }else if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("Inconnue")){
             oed = "Unknown";
         }
+
+        if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENAS")){
+            uren = "sam";
+        } else if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENAM")){
+            uren = "mas";
+        }else if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENI")){
+            uren = "samp";
+        }
+
         if (nbr_plu.getString().length() == 0) {
             nbrplu = "-";
         } else {
@@ -273,7 +284,7 @@ public RegisterForm(NUTMIDlet midlet) {
 
         return "nut register" + sep + health_center
                               + sep + reporting_d
-                              + sep + type_uren.getSelectedIndex() // return O = URENAS, 1 = URENI, URENAM = 2
+                              + sep + uren
                               + sep + id.getString()
                               + sep + first_name.getString().replace(' ', '_')
                               + sep + last_name.getString().replace(' ', '_')
