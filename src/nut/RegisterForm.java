@@ -25,7 +25,6 @@ public class RegisterForm extends Form implements CommandListener {
     private static final Command CMD_HELP = new Command ("Aide",
                                                             Command.HELP, 2);
     private static final int MAX_SIZE = 5; // max no. of chars per field.
-    private static final String month_list[] = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
 
     public NUTMIDlet midlet;
 
@@ -90,11 +89,11 @@ public RegisterForm(NUTMIDlet midlet) {
 
     // add fields to forms
     append(create_date);
+    append(type_uren);
     append(id);
     append(first_name);
     append(last_name);
     append(mother_name);
-    append(type_uren);
     append(dob);
     append(sex);
     append(contacts);
@@ -165,21 +164,6 @@ public RegisterForm(NUTMIDlet midlet) {
             return false;
         }
         return true;
-    }
-
-    private int[] formatDateString(Date date_obj) {
-        String date = date_obj.toString();
-        int day = Integer.valueOf(date.substring(8, 10)).intValue();
-        int month = monthFromString(date.substring(4,7));
-        int start = 24;
-        int end = 28;
-        if (date.length()==34){
-            start = 30;
-            end = 34;
-        }
-        int year = Integer.valueOf(date.substring(start, end)).intValue();
-        int list_date[] = {day, month, year};
-        return list_date;
     }
 
     /*
@@ -254,15 +238,6 @@ public RegisterForm(NUTMIDlet midlet) {
      * @return <code>String</code> to be sent by SMS
      */
 
-    private int monthFromString(String month_str) {
-        int i;
-        for(i=0; i<=month_list.length; i++){
-            if(month_list[i].equals(month_str)){
-                return i + 1;
-            }
-        }
-        return 1;
-    }
 
     public String toSMSFormat() {
         String sep = " ";

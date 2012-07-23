@@ -7,6 +7,7 @@ import java.util.TimeZone;
 import java.util.Date;
 import nut.Constants.*;
 import nut.HelpForm.*;
+import nut.SharedChecks.*;
 
 /**
  * J2ME Patient DisableForm Form
@@ -23,15 +24,18 @@ public class DisableForm extends Form implements CommandListener {
 
     public NUTMIDlet midlet;
 
-    private DateField date_disable;
+    private String ErrorMessage = "";
+    private String health_center = "";
 
     private Configuration config;
     private static final String[] reason = {"ABANDON", "TRANSFER",
                                             "GUERISON","NON-REPONDANT",
                                             "DECES"};
-    private ChoiceGroup reasonField;
+    private static final String[] typeurenlist = {"URENAS", "URENI", "URENAM"};
+    private DateField date_disable;
     private TextField id_patient;
-    private String ErrorMessage = "";
+    private ChoiceGroup type_uren;
+    private ChoiceGroup reasonField;
 
 
 public DisableForm(NUTMIDlet midlet) {
@@ -39,18 +43,21 @@ public DisableForm(NUTMIDlet midlet) {
     this.midlet = midlet;
 
     config = new Configuration();
+    health_center = config.get("health_center");
 
     // creating al fields (blank)
     id_patient =  new TextField("ID:", null, 4, TextField.DECIMAL);
+    type_uren = new ChoiceGroup("Type uren:", ChoiceGroup.POPUP, typeurenlist, null);
     reasonField =  new ChoiceGroup("Raison:", ChoiceGroup.POPUP, reason, null);
     date_disable =  new DateField("Date de sortie:", DateField.DATE, TimeZone.getTimeZone("GMT"));
 
     date_disable.setDate(new Date());
 
     // add fields to forms
-    append(id_patient);
-    append(reasonField);
     append(date_disable);
+    append(id_patient);
+    append(type_uren);
+    append(reasonField);
 
     addCommand(CMD_EXIT);
     addCommand(CMD_SAVE);
@@ -99,13 +106,15 @@ public DisableForm(NUTMIDlet midlet) {
         }
 
         int date_array[] = SharedChecks.formatDateString(date_disable.getDate());
-        String disable_d = String.valueOf(date_array[2])
-                         + SharedChecks.addzero(date_array[1])
-                         + SharedChecks.addzero(date_array[0]);
+        String disable_d =  SharedChecks.addzero(date_array[2])
+                            + SharedChecks.addzero(date_array[1])
+                            + SharedChecks.addzero(date_array[0]);
 
-        return "nut off" + sep + id_patient.getString()
-                         + sep + rea
-                         + sep + disable_d;
+        return "nut off" + sep + health_center
+                         + sep + disable_d
+                         + sep + type_uren.getSelectedIndex() // return O = URENAS, 1 = URENI, URENAM = 2
+                         + sep + id_patient.getString()
+                         + sep + rea;
     }
 
     public void commandAction(Command c, Displayable d) {
