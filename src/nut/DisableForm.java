@@ -122,7 +122,7 @@ public DisableForm(NUTMIDlet midlet) {
 
         return "nut off" + sep + health_center
                          + sep + disable_d
-                         + sep + type_uren.getSelectedIndex() // return O = URENAS, 1 = URENI, URENAM = 2
+                         + sep + uren
                          + sep + id_patient.getString()
                          + sep + rea;
     }
