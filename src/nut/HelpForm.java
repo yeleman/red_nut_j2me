@@ -52,13 +52,14 @@ public class HelpForm extends Form implements CommandListener {
                    "Croix-Rouge.\nUn mauvais numéro vous empêchera de " +
                    "transmettre vos rapports.\n" ;
         } else if (section.equalsIgnoreCase("registration")) {
-            text = "Renseignez le prénom, le nom, la date d'anniversaire, le" +
-                   " nom de la mère puis les données nutritionelles de " +
+            text = "Renseignez la date de la visite, l'ID avec juste les derniers chiffres de l'identifiant, le prénom, le nom, la date d'anniversaire, le" +
+                   " nom de la mère, precisez le type d'UREN puis les données nutritionelles de " +
                    "l'enfant.\n\n" +
                    "En cas de problème, contactez la Croix-Rouge.";
         } else if (section.equalsIgnoreCase("datanut")) {
             text = "Renseignez les champs: \n" +
-                    "ID avec l'identifiant de l'enfant, \n" +
+                    "ID avec juste les derniers chiffres de l'identifiant de l'enfant, \n" +
+                    "precisez le type d'UREN, " +
                     "le poids en kilogramme, \n" +
                     "la taille en centimètre, \n" +
                     "le périmètre brachial en millimètre \n" +
@@ -69,7 +70,7 @@ public class HelpForm extends Form implements CommandListener {
                    "recevrez un SMS contenant l'ID des patients si ils existent.\n\n" +
                    "En cas de problème, contactez la Croix-Rouge.";
         } else if (section.equalsIgnoreCase("Disable")) {
-            text = "Renseignez l'ID puis indiquez la raison de la sortie " +
+            text = "Renseignez l'ID avec juste les derniers chiffres de l'identifiant de l'enfant, puis indiquez la raison de la sortie " +
                    " du patient du programme. \n" +
                    "Vous recevrez un SMS confirmant ou non la désactivation.\n\n" +
                    "En cas de problème, contactez la Croix-Rouge.";

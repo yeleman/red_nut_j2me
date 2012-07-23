@@ -67,14 +67,14 @@ public RegisterForm(NUTMIDlet midlet) {
     health_center = config.get("health_center");
 
     // creating all fields (blank)
-    create_date =  new DateField("Date de enregistrement:", DateField.DATE, TimeZone.getTimeZone("GMT"));
+    create_date =  new DateField("Date d'enregistrement:", DateField.DATE, TimeZone.getTimeZone("GMT"));
     id =  new TextField("ID:", null, 10, TextField.DECIMAL);
     first_name =  new TextField("Prénom:", null, 20, TextField.ANY);
     last_name =  new TextField("Nom:", null, 20, TextField.ANY);
     mother_name =  new TextField("Nom de la mère:", null, 20, TextField.ANY);
     dob =  new DateField("Date de naissance:", DateField.DATE, TimeZone.getTimeZone("GMT"));
     sex = new ChoiceGroup("Sexe:", ChoiceGroup.POPUP, sexList, null);
-    type_uren = new ChoiceGroup("Type uren:", ChoiceGroup.POPUP, typeurenlist, null);
+    type_uren = new ChoiceGroup("Type UREN:", ChoiceGroup.POPUP, typeurenlist, null);
     contacts =  new TextField("contact:", null, 20, TextField.NUMERIC);
 
     intro = new StringItem(null, "Suivi nutritionnel");
