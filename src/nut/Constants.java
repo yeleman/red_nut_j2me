@@ -15,5 +15,7 @@ public class Constants {
     public static final int MAX_HEIGHT = 120;
     public static final int MIN_PB = 80;
     public static final int MAX_PB = 135;
+    public static final int MIN_AGE = 6;
+    public static final int MAX_AGE = 59;
     
 }

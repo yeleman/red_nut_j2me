@@ -46,7 +46,7 @@ public class RegisterForm extends Form implements CommandListener {
     private TextField mother_name;
     private ChoiceGroup sex;
     private ChoiceGroup type_uren;
-    private DateField dob;
+    private TextField dob;
     private TextField contacts;
 
     //datanut
@@ -72,7 +72,7 @@ public RegisterForm(NUTMIDlet midlet) {
     first_name =  new TextField("Prénom:", null, 20, TextField.ANY);
     last_name =  new TextField("Nom:", null, 20, TextField.ANY);
     mother_name =  new TextField("Nom de la mère:", null, 20, TextField.ANY);
-    dob =  new DateField("Date de naissance:", DateField.DATE, TimeZone.getTimeZone("GMT"));
+    dob =  new  TextField("Age de l'enfant(mois):", null, 2, TextField.DECIMAL);
     sex = new ChoiceGroup("Sexe:", ChoiceGroup.POPUP, sexList, null);
     type_uren = new ChoiceGroup("Type UREN:", ChoiceGroup.POPUP, typeurenlist, null);
     contacts =  new TextField("contact:", null, 20, TextField.NUMERIC);
@@ -85,7 +85,6 @@ public RegisterForm(NUTMIDlet midlet) {
     nbr_plu =  new TextField("Sachets plumpy nut donnés:", null, MAX_SIZE, TextField.NUMERIC);
 
     create_date.setDate(new Date());
-    dob.setDate(new Date());
 
     // add fields to forms
     append(create_date);
@@ -111,44 +110,6 @@ public RegisterForm(NUTMIDlet midlet) {
 
 }
 
-    private int[] previous_month( int day, int month, int year) {
-        int new_month[] = {day, 1, 2012};
-        if (month > 1){
-            new_month[1] = month -1;
-            new_month[2] = year;
-        }
-        else{
-            new_month[1] = 12;
-            new_month[2] = year - 1;
-        }
-        return new_month;
-    }
-
-    private boolean is_before_month(int day1, int month1, int year1, int day2, int month2, int year2) {
-        if (year1 < year2) {
-            return true;
-        }
-        else if (year1 == year2) {
-            if (month1 < month2){
-                return true;
-            }
-            else if (month1 == month2){
-                if (day1 < day2){
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            }
-            else{
-                return false;
-            }
-        }
-        else{
-            return false;
-        }
-    }
-
     /*
      * Whether all required fields are filled
      * @return <code>true</code> is all fields are filled
@@ -172,61 +133,23 @@ public RegisterForm(NUTMIDlet midlet) {
      * <code>false</code> otherwise.
      */
     public boolean isValid() {
-        ErrorMessage = "La date indiquée est dans le futur.";
 
         if (SharedChecks.isDateValide(create_date.getDate()) != true) {
-            ErrorMessage = "[Date de visite] " + ErrorMessage;
+            ErrorMessage = "[Date de visite] est dans le futur.";
             return false;
         }
-
-        if (SharedChecks.isDateValide(dob.getDate()) != true) {
-            ErrorMessage = "[Date de naissance] " + ErrorMessage;
-            return false;
-        }
-
-        int dob_array[] = SharedChecks.formatDateString(dob.getDate());
-        int day = dob_array[0];
-        int month = dob_array[1];
-        int year = dob_array[2];
-
-        Date now = new Date();
-        int now_array[] = SharedChecks.formatDateString(now);
-        int now_day = now_array[0];
-        int now_month = now_array[1];
-        int now_year = now_array[2];
-
-        if ((now_year - 5 > year)) {
+        // Date plus de 59 mois
+        if ( Integer.parseInt(dob.getString()) > Constants.MAX_AGE) {
             ErrorMessage = "DATE TROP VIEILLE";
             return false;
         }
-        // calcule date 6 mois
-        int d[] = {now_day, now_month, now_year};
 
-        int i;
-        for(i=0; i<=6; i++){
-            d = previous_month(d[0], d[1], d[2]);
-        }
-
-        int six_month_old[] = d;
-
-        for(i=0; i<=59; i++){
-            d = previous_month(d[0], d[1], d[2]);
-        }
-
-        int fifty_month_old[] = d;
-
-        if (is_before_month(six_month_old[0], six_month_old[1], six_month_old[2],
-                           day, month, year)){
+        if (Integer.parseInt(dob.getString()) < Constants.MIN_AGE){
             // date a moins de 6 mois.
             ErrorMessage = "L'enfant doit être agé de plus de 6 mois";
             return false;
         }
-        if (is_before_month(day, month, year,
-                           fifty_month_old[0], fifty_month_old[1], fifty_month_old[2])){
-            // date a moins de 6 mois.
-            ErrorMessage = "Plus de 59 mois";
-            return false;
-        }
+
         ErrorMessage = SharedChecks.Message(weight, height, pb);
            if (ErrorMessage != ""){
                return false;
@@ -277,11 +200,6 @@ public RegisterForm(NUTMIDlet midlet) {
                               + SharedChecks.addzero(reporting_date_array[1])
                               + SharedChecks.addzero(reporting_date_array[0]);
 
-        int dob_array[] = SharedChecks.formatDateString(dob.getDate());
-        String dob_d = String.valueOf(dob_array[2])
-                              + SharedChecks.addzero(dob_array[1])
-                              + SharedChecks.addzero(dob_array[0]);
-
         return "nut register" + sep + health_center
                               + sep + reporting_d
                               + sep + uren
@@ -290,7 +208,7 @@ public RegisterForm(NUTMIDlet midlet) {
                               + sep + last_name.getString().replace(' ', '_')
                               + sep + mother_name.getString().replace(' ', '_')
                               + sep + sex.getString(sex.getSelectedIndex())
-                              + sep + dob_d
+                              + sep + dob.getString()
                               + sep + contact
                               + "#" + weight.getString()
                               + sep + height.getString()

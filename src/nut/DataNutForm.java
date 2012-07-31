@@ -52,7 +52,7 @@ public class DataNutForm extends Form implements CommandListener {
         health_center = config.get("health_center");
 
         // creating all fields (blank)
-        create_date =  new DateField("Date d'enregistrement:", DateField.DATE, TimeZone.getTimeZone("GMT"));
+        create_date =  new DateField("Date de visite:", DateField.DATE, TimeZone.getTimeZone("GMT"));
         id =  new TextField("ID:", null, 10, TextField.DECIMAL);
         type_uren = new ChoiceGroup("Type UREN:", ChoiceGroup.POPUP, typeurenlist, null);
         weight =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
