@@ -67,7 +67,7 @@ public StockForm(NUTMIDlet midlet) {
     mam_inputs.put("auf", "Autre Farine");
 
     Hashtable sam_comp_inputs = new Hashtable();
-    sam_comp_inputs.put("l75", "Lait F175");
+    sam_comp_inputs.put("l75", "Lait F75");
     sam_comp_inputs.put("l100", "Lait F100");
     sam_comp_inputs.put("pln", "Plumpy Nut");
     sam_comp_inputs.put("auf", "Autre Farine");
@@ -82,7 +82,7 @@ public StockForm(NUTMIDlet midlet) {
     if (this.hc_code.equals("URENAS") || this.hc_code.equals("URENAM+URENAS")) {
         inputs.put("sam", sam_inputs);
     }
-    if (this.hc_code.equals("URENI")) {
+    if (this.hc_code.equals("URENI") || this.hc_code.equals("URENI+URENAS")) {
         inputs.put("sam_comp", sam_comp_inputs);
     }
 
