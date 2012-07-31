@@ -30,10 +30,9 @@ public class Configuration {
         }
         if (recordEnumeration.numRecords() < 4) {
             // the following has to be in order of indexes.
-            this.set("server_number", "63845887", true);
-            this.set("health_center", "csref", true);
+            this.set("server_number", Constants.server_number, true);
+            this.set("health_center", "", true);
             this.set("hc_code", "URENAM+URENAS", true);
-            this.set("server_number", Constants.server_number, false);
         }
     }
 

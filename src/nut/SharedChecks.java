@@ -60,7 +60,7 @@ public class SharedChecks {
                 return true;
             }
             else if (month == now_month){
-                if (day < now_day){
+                if (day <= now_day){
                     return true;
                 }
                 else {

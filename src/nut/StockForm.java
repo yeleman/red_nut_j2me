@@ -82,7 +82,7 @@ public StockForm(NUTMIDlet midlet) {
     if (this.hc_code.equals("URENAS") || this.hc_code.equals("URENAM+URENAS")) {
         inputs.put("sam", sam_inputs);
     }
-    if (this.hc_code.equals("URENI") || this.hc_code.equals("URENI+URENAS")) {
+    if (this.hc_code.equals("URENI") || this.hc_code.equals("URENI²+URENAS")) {
         inputs.put("sam_comp", sam_comp_inputs);
     }
 
