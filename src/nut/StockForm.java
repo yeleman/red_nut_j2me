@@ -50,7 +50,7 @@ public StockForm(NUTMIDlet midlet) {
     yearField = new ChoiceGroup("Année:", ChoiceGroup.POPUP, yearList, null);
     hc_code = config.get("hc_code");
     health_center = config.get("health_center");
-    period_intro = new StringItem(null, "Indiquez la periode");
+    period_intro = new StringItem(null, "Indiquez la période");
 
     // add period
     append(period_intro);
@@ -204,7 +204,7 @@ public StockForm(NUTMIDlet midlet) {
                 + Integer.parseInt(received.getString())
                 < Integer.parseInt(used.getString())
                 + Integer.parseInt(lost.getString())) {
-                    ErrorMessage = input_name + ": stock initial + stock reçu ne peut pas etre inferieur stock utilisé + stock perdu";
+                    ErrorMessage = input_name + ": stock initial + stock reçu ne peut pas être inferieur à stock utilisé + stock perdu";
                     return false;
                 }
             }

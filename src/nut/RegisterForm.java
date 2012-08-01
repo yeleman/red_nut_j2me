@@ -72,10 +72,10 @@ public RegisterForm(NUTMIDlet midlet) {
     first_name =  new TextField("Prénom:", null, 20, TextField.ANY);
     last_name =  new TextField("Nom:", null, 20, TextField.ANY);
     mother_name =  new TextField("Nom de la mère:", null, 20, TextField.ANY);
-    dob =  new  TextField("Age de l'enfant(mois):", null, 2, TextField.DECIMAL);
+    dob =  new  TextField("Age (en mois):", null, 2, TextField.DECIMAL);
     sex = new ChoiceGroup("Sexe:", ChoiceGroup.POPUP, sexList, null);
     type_uren = new ChoiceGroup("Type UREN:", ChoiceGroup.POPUP, typeurenlist, null);
-    contacts =  new TextField("contact:", null, 20, TextField.NUMERIC);
+    contacts =  new TextField("Contact:", null, 20, TextField.NUMERIC);
 
     intro = new StringItem(null, "Suivi nutritionnel");
     weight =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
@@ -140,13 +140,13 @@ public RegisterForm(NUTMIDlet midlet) {
         }
         // Date plus de 59 mois
         if ( Integer.parseInt(dob.getString()) > Constants.MAX_AGE) {
-            ErrorMessage = "DATE TROP VIEILLE";
+            ErrorMessage = "La date est trop vieille.";
             return false;
         }
 
         if (Integer.parseInt(dob.getString()) < Constants.MIN_AGE){
             // date a moins de 6 mois.
-            ErrorMessage = "L'enfant doit être agé de plus de 6 mois";
+            ErrorMessage = "L'enfant doit être agé de plus de 6 mois.";
             return false;
         }
 

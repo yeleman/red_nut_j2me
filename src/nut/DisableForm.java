@@ -28,7 +28,7 @@ public class DisableForm extends Form implements CommandListener {
     private String health_center = "";
 
     private Configuration config;
-    private static final String[] reason = {"ABANDON", "TRANSFER",
+    private static final String[] reason = {"ABANDON", "TRANSFERT",
                                             "GUERISON","NON-REPONDANT",
                                             "DECES"};
     private static final String[] typeurenlist = {"URENAS", "URENI", "URENAM"};
@@ -97,7 +97,7 @@ public DisableForm(NUTMIDlet midlet) {
 
         if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("ABANDON")){
             rea = "a";
-        } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("TRANSFER")){
+        } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("TRANSFERT")){
             rea = "t";
         } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("GUERISON")){
             rea = "h";
