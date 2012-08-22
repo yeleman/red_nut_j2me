@@ -90,7 +90,7 @@ public class SharedChecks {
         if (Float.parseFloat(weight.getString()) < Constants.MIN_WEIGHT || Float.parseFloat(weight.getString()) > Constants.MAX_WEIGHT) {
            return "Le poids doit être compris entre " + Constants.MIN_WEIGHT + " et " + Constants.MAX_WEIGHT + " kg";
         }
-        else if (Integer.parseInt(height.getString()) < Constants.MIN_HEIGHT || Integer.parseInt(height.getString()) > Constants.MAX_HEIGHT) {
+        else if (Float.parseFloat(height.getString()) < Constants.MIN_HEIGHT || Float.parseFloat(height.getString()) > Constants.MAX_HEIGHT) {
             return "La taille de l'enfant doit être compris entre " + Constants.MIN_HEIGHT + " et " + Constants.MAX_HEIGHT + " cm";
         }
         else if (Integer.parseInt(pb.getString()) < Constants.MIN_PB || Integer.parseInt(pb.getString()) > Constants.MAX_PB) {
