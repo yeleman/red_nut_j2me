@@ -72,7 +72,7 @@ public RegisterForm(NUTMIDlet midlet) {
     first_name =  new TextField("Prénom:", null, 20, TextField.ANY);
     last_name =  new TextField("Nom:", null, 20, TextField.ANY);
     mother_name =  new TextField("Nom de la mère:", null, 20, TextField.ANY);
-    dob =  new  TextField("Age (en mois):", null, 2, TextField.DECIMAL);
+    dob =  new  TextField("Age (en mois):", null, 2, TextField.NUMERIC);
     sex = new ChoiceGroup("Sexe:", ChoiceGroup.POPUP, sexList, null);
     type_uren = new ChoiceGroup("Type UREN:", ChoiceGroup.POPUP, typeurenlist, null);
     contacts =  new TextField("Contact:", null, 20, TextField.NUMERIC);

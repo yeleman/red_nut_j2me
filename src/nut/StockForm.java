@@ -200,10 +200,10 @@ public StockForm(NUTMIDlet midlet) {
                 TextField used = (TextField)indiv_fields.get("used");
                 TextField lost = (TextField)indiv_fields.get("lost");
 
-                if (Integer.parseInt(initial.getString())
-                + Integer.parseInt(received.getString())
-                < Integer.parseInt(used.getString())
-                + Integer.parseInt(lost.getString())) {
+                if (Float.parseFloat(initial.getString())
+                + Float.parseFloat(received.getString())
+                < Float.parseFloat(used.getString())
+                + Float.parseFloat(lost.getString())) {
                     ErrorMessage = input_name + ": stock initial + stock reçu ne peut pas être inferieur à stock utilisé + stock perdu";
                     return false;
                 }
