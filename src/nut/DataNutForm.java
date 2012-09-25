@@ -8,6 +8,7 @@ import nut.Configuration.*;
 import nut.Constants.*;
 import nut.HelpForm.*;
 import nut.SharedChecks.*;
+
 /**
  * J2ME Patient NutritionalData Form
  * Displays NutritionalData fields
@@ -27,21 +28,21 @@ public class DataNutForm extends Form implements CommandListener {
 
     private Configuration config;
 
-    private String health_center = "";
     private String ErrorMessage = "";
+    private String health_center = "";
 
     private static final String[] oedema = {"OUI", "NON", "Inconnue"};
     private static final String[] typeurenlist = {"URENAS", "URENI", "URENAM"};
 
     private ChoiceGroup oedemaField;
 
-    private DateField create_date;
-    private TextField id;
-    private ChoiceGroup type_uren;
-    private TextField weight;
-    private TextField height;
-    private TextField pb;
-    private TextField nbr_plu;
+    private DateField create_datefield;
+    private TextField id_patientfield;
+    private ChoiceGroup type_urenfield;
+    private TextField weightfield;
+    private TextField heightfield;
+    private TextField pbfield;
+    private TextField nbr_plufield;
 
 
     public DataNutForm(NUTMIDlet midlet) {
@@ -52,26 +53,26 @@ public class DataNutForm extends Form implements CommandListener {
         health_center = config.get("health_center");
 
         // creating all fields (blank)
-        create_date =  new DateField("Date de visite:", DateField.DATE, TimeZone.getTimeZone("GMT"));
-        id =  new TextField("ID:", null, 10, TextField.DECIMAL);
-        type_uren = new ChoiceGroup("Type UREN:", ChoiceGroup.POPUP, typeurenlist, null);
-        weight =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
-        height =  new TextField("Taille (en cm):", null, MAX_SIZE, TextField.DECIMAL);
+        create_datefield =  new DateField("Date de visite:", DateField.DATE, TimeZone.getTimeZone("GMT"));
+        id_patientfield =  new TextField("ID:", null, 10, TextField.DECIMAL);
+        type_urenfield = new ChoiceGroup("Type UREN:", ChoiceGroup.POPUP, typeurenlist, null);
+        weightfield =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
+        heightfield =  new TextField("Taille (en cm):", null, MAX_SIZE, TextField.DECIMAL);
         oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
-        pb =  new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
-        nbr_plu =  new TextField("Sachets plumpy nut donnés:", null, MAX_SIZE, TextField.NUMERIC);
+        pbfield =  new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
+        nbr_plufield =  new TextField("Sachets plumpy nut donnés:", null, MAX_SIZE, TextField.NUMERIC);
 
-        create_date.setDate(new Date());
+        create_datefield.setDate(new Date());
 
         // add fields to form
-        append(create_date);
-        append(type_uren);
-        append(id);
-        append(weight);
-        append(height);
+        append(create_datefield);
+        append(type_urenfield);
+        append(id_patientfield);
+        append(weightfield);
+        append(heightfield);
         append(oedemaField);
-        append(pb);
-        append(nbr_plu);
+        append(pbfield);
+        append(nbr_plufield);
 
         // add command to form
         addCommand(CMD_HELP);
@@ -88,7 +89,7 @@ public class DataNutForm extends Form implements CommandListener {
     public boolean isComplete() {
         // all fields are required to be filled.
         //SharedChecks checks = new SharedChecks();
-        if (id.getString().length() == 0 || !SharedChecks.isComplete(weight, height, pb)) {
+        if (id_patientfield.getString().length() == 0 || !SharedChecks.isComplete(weightfield, heightfield, pbfield)) {
             return false;
         }
         return true;
@@ -100,11 +101,11 @@ public class DataNutForm extends Form implements CommandListener {
      * <code>false</code> otherwise.
      */
      public boolean isValid() {
-        ErrorMessage = SharedChecks.Message(weight, height, pb);
+        ErrorMessage = SharedChecks.Message(weightfield, heightfield, pbfield);
         if (ErrorMessage != ""){
            return false;
         }
-        if (SharedChecks.isDateValide(create_date.getDate()) != true) {
+        if (SharedChecks.isDateValide(create_datefield.getDate()) != true) {
             ErrorMessage = "La date indiquée est dans le futur.";
             return false;
         }
@@ -127,20 +128,20 @@ public class DataNutForm extends Form implements CommandListener {
         }else if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("Inconnue")){
             oed = "Unknown";
         }
-        if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENAS")){
+        if (type_urenfield.getString(type_urenfield.getSelectedIndex()).equals("URENAS")){
             uren = "sam";
-        } else if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENAM")){
+        } else if (type_urenfield.getString(type_urenfield.getSelectedIndex()).equals("URENAM")){
             uren = "mas";
-        }else if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENI")){
+        }else if (type_urenfield.getString(type_urenfield.getSelectedIndex()).equals("URENI")){
             uren = "samp";
         }
-        if (nbr_plu.getString().length() == 0) {
+        if (nbr_plufield.getString().length() == 0) {
             nbr = "-";
         } else {
-            nbr = nbr_plu.getString();
+            nbr = nbr_plufield.getString();
         }
 
-        int reporting_date_array[] = SharedChecks.formatDateString(create_date.getDate());
+        int reporting_date_array[] = SharedChecks.formatDateString(create_datefield.getDate());
         String reporting_d = String.valueOf(reporting_date_array[2])
                               + SharedChecks.addzero(reporting_date_array[1])
                               + SharedChecks.addzero(reporting_date_array[0]);
@@ -148,11 +149,11 @@ public class DataNutForm extends Form implements CommandListener {
         return "nut fol" + sep + health_center
                          + sep + reporting_d
                          + sep + uren
-                         + sep + id.getString()
-                         + sep + weight.getString()
-                         + sep + height.getString()
+                         + sep + id_patientfield.getString()
+                         + sep + weightfield.getString()
+                         + sep + heightfield.getString()
                          + sep + oed
-                         + sep + pb.getString()
+                         + sep + pbfield.getString()
                          + sep + nbr;
     }
 

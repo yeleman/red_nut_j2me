@@ -16,53 +16,67 @@ import nut.SharedChecks.*;
  * Sends as SMS
  * @author Fadiga
  */
+
 public class DisableForm extends Form implements CommandListener {
 
     private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
     private static final Command CMD_SAVE = new Command ("Envoi.", Command.OK, 1);
     private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
+    private static final int MAX_SIZE = 5; // max no. of chars per field.
 
     public NUTMIDlet midlet;
+
+    private Configuration config;
 
     private String ErrorMessage = "";
     private String health_center = "";
 
-    private Configuration config;
     private static final String[] reason = {"ABANDON", "TRANSFERT", "REFERENCE",
                                             "GUERISON","NON-REPONDANT", "DECES"};
     private static final String[] typeurenlist = {"URENAS", "URENI", "URENAM"};
+
     private DateField date_disable;
-    private TextField id_patient;
-    private ChoiceGroup type_uren;
-    private ChoiceGroup reasonField;
+    private TextField id_patientfield;
+    private ChoiceGroup type_urenfield;
+    private TextField weightfield;
+    private TextField heightfield;
+    private TextField pbfield;
+    private ChoiceGroup reasonfield;
 
 
-public DisableForm(NUTMIDlet midlet) {
-    super("Sortie");
-    this.midlet = midlet;
+    public DisableForm(NUTMIDlet midlet) {
+        super("Sortie");
+        this.midlet = midlet;
 
-    config = new Configuration();
-    health_center = config.get("health_center");
+        config = new Configuration();
+        health_center = config.get("health_center");
 
-    // creating al fields (blank)
-    id_patient =  new TextField("ID:", null, 4, TextField.DECIMAL);
-    type_uren = new ChoiceGroup("Type UREN:", ChoiceGroup.POPUP, typeurenlist, null);
-    reasonField =  new ChoiceGroup("Raison:", ChoiceGroup.POPUP, reason, null);
-    date_disable =  new DateField("Date de sortie:", DateField.DATE, TimeZone.getTimeZone("GMT"));
+        // creating al fields (blank)
+        id_patientfield =  new TextField("ID:", null, 4, TextField.DECIMAL);
+        type_urenfield = new ChoiceGroup("Type UREN:", ChoiceGroup.POPUP, typeurenlist, null);
+        reasonfield =  new ChoiceGroup("Raison:", ChoiceGroup.POPUP, reason, null);
+        date_disable =  new DateField("Date de sortie:", DateField.DATE, TimeZone.getTimeZone("GMT"));
+        weightfield =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
+        heightfield =  new TextField("Taille (en cm):", null, MAX_SIZE, TextField.DECIMAL);
+        // oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
+        pbfield =  new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
 
-    date_disable.setDate(new Date());
+        date_disable.setDate(new Date());
 
-    // add fields to forms
-    append(date_disable);
-    append(type_uren);
-    append(id_patient);
-    append(reasonField);
+        // add fields to forms
+        append(date_disable);
+        append(type_urenfield);
+        append(id_patientfield);
+        append(weightfield);
+        append(heightfield);
+        append(pbfield);
+        append(reasonfield);
 
-    addCommand(CMD_EXIT);
-    addCommand(CMD_SAVE);
-    addCommand(CMD_HELP);
-    this.setCommandListener (this);
-}
+        addCommand(CMD_EXIT);
+        addCommand(CMD_SAVE);
+        addCommand(CMD_HELP);
+        this.setCommandListener (this);
+    }
 
     /*
      * Whether all required fields are filled
@@ -71,13 +85,23 @@ public DisableForm(NUTMIDlet midlet) {
      */
     public boolean isComplete() {
         // all fields are required to be filled.
-        if (id_patient.getString().length() == 0) {
+        if (id_patientfield.getString().length() == 0) {
             return false;
+        }
+        if ((this.reasonfield.getString(reasonfield.getSelectedIndex())).equals("GUERISON")) {
+            if (!SharedChecks.isComplete(weightfield, heightfield, pbfield)){
+             return false;
+             }
         }
         return true;
     }
     public boolean isValid() {
-
+        if ((this.reasonfield.getString(reasonfield.getSelectedIndex())).equals("GUERISON")) {
+            ErrorMessage = SharedChecks.Message(weightfield, heightfield, pbfield);
+        }
+        if (ErrorMessage != ""){
+           return false;
+        }
         if (SharedChecks.isDateValide(date_disable.getDate()) != true) {
             ErrorMessage = "[Date de sortie] La date indiquée est dans le futur.";
             return false;
@@ -93,27 +117,37 @@ public DisableForm(NUTMIDlet midlet) {
         String sep = " ";
         String rea = " ";
         String uren = " ";
+        String weight = weightfield.getString();
+        String height = heightfield.getString();
+        String pb = pbfield.getString();
 
-        if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("ABANDON")){
+        if ((this.reasonfield.getString(reasonfield.getSelectedIndex())).equals("ABANDON")){
             rea = "a";
-        } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("TRANSFERT")){
+        } else if ((this.reasonfield.getString(reasonfield.getSelectedIndex())).equals("TRANSFERT")){
             rea = "t";
-        } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("GUERISON")){
+        } else if ((this.reasonfield.getString(reasonfield.getSelectedIndex())).equals("GUERISON")){
             rea = "h";
-        } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("NON-REPONDANT")){
+        } else if ((this.reasonfield.getString(reasonfield.getSelectedIndex())).equals("NON-REPONDANT")){
             rea = "n";
-        } else if ((this.reasonField.getString(reasonField.getSelectedIndex())).equals("DECES")){
+        } else if ((this.reasonfield.getString(reasonfield.getSelectedIndex())).equals("DECES")){
             rea = "d";
+        } else if ((this.reasonfield.getString(reasonfield.getSelectedIndex())).equals("REFERENCE")){
+            rea = "r";
         }
 
-        if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENAS")){
+        if (type_urenfield.getString(type_urenfield.getSelectedIndex()).equals("URENAS")){
             uren = "sam";
-        } else if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENAM")){
+        } else if (type_urenfield.getString(type_urenfield.getSelectedIndex()).equals("URENAM")){
             uren = "mas";
-        }else if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENI")){
+        }else if (type_urenfield.getString(type_urenfield.getSelectedIndex()).equals("URENI")){
             uren = "samp";
         }
 
+        if (!(this.reasonfield.getString(reasonfield.getSelectedIndex())).equals("GUERISON")) {
+            weight = "-";
+            height = "-";
+            pb = "-";
+        }
         int date_array[] = SharedChecks.formatDateString(date_disable.getDate());
         String disable_d =  SharedChecks.addzero(date_array[2])
                             + SharedChecks.addzero(date_array[1])
@@ -122,7 +156,10 @@ public DisableForm(NUTMIDlet midlet) {
         return "nut off" + sep + health_center
                          + sep + disable_d
                          + sep + uren
-                         + sep + id_patient.getString()
+                         + sep + id_patientfield.getString()
+                         + sep + weight
+                         + sep + height
+                         + sep + pb
                          + sep + rea;
     }
 
