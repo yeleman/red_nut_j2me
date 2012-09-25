@@ -32,7 +32,7 @@ public class Configuration {
             // the following has to be in order of indexes.
             this.set("server_number", Constants.server_number, true);
             this.set("health_center", "", true);
-            this.set("hc_code", "URENAM+URENAS", true);
+            this.set("hc_code", "URENAS", true);
         }
     }
 

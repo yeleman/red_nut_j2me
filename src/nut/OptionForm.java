@@ -20,7 +20,7 @@ public class OptionForm extends Form implements CommandListener {
     private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
     
     private Configuration config;
-    private static final String[] type_center = {"URENI", "URENAM", "URENAS", "URENAM+URENAS", "URENI+URENAS"};
+    private static final String[] type_center = {"URENI", "URENAS", "URENI+URENAS"};
     private TextField numberField;
     private TextField health_centerField;
     private ChoiceGroup hc_codeField;

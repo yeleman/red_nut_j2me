@@ -34,7 +34,7 @@ public class RegisterForm extends Form implements CommandListener {
 
     private static final String[] sexList= {"F", "M"};
     private static final String[] oedema = {"OUI", "NON", "Inconnue"};
-    private static final String[] typeurenlist = {"URENAS", "URENI", "URENAM"};
+    private static final String[] typeurenlist = {"URENAS", "URENI"};
 
     private String ErrorMessage = "";
 
@@ -179,8 +179,8 @@ public RegisterForm(NUTMIDlet midlet) {
 
         if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENAS")){
             uren = "sam";
-        } else if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENAM")){
-            uren = "mas";
+        // } else if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENAM")){
+        //     uren = "mam";
         }else if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENI")){
             uren = "samp";
         }

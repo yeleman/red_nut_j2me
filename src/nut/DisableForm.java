@@ -33,7 +33,7 @@ public class DisableForm extends Form implements CommandListener {
 
     private static final String[] reason = {"ABANDON", "TRANSFERT", "REFERENCE",
                                             "GUERISON","NON-REPONDANT", "DECES"};
-    private static final String[] typeurenlist = {"URENAS", "URENI", "URENAM"};
+    private static final String[] typeurenlist = {"URENAS", "URENI"};
 
     private DateField date_disable;
     private TextField id_patientfield;
@@ -137,8 +137,8 @@ public class DisableForm extends Form implements CommandListener {
 
         if (type_urenfield.getString(type_urenfield.getSelectedIndex()).equals("URENAS")){
             uren = "sam";
-        } else if (type_urenfield.getString(type_urenfield.getSelectedIndex()).equals("URENAM")){
-            uren = "mas";
+        // } else if (type_urenfield.getString(type_urenfield.getSelectedIndex()).equals("URENAM")){
+        //     uren = "mam";
         }else if (type_urenfield.getString(type_urenfield.getSelectedIndex()).equals("URENI")){
             uren = "samp";
         }

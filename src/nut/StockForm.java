@@ -76,13 +76,13 @@ public StockForm(NUTMIDlet midlet) {
     sam_inputs.put("pln", "Plumpy Nut");
 
     inputs = new Hashtable();
-    if (this.hc_code.equals("URENAM") || this.hc_code.equals("URENAM+URENAS")) {
-        inputs.put("mam", mam_inputs);
-    }
-    if (this.hc_code.equals("URENAS") || this.hc_code.equals("URENAM+URENAS")) {
+    // if (this.hc_code.equals("URENAM") || this.hc_code.equals("URENAM+URENAS")) {
+    //     inputs.put("mam", mam_inputs);
+    // }
+    if (this.hc_code.equals("URENAS") || this.hc_code.equals("URENAM+URENAS") || this.hc_code.equals("URENI+URENAS")) {
         inputs.put("sam", sam_inputs);
     }
-    if (this.hc_code.equals("URENI") || this.hc_code.equals("URENI²+URENAS")) {
+    if (this.hc_code.equals("URENI") || this.hc_code.equals("URENI+URENAS")) {
         inputs.put("sam_comp", sam_comp_inputs);
     }
 
