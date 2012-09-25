@@ -28,9 +28,8 @@ public class DisableForm extends Form implements CommandListener {
     private String health_center = "";
 
     private Configuration config;
-    private static final String[] reason = {"ABANDON", "TRANSFERT",
-                                            "GUERISON","NON-REPONDANT",
-                                            "DECES"};
+    private static final String[] reason = {"ABANDON", "TRANSFERT", "REFERENCE",
+                                            "GUERISON","NON-REPONDANT", "DECES"};
     private static final String[] typeurenlist = {"URENAS", "URENI", "URENAM"};
     private DateField date_disable;
     private TextField id_patient;
