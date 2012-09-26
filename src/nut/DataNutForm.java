@@ -102,7 +102,7 @@ public class DataNutForm extends Form implements CommandListener {
      */
      public boolean isValid() {
         ErrorMessage = SharedChecks.Message(weightfield, heightfield, pbfield);
-        if (ErrorMessage != ""){
+        if (!ErrorMessage.equals("")){
            return false;
         }
         if (SharedChecks.isDateValide(create_datefield.getDate()) != true) {

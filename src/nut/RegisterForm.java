@@ -151,7 +151,7 @@ public RegisterForm(NUTMIDlet midlet) {
         }
 
         ErrorMessage = SharedChecks.Message(weight, height, pb);
-           if (ErrorMessage != ""){
+           if (!ErrorMessage.equals("")){
                return false;
            }
         return true;

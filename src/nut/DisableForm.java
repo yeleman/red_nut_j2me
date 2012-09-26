@@ -67,10 +67,10 @@ public class DisableForm extends Form implements CommandListener {
         append(date_disable);
         append(type_urenfield);
         append(id_patientfield);
+        append(reasonfield);
         append(weightfield);
         append(heightfield);
         append(pbfield);
-        append(reasonfield);
 
         addCommand(CMD_EXIT);
         addCommand(CMD_SAVE);
@@ -99,7 +99,7 @@ public class DisableForm extends Form implements CommandListener {
         if ((this.reasonfield.getString(reasonfield.getSelectedIndex())).equals("GUERISON")) {
             ErrorMessage = SharedChecks.Message(weightfield, heightfield, pbfield);
         }
-        if (ErrorMessage != ""){
+        if (!ErrorMessage.equals("")){
            return false;
         }
         if (SharedChecks.isDateValide(date_disable.getDate()) != true) {
