@@ -180,7 +180,7 @@ public RegisterForm(NUTMIDlet midlet) {
         if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENAS")){
             uren = "sam";
         // } else if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENAM")){
-        //     uren = "mam";
+        //     uren = "mas";
         }else if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENI")){
             uren = "samp";
         }

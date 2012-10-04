@@ -33,8 +33,10 @@ public class DataNutForm extends Form implements CommandListener {
 
     private static final String[] oedema = {"OUI", "NON", "Inconnue"};
     private static final String[] typeurenlist = {"URENAS", "URENI"};
+    private static final String[] isureni = {"NON", "OUI"};
 
     private ChoiceGroup oedemaField;
+    private ChoiceGroup isurenifield;
 
     private DateField create_datefield;
     private TextField id_patientfield;
@@ -44,7 +46,6 @@ public class DataNutForm extends Form implements CommandListener {
     private TextField pbfield;
     private TextField nbr_plufield;
 
-
     public DataNutForm(NUTMIDlet midlet) {
         super("Suivi nutritionnel");
         this.midlet = midlet;
@@ -53,15 +54,15 @@ public class DataNutForm extends Form implements CommandListener {
         health_center = config.get("health_center");
 
         // creating all fields (blank)
-        create_datefield =  new DateField("Date de visite:", DateField.DATE, TimeZone.getTimeZone("GMT"));
-        id_patientfield =  new TextField("ID:", null, 10, TextField.DECIMAL);
+        create_datefield = new DateField("Date de visite:", DateField.DATE, TimeZone.getTimeZone("GMT"));
+        id_patientfield = new TextField("ID:", null, 10, TextField.DECIMAL);
         type_urenfield = new ChoiceGroup("Type UREN:", ChoiceGroup.POPUP, typeurenlist, null);
-        weightfield =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
-        heightfield =  new TextField("Taille (en cm):", null, MAX_SIZE, TextField.DECIMAL);
-        oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
-        pbfield =  new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
-        nbr_plufield =  new TextField("Sachets plumpy nut donnés:", null, MAX_SIZE, TextField.NUMERIC);
-
+        weightfield = new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
+        heightfield = new TextField("Taille (en cm):", null, MAX_SIZE, TextField.DECIMAL);
+        oedemaField = new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
+        pbfield = new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
+        nbr_plufield = new TextField("Sachets plumpy nut donnés:", null, MAX_SIZE, TextField.NUMERIC);
+        isurenifield = new ChoiceGroup("Sévère:", ChoiceGroup.POPUP, isureni, null);
         create_datefield.setDate(new Date());
 
         // add fields to form
@@ -73,6 +74,7 @@ public class DataNutForm extends Form implements CommandListener {
         append(oedemaField);
         append(pbfield);
         append(nbr_plufield);
+        append(isurenifield);
 
         // add command to form
         addCommand(CMD_HELP);
@@ -131,7 +133,7 @@ public class DataNutForm extends Form implements CommandListener {
         if (type_urenfield.getString(type_urenfield.getSelectedIndex()).equals("URENAS")){
             uren = "sam";
         // } else if (type_urenfield.getString(type_urenfield.getSelectedIndex()).equals("URENAM")){
-        //     uren = "mam";
+        //     uren = "mas";
         }else if (type_urenfield.getString(type_urenfield.getSelectedIndex()).equals("URENI")){
             uren = "samp";
         }
@@ -154,7 +156,8 @@ public class DataNutForm extends Form implements CommandListener {
                          + sep + heightfield.getString()
                          + sep + oed
                          + sep + pbfield.getString()
-                         + sep + nbr;
+                         + sep + nbr
+                         + sep + isurenifield.getSelectedIndex();
     }
 
     public void commandAction(Command c, Displayable d) {

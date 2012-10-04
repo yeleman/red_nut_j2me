@@ -138,7 +138,7 @@ public class DisableForm extends Form implements CommandListener {
         if (type_urenfield.getString(type_urenfield.getSelectedIndex()).equals("URENAS")){
             uren = "sam";
         // } else if (type_urenfield.getString(type_urenfield.getSelectedIndex()).equals("URENAM")){
-        //     uren = "mam";
+        //     uren = "mas";
         }else if (type_urenfield.getString(type_urenfield.getSelectedIndex()).equals("URENI")){
             uren = "samp";
         }
