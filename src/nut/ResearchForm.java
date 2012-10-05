@@ -13,6 +13,7 @@ import nut.HelpForm.*;
  * Sends as SMS
  * @author Fadiga
  */
+
 public class ResearchForm extends Form implements CommandListener {
 
     private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);

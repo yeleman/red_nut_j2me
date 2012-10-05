@@ -34,7 +34,8 @@ public class RegisterForm extends Form implements CommandListener {
 
     private static final String[] sexList= {"F", "M"};
     private static final String[] oedema = {"OUI", "NON", "Inconnue"};
-    private static final String[] typeurenlist = {"URENAS", "URENI"};
+    // private static final String[] typeurenlist = {"URENAS", "URENI"};
+    private static final String[] isureni = {"NON", "OUI"};
 
     private String ErrorMessage = "";
 
@@ -45,7 +46,7 @@ public class RegisterForm extends Form implements CommandListener {
     private TextField last_name;
     private TextField mother_name;
     private ChoiceGroup sex;
-    private ChoiceGroup type_uren;
+    // private ChoiceGroup type_uren;
     private TextField dob;
     private TextField contacts;
 
@@ -56,6 +57,7 @@ public class RegisterForm extends Form implements CommandListener {
     private ChoiceGroup oedemaField;
     private TextField pb;
     private TextField nbr_plu;
+    private ChoiceGroup isurenifield;
 
 
 public RegisterForm(NUTMIDlet midlet) {
@@ -74,7 +76,7 @@ public RegisterForm(NUTMIDlet midlet) {
     mother_name =  new TextField("Nom de la mère:", null, 20, TextField.ANY);
     dob =  new  TextField("Age (en mois):", null, 2, TextField.NUMERIC);
     sex = new ChoiceGroup("Sexe:", ChoiceGroup.POPUP, sexList, null);
-    type_uren = new ChoiceGroup("Type UREN:", ChoiceGroup.POPUP, typeurenlist, null);
+    // type_uren = new ChoiceGroup("Type UREN:", ChoiceGroup.POPUP, typeurenlist, null);
     contacts =  new TextField("Contact:", null, 20, TextField.NUMERIC);
 
     intro = new StringItem(null, "Suivi nutritionnel");
@@ -83,12 +85,13 @@ public RegisterForm(NUTMIDlet midlet) {
     oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
     pb =  new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
     nbr_plu =  new TextField("Sachets plumpy nut donnés:", null, MAX_SIZE, TextField.NUMERIC);
+    isurenifield = new ChoiceGroup("Sévère:", ChoiceGroup.POPUP, isureni, null);
 
     create_date.setDate(new Date());
 
     // add fields to forms
     append(create_date);
-    append(type_uren);
+    // append(type_uren);
     append(id);
     append(first_name);
     append(last_name);
@@ -102,6 +105,9 @@ public RegisterForm(NUTMIDlet midlet) {
     append(oedemaField);
     append(pb);
     append(nbr_plu);
+    append(isurenifield);
+    
+    // add command to form
     addCommand(CMD_EXIT);
     addCommand(CMD_SAVE);
     addCommand(CMD_HELP);
@@ -177,13 +183,13 @@ public RegisterForm(NUTMIDlet midlet) {
             oed = "Unknown";
         }
 
-        if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENAS")){
-            uren = "sam";
+        // if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENAS")){
+        //     uren = "sam";
         // } else if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENAM")){
         //     uren = "mas";
-        }else if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENI")){
-            uren = "samp";
-        }
+        // }else if (type_uren.getString(type_uren.getSelectedIndex()).equals("URENI")){
+        //     uren = "samp";
+        // }
 
         if (nbr_plu.getString().length() == 0) {
             nbrplu = "-";
@@ -202,7 +208,7 @@ public RegisterForm(NUTMIDlet midlet) {
 
         return "nut register" + sep + health_center
                               + sep + reporting_d
-                              + sep + uren
+                              // + sep + uren
                               + sep + id.getString()
                               + sep + first_name.getString().replace(' ', '_')
                               + sep + last_name.getString().replace(' ', '_')
@@ -214,7 +220,8 @@ public RegisterForm(NUTMIDlet midlet) {
                               + sep + height.getString()
                               + sep + oed
                               + sep + pb.getString()
-                              + sep + nbrplu;
+                              + sep + nbrplu
+                              + sep + isurenifield.getSelectedIndex();
     }
 
     public void commandAction(Command c, Displayable d) {

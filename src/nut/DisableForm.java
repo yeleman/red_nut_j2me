@@ -58,7 +58,6 @@ public class DisableForm extends Form implements CommandListener {
         date_disable =  new DateField("Date de sortie:", DateField.DATE, TimeZone.getTimeZone("GMT"));
         weightfield =  new TextField("Poids (en kg):", null, MAX_SIZE, TextField.DECIMAL);
         heightfield =  new TextField("Taille (en cm):", null, MAX_SIZE, TextField.DECIMAL);
-        // oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
         pbfield =  new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
 
         date_disable.setDate(new Date());

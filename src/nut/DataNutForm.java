@@ -63,6 +63,7 @@ public class DataNutForm extends Form implements CommandListener {
         pbfield = new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
         nbr_plufield = new TextField("Sachets plumpy nut donnés:", null, MAX_SIZE, TextField.NUMERIC);
         isurenifield = new ChoiceGroup("Sévère:", ChoiceGroup.POPUP, isureni, null);
+
         create_datefield.setDate(new Date());
 
         // add fields to form
@@ -120,7 +121,7 @@ public class DataNutForm extends Form implements CommandListener {
     public String toSMSFormat() {
         String sep = " ";
         String oed = " ";
-        String nbr = " ";
+        String nbrplu = " ";
         String uren = " ";
 
         if (oedemaField.getString(oedemaField.getSelectedIndex()).equals("OUI")){
@@ -138,9 +139,9 @@ public class DataNutForm extends Form implements CommandListener {
             uren = "samp";
         }
         if (nbr_plufield.getString().length() == 0) {
-            nbr = "-";
+            nbrplu = "-";
         } else {
-            nbr = nbr_plufield.getString();
+            nbrplu = nbr_plufield.getString();
         }
 
         int reporting_date_array[] = SharedChecks.formatDateString(create_datefield.getDate());
@@ -156,7 +157,7 @@ public class DataNutForm extends Form implements CommandListener {
                          + sep + heightfield.getString()
                          + sep + oed
                          + sep + pbfield.getString()
-                         + sep + nbr
+                         + sep + nbrplu
                          + sep + isurenifield.getSelectedIndex();
     }
 
