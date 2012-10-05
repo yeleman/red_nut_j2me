@@ -52,8 +52,8 @@ public class HelpForm extends Form implements CommandListener {
                    "Croix-Rouge.\nUn mauvais numéro vous empêchera de " +
                    "transmettre vos rapports.\n" ;
         } else if (section.equalsIgnoreCase("registration")) {
-            text = "Renseignez Date d'enregistrement avec la date de la viste" +
-                   ", precisez le type UREN, ID avec juste les derniers " +
+            text = "Renseignez la date d'enregistrement avec la date de la viste," +
+                   " ID avec juste les derniers " +
                    "chiffres de l'identifiant, le prénom, le nom, le" +
                    " nom de la mère, la date de naissnce, le sexe puis les " +
                    "données nutritionelles de l'enfant.\n\n" +
@@ -72,9 +72,9 @@ public class HelpForm extends Form implements CommandListener {
                    "recevrez un SMS contenant l'ID des patients si ils existent.\n\n" +
                    "En cas de problème, contactez la Croix-Rouge.";
         } else if (section.equalsIgnoreCase("Disable")) {
-            text = "Renseignez l'ID avec juste les derniers chiffres de " +
-                   "l'identifiant de l'enfant, puis indiquez la raison de la sortie " +
-                   " du patient du programme. \n" +
+            text = "Renseignez la date de sortie, le type d'UREN, ID avec juste les derniers chiffres de " +
+                   "l'identifiant de l'enfant, indiquez la raison de la sortie puis les " +
+                   "données nutritionelles de l'enfant si c'est une guerison. \n" +
                    "Vous recevrez un SMS confirmant ou non la désactivation.\n\n" +
                    "En cas de problème, contactez la Croix-Rouge.";
         } else if (section.equalsIgnoreCase("stock")) {
