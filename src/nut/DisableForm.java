@@ -85,10 +85,12 @@ public class DisableForm extends Form implements CommandListener {
     public boolean isComplete() {
         // all fields are required to be filled.
         if (id_patientfield.getString().length() == 0) {
+            ErrorMessage = "Le champ ID du patient doit être remplie!";
             return false;
         }
         if ((this.reasonfield.getString(reasonfield.getSelectedIndex())).equals("GUERISON")) {
             if (!SharedChecks.isComplete(weightfield, heightfield, pbfield)){
+                ErrorMessage = "Tous les champs requis doivent être remplis!";
              return false;
              }
         }
@@ -182,7 +184,7 @@ public class DisableForm extends Form implements CommandListener {
             // check whether all fields have been completed
             // if not, we alert and don't do anything else.
             if (!this.isComplete()) {
-                alert = new Alert("Données manquantes", "Le champ ID du patient doit être remplie!", null, AlertType.ERROR);
+                alert = new Alert("Données manquantes", this.ErrorMessage, null, AlertType.ERROR);
                 alert.setTimeout(Alert.FOREVER);
                 this.midlet.display.setCurrent (alert, this);
                 return;
