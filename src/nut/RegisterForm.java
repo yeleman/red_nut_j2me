@@ -35,7 +35,7 @@ public class RegisterForm extends Form implements CommandListener {
     private static final String[] sexList= {"F", "M"};
     private static final String[] oedema = {"OUI", "NON", "Inconnue"};
     // private static final String[] typeurenlist = {"URENAS", "URENI"};
-    private static final String[] isureni = {"NON", "OUI"};
+    private static final String[] isureni = {"URENAS (MAS)", "URENI (MAS+)"};
 
     private String ErrorMessage = "";
 
@@ -85,7 +85,7 @@ public RegisterForm(NUTMIDlet midlet) {
     oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
     pb =  new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
     nbr_plu =  new TextField("Sachets plumpy nut donnés:", null, MAX_SIZE, TextField.NUMERIC);
-    isurenifield = new ChoiceGroup("Sévère:", ChoiceGroup.POPUP, isureni, null);
+    isurenifield = new ChoiceGroup("URENAS-URENI:", ChoiceGroup.POPUP, isureni, null);
 
     create_date.setDate(new Date());
 

@@ -7,7 +7,7 @@ package nut;
  */
 public class Constants {
 
-    public static final String version = "0.9b";
+    public static final String version = "1.0b";
     public static final String server_number = "63845887";
     public static final float MIN_WEIGHT = 2;
     public static final float MAX_WEIGHT = (float) 19.5;

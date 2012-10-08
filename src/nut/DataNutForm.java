@@ -33,7 +33,7 @@ public class DataNutForm extends Form implements CommandListener {
 
     private static final String[] oedema = {"OUI", "NON", "Inconnue"};
     private static final String[] typeurenlist = {"URENAS", "URENI"};
-    private static final String[] isureni = {"NON", "OUI"};
+    private static final String[] isureni = {"URENAS (MAS)", "URENI (MAS+)"};
 
     private ChoiceGroup oedemaField;
     private ChoiceGroup isurenifield;
@@ -62,7 +62,7 @@ public class DataNutForm extends Form implements CommandListener {
         oedemaField = new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
         pbfield = new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
         nbr_plufield = new TextField("Sachets plumpy nut donnés:", null, MAX_SIZE, TextField.NUMERIC);
-        isurenifield = new ChoiceGroup("Sévère:", ChoiceGroup.POPUP, isureni, null);
+        isurenifield = new ChoiceGroup("URENAS-URENI:", ChoiceGroup.POPUP, isureni, null);
 
         create_datefield.setDate(new Date());
 
