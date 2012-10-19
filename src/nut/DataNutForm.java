@@ -30,10 +30,11 @@ public class DataNutForm extends Form implements CommandListener {
 
     private String ErrorMessage = "";
     private String health_center = "";
+    private String hc_code = "";
 
-    private static final String[] oedema = {"OUI", "NON", "Inconnue"};
+    private static final String[] oedema = {"NON", "OUI", "Inconnue"};
     private static final String[] typeurenlist = {"URENAS", "URENI"};
-    private static final String[] isureni = {"URENAS (MAS)", "URENI (MAS+)"};
+    private static final String[] isureni = {"MAS", "MAS+"};
 
     private ChoiceGroup oedemaField;
     private ChoiceGroup isurenifield;
@@ -52,6 +53,7 @@ public class DataNutForm extends Form implements CommandListener {
 
         config = new Configuration();
         health_center = config.get("health_center");
+        hc_code = config.get("hc_code");
 
         // creating all fields (blank)
         create_datefield = new DateField("Date de visite:", DateField.DATE, TimeZone.getTimeZone("GMT"));
@@ -62,7 +64,7 @@ public class DataNutForm extends Form implements CommandListener {
         oedemaField = new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
         pbfield = new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
         nbr_plufield = new TextField("Sachets plumpy nut donnés:", null, MAX_SIZE, TextField.NUMERIC);
-        isurenifield = new ChoiceGroup("URENAS-URENI:", ChoiceGroup.POPUP, isureni, null);
+        isurenifield = new ChoiceGroup("MAS/MAS+:", ChoiceGroup.POPUP, isureni, null);
 
         create_datefield.setDate(new Date());
 
@@ -74,8 +76,10 @@ public class DataNutForm extends Form implements CommandListener {
         append(heightfield);
         append(oedemaField);
         append(pbfield);
+        if (!this.hc_code.equals("URENAS")) {
+            append(isurenifield);
+        }
         append(nbr_plufield);
-        append(isurenifield);
 
         // add command to form
         addCommand(CMD_HELP);

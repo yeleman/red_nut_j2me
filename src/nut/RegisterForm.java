@@ -33,12 +33,13 @@ public class RegisterForm extends Form implements CommandListener {
     private String health_center = "";
 
     private static final String[] sexList= {"F", "M"};
-    private static final String[] oedema = {"OUI", "NON", "Inconnue"};
+    private static final String[] oedema = {"NON", "OUI", "Inconnue"};
     // private static final String[] typeurenlist = {"URENAS", "URENI"};
-    private static final String[] isureni = {"URENAS (MAS)", "URENI (MAS+)"};
+    private static final String[] isureni = {"MAS", "MAS+"};
 
     private String ErrorMessage = "";
 
+    private String hc_code = "";
     //register
     private DateField create_date;
     private TextField id;
@@ -64,9 +65,11 @@ public RegisterForm(NUTMIDlet midlet) {
     super("Enregistrement");
     this.midlet = midlet;
 
+    System.out.println();
     config = new Configuration();
 
     health_center = config.get("health_center");
+    hc_code = config.get("hc_code");
 
     // creating all fields (blank)
     create_date =  new DateField("Date d'enregistrement:", DateField.DATE, TimeZone.getTimeZone("GMT"));
@@ -85,7 +88,7 @@ public RegisterForm(NUTMIDlet midlet) {
     oedemaField =  new ChoiceGroup("Oedème:", ChoiceGroup.POPUP, oedema, null);
     pb =  new TextField("Périmètre brachial (en mm):", null, MAX_SIZE, TextField.DECIMAL);
     nbr_plu =  new TextField("Sachets plumpy nut donnés:", null, MAX_SIZE, TextField.NUMERIC);
-    isurenifield = new ChoiceGroup("URENAS-URENI:", ChoiceGroup.POPUP, isureni, null);
+    isurenifield = new ChoiceGroup("MAS/MAS+", ChoiceGroup.POPUP, isureni, null);
 
     create_date.setDate(new Date());
 
@@ -104,8 +107,10 @@ public RegisterForm(NUTMIDlet midlet) {
     append(height);
     append(oedemaField);
     append(pb);
-    append(nbr_plu);
+    if (!this.hc_code.equals("URENAS")) {
     append(isurenifield);
+    }
+    append(nbr_plu);
     
     // add command to form
     addCommand(CMD_EXIT);
